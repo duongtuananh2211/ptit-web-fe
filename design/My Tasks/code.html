@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HorusVis - Issue Detail &amp; Bug Tracking</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#434654",
+                        "inverse-surface": "#293041",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#d2daf0",
+                        "surface-container-highest": "#dbe2f9",
+                        "surface": "#f9f9ff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#0040a2",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#ffc4c3",
+                        "secondary": "#525f73",
+                        "on-background": "#141b2c",
+                        "surface-bright": "#f9f9ff",
+                        "on-primary-container": "#c4d2ff",
+                        "surface-container": "#e9edff",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#3b485a",
+                        "primary": "#003d9b",
+                        "on-primary-fixed": "#001848",
+                        "surface-variant": "#dbe2f9",
+                        "secondary-fixed-dim": "#bac7de",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#ffb3b2",
+                        "secondary-fixed": "#d6e3fb",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f1f3ff",
+                        "primary-fixed": "#dae2ff",
+                        "inverse-primary": "#b2c5ff",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e0e8ff",
+                        "outline-variant": "#c3c6d6",
+                        "primary-container": "#0052cc",
+                        "on-surface": "#141b2c",
+                        "tertiary-fixed": "#ffdad9",
+                        "outline": "#737685",
+                        "tertiary-container": "#b4132d",
+                        "primary-fixed-dim": "#b2c5ff",
+                        "on-secondary-fixed": "#0f1c2d",
+                        "secondary-container": "#d6e3fb",
+                        "inverse-on-surface": "#edf0ff",
+                        "background": "#f9f9ff",
+                        "on-tertiary-fixed-variant": "#92001f",
+                        "on-tertiary-fixed": "#410008",
+                        "tertiary": "#8c001d",
+                        "on-secondary-container": "#586579",
+                        "surface-tint": "#0c56d0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-lockup { letter-spacing: -0.02em; }
+        .glass-sidebar { backdrop-filter: blur(12px); }
+        .primary-gradient { background: linear-gradient(135deg, #003d9b, #0052cc); }
+        .success-gradient { background: linear-gradient(135deg, #28A745, #1E7E34); }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
+<div class="flex h-screen overflow-hidden">
+<aside class="fixed left-0 top-0 h-full flex flex-col p-4 z-50 h-screen w-64 border-r border-slate-200/50 dark:border-slate-800 bg-[#f1f3ff] dark:bg-slate-950/50 glass-sidebar">
+<div class="mb-8 px-2">
+<h1 class="text-lg font-bold text-[#141b2c] dark:text-slate-100 editorial-lockup">HorusVis</h1>
+<p class="text-xs text-slate-500 font-label tracking-widest uppercase mt-1">Project Management</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-[#0052CC] hover:bg-white/50 dark:hover:bg-slate-800/50 transition-all rounded-lg font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
+                    Projects
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-[#0052CC] dark:text-[#4089FF] font-semibold bg-white dark:bg-slate-900 rounded-lg shadow-sm font-['Inter'] text-sm tracking-wide transform scale-105" href="#">
+<span class="material-symbols-outlined" data-icon="assignment_turned_in">assignment_turned_in</span>
+                    My Tasks
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-[#0052CC] hover:bg-white/50 dark:hover:bg-slate-800/50 transition-all rounded-lg font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
+                    Reports
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-[#0052CC] hover:bg-white/50 dark:hover:bg-slate-800/50 transition-all rounded-lg font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                    Admin
+                </a>
+</nav>
+<div class="mt-auto space-y-1 pt-4 border-t border-slate-200/50">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:text-[#0052CC] transition-all font-['Inter'] text-sm" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                    Help
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:text-[#0052CC] transition-all font-['Inter'] text-sm" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                    Settings
+                </a>
+</div>
+</aside>
+<main class="flex-1 ml-64 overflow-y-auto">
+<header class="flex justify-between items-center px-6 w-full sticky top-0 z-40 bg-[#ffffff] dark:bg-slate-900 h-16 border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-4">
+<span class="text-[#0052CC] dark:text-[#4089FF] font-['Inter'] font-medium text-sm">Issue Tracking / PRJ-102</span>
+<h2 class="text-xl font-black tracking-tight text-[#141b2c] dark:text-slate-100 editorial-lockup">HorusVis</h2>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full cursor-pointer transition-colors" data-icon="notifications">notifications</span>
+<div class="absolute top-2 right-2 w-2 h-2 bg-tertiary rounded-full border-2 border-white"></div>
+</div>
+<img alt="User profile" class="w-8 h-8 rounded-full border border-surface-container-highest" data-alt="close-up portrait of a professional developer in a studio with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDayNPsBQRjQCAFABf0yMv332oC74VNxotxwGMG3qxKFRdsrsNxGVw__I5Wb_DsrNTxFK24tMb78QBFr1P6Q6Rn8892Qapz6_6zONZoTgR9YmO-SH9a6VQRiIUztgnTPO8Mgin5pR3qhI_Mt_rZI6HlNt5-QMxs-wjW91_qGF4b74jUV2Caxc34c-2gYIceWEJCrLUUlcnZAOhDe_I1glqD_62JYQY3P8LQf4yiX0V4NZK1-I5h7zrJhF3ek_L07YvxlXpEv9flTPI3"/>
+</div>
+</header>
+<div class="p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-7xl mx-auto">
+<div class="lg:col-span-7 space-y-8">
+<section class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/10">
+<div class="flex justify-between items-start mb-6">
+<div>
+<span class="bg-secondary-fixed text-on-secondary-fixed-variant px-2.5 py-1 rounded text-[10px] font-label font-bold uppercase tracking-wider mb-2 inline-block">Feature Development</span>
+<h3 class="text-3xl font-black text-on-surface editorial-lockup">Secure API Gateway Integration</h3>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-tertiary animate-pulse" title="High Priority"></span>
+<span class="text-xs font-label text-tertiary font-bold uppercase tracking-widest">Critical</span>
+</div>
+</div>
+<p class="text-on-surface-variant leading-relaxed text-lg mb-8">
+                            Implement a high-throughput secure API gateway to handle all external authentication requests. This layer must support OAuth2.0, JWT validation, and rate-limiting to protect downstream microservices.
+                        </p>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-4 rounded-lg">
+<span class="block text-[10px] font-label text-outline uppercase tracking-widest mb-1">Assignee</span>
+<div class="flex items-center gap-2">
+<img alt="Dev" class="w-6 h-6 rounded-full" data-alt="professional male engineer looking directly at camera, soft natural light background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCt49pgrOKgXGbAk6ZitKP_oU0w1ONsQNdzVCVJnfvb3ezd4v_LoW00hz4rHS4MD7GjYhrD3TUQEVOs1bzYo8dtHrJDvjuulsMwHfDSMDmpq-MuhxchIzfyWNIanCNKvV61glrZvISaIZHFkCtxtHKRKiLmCl31B5NqyFf0TbE8N0-C6RobMwh8uV3G3kt90Gax6kEMw0inuvrC16GYEKOAgkYrlT1T95xyvCfaCZAeA8WbgEvikKVMrqGWNV82tAerpMCpgK__pajj"/>
+<span class="text-sm font-semibold">Julian V. (Lead)</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg">
+<span class="block text-[10px] font-label text-outline uppercase tracking-widest mb-1">Due Date</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="event">event</span>
+<span class="text-sm font-semibold">Oct 24, 2023</span>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/10">
+<div class="flex items-center justify-between mb-6">
+<h4 class="text-lg font-bold text-on-surface editorial-lockup">Fixing Workflow</h4>
+<span class="text-xs font-label text-outline uppercase tracking-widest">Dev Lifecycle</span>
+</div>
+<div class="flex items-center gap-0 w-full relative">
+<div class="absolute top-1/2 left-0 w-full h-[2px] bg-surface-variant -translate-y-1/2 -z-10"></div>
+<div class="flex-1 flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold ring-4 ring-surface-container-lowest">1</div>
+<span class="text-[10px] font-bold mt-2 uppercase tracking-tighter text-primary">Triage</span>
+</div>
+<div class="flex-1 flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold ring-4 ring-surface-container-lowest">2</div>
+<span class="text-[10px] font-bold mt-2 uppercase tracking-tighter text-primary">Debug</span>
+</div>
+<div class="flex-1 flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant text-xs font-bold ring-4 ring-surface-container-lowest">3</div>
+<span class="text-[10px] font-bold mt-2 uppercase tracking-tighter text-outline">Fixing</span>
+</div>
+<div class="flex-1 flex flex-col items-center">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant text-xs font-bold ring-4 ring-surface-container-lowest">4</div>
+<span class="text-[10px] font-bold mt-2 uppercase tracking-tighter text-outline">Verify</span>
+</div>
+</div>
+</section>
+<section class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant/10">
+<h4 class="text-lg font-bold text-on-surface editorial-lockup mb-6">Report New Issue</h4>
+<form class="space-y-6">
+<div>
+<label class="block text-[10px] font-label text-outline uppercase tracking-widest mb-2">Description</label>
+<input class="w-full bg-surface border-none rounded-lg focus:ring-2 focus:ring-primary-container text-sm p-4" placeholder="Short summary of the bug..." type="text"/>
+</div>
+<div>
+<label class="block text-[10px] font-label text-outline uppercase tracking-widest mb-2">Steps to Reproduce</label>
+<textarea class="w-full bg-surface border-none rounded-lg focus:ring-2 focus:ring-primary-container text-sm p-4" placeholder="1. Go to... 2. Click... 3. Observer..." rows="3"></textarea>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div>
+<label class="block text-[10px] font-label text-outline uppercase tracking-widest mb-2">Priority</label>
+<select class="w-full bg-surface border-none rounded-lg focus:ring-2 focus:ring-primary-container text-sm p-4 appearance-none">
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+<option>Critical</option>
+</select>
+</div>
+<div class="flex items-end">
+<button class="w-full py-4 primary-gradient text-white font-bold rounded-lg hover:scale-[1.02] active:scale-98 transition-all shadow-lg shadow-primary-container/20" type="button">
+                                        Add Issue
+                                    </button>
+</div>
+</div>
+</form>
+</section>
+</div>
+<div class="lg:col-span-5 space-y-6">
+<div class="flex items-center justify-between px-2">
+<h4 class="text-xl font-black text-on-surface editorial-lockup">Issue List</h4>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-surface-container-high rounded-lg transition-colors">
+<span class="material-symbols-outlined text-outline" data-icon="filter_list">filter_list</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg transition-colors">
+<span class="material-symbols-outlined text-outline" data-icon="search">search</span>
+</button>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-error shadow-sm hover:scale-[1.01] transition-all cursor-pointer group">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-label text-error font-extrabold uppercase tracking-widest">Open</span>
+<span class="text-[10px] font-label text-outline">ISS-241</span>
+</div>
+<h5 class="font-bold text-on-surface mb-2 group-hover:text-primary transition-colors">JWT Validation failing for guest tokens</h5>
+<p class="text-xs text-on-surface-variant line-clamp-2 mb-4">Requests are being rejected even with valid temporary scopes from the Auth service...</p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<img alt="Team" class="w-6 h-6 rounded-full border-2 border-white" data-alt="vibrant headshot of male software architect in a creative office environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACdJ0X7bQL4hj7SYFYuG-tHVu9vR22fQbSef1Iwwj09Ab9Isv0x_0MfFjJAEmCrRvyZU124ZhvaJcenMjb3U8wnXq7amWH7cxjNMkRZZRWy_KBjTQknvsn2NFWFyH9z_RKk_NKdvQ6e4SCnv_Z_XSAptqXlinXkR4fi55Lvjj6d3ZTTaOYgb-IQTUsl_wEJitmL8BpluxWzrYU7LBdIw8KpO1mEVI7AaMZfK8K2-1cC-7YIoIwJz-1AXfCE6mYa8aG3Ka2WcMCcmHN"/>
+<img alt="Team" class="w-6 h-6 rounded-full border-2 border-white" data-alt="professional woman in tech industry, warm lighting, shallow depth of field" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzfCQSZkOOLv7vdwN6LnYqJo8OBKdye_pFnaxWiXH6tnrEb0RQMeqDuilu9lHH8_DlhsUAWHQo-5bTxdLr8oKnJUPmgy36lkAmpoc7CplQWGsHkfs7E-8YUqL7_F-_6a7hfJstdW4ExIHu_sAlpLbF8zyo-ZB9_-l_xZGt5vRU3P5aVCLx6SBfVqb4uw-1Pjp4JnPwA46sL9oMxBQavFtI2TdgKMDe_6ltHMcJ7wfzMJd9oadFna8LMYd5t50oMAEt74hMDCDHrS7M"/>
+</div>
+<div class="flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-base" data-icon="priority_high">priority_high</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">High</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-secondary shadow-sm opacity-90">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-label text-secondary font-extrabold uppercase tracking-widest">Resolved</span>
+<span class="text-[10px] font-label text-outline">ISS-238</span>
+</div>
+<h5 class="font-bold text-on-surface mb-2">CORS configuration for staging domain</h5>
+<p class="text-xs text-on-surface-variant line-clamp-2 mb-4">Allow cross-origin requests from the alpha portal dashboard...</p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<img alt="Team" class="w-6 h-6 rounded-full border-2 border-white" data-alt="side profile of a male project manager in a minimalist office" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjzm7GLEQRQRtmjyNYPzKSxz8VeDDcB5NjGHd43eeBdo4zV3lNSqn_SgZE6HGmiwjL0rInUw2yCxjONoaprii2d5p6Ry8z7aRZTqkDa563Nlm5IT3nF4V1roOu-zEHaPYB-z_h2__IjtCVy-C_xAg4IDhOt5UzHVNMFl6G_TvG3D9JfPZ9lnq7BMYUHuPPb_mbzk9RCJqST32AXLq1NTqNPHIgK3E4mz9CkJXNjV4n4zapN-7cJ4ocf4TMTWK0uYuX0R84zmxSRlNQ"/>
+</div>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-base" data-icon="check_circle">check_circle</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Verified</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl border-l-4 border-outline-variant shadow-none opacity-60">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-label text-outline font-extrabold uppercase tracking-widest">Closed</span>
+<span class="text-[10px] font-label text-outline">ISS-192</span>
+</div>
+<h5 class="font-bold text-on-surface mb-2 line-through">Rate limiting header typo</h5>
+<p class="text-xs text-on-surface-variant line-clamp-1 mb-4">Fix X-RateLimit-Remaning typo in the gateway response...</p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-label text-outline italic">Completed Sep 12</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border-l-4 border-error shadow-sm hover:scale-[1.01] transition-all cursor-pointer group">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-label text-error font-extrabold uppercase tracking-widest">Open</span>
+<span class="text-[10px] font-label text-outline">ISS-245</span>
+</div>
+<h5 class="font-bold text-on-surface mb-2 group-hover:text-primary transition-colors">Redis cache eviction latency</h5>
+<p class="text-xs text-on-surface-variant line-clamp-2 mb-4">Performance bottleneck detected when clearing bulk keys during deployment...</p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<img alt="Team" class="w-6 h-6 rounded-full border-2 border-white" data-alt="professional female software engineer in a workspace with warm artificial lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO0OVqQSROR5nbtP72zOBVrk3tnWBKaj-XPwMvz2ghTSs-qP-r_c_4rZ1ADZWPa1KSmm8zdIf6tk_ngdvWdpPR5hsJVCUhNFtQun__bG4G5ex5uDsADGQcSRVVLZh91NLpFTyAknsXY6Tv-U4pM_s2h9id65OXPrA3B5xCYVKImd6TaaIe5v-zzKKJ4N-hCSMIRi1ESRWFP-YC-zuVj5rwa9ZH2bHhnMQePPbFc52msl4RIZp0VptvovMTDTz1PnHQ4ZyjAehKKOft"/>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-base" data-icon="low_priority">low_priority</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Medium</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
