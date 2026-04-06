@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 interface TaskCardProps {
   task: any;
@@ -6,8 +8,30 @@ interface TaskCardProps {
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({ task, isDone }) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging
+  } = useSortable({ id: task.id });
+
+  const style = {
+    transform: CSS.Translate.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+    cursor: 'grab',
+  };
+
   return (
-    <div className={`bg-surface-container-lowest p-5 rounded-xl transition-all hover:translate-y-[-2px] group shadow-sm ${isDone ? 'border border-outline-variant/20' : ''}`}>
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className={`bg-surface-container-lowest p-5 rounded-xl transition-all hover:translate-y-[-2px] group shadow-sm ${isDone ? 'border border-outline-variant/20' : ''}`}
+    >
       <div className="flex justify-between items-start mb-3">
         <span className={`px-2 py-1 bg-surface-variant text-on-surface-variant text-[10px] font-bold uppercase tracking-wider rounded ${isDone ? 'line-through' : ''}`}>
           {task.priority}

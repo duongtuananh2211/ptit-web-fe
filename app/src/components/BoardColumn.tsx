@@ -1,7 +1,10 @@
 import React from 'react';
+import { useDroppable } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import TaskCard from './TaskCard';
 
 interface BoardColumnProps {
+  id: string;
   title: string;
   tasks: any[];
   dotColor: string;
@@ -9,7 +12,11 @@ interface BoardColumnProps {
   isDone?: boolean;
 }
 
-const BoardColumn: React.FC<BoardColumnProps> = ({ title, tasks, dotColor, countColor, isDone }) => {
+const BoardColumn: React.FC<BoardColumnProps> = ({ id, title, tasks, dotColor, countColor, isDone }) => {
+  const { setNodeRef } = useDroppable({
+    id: id,
+  });
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between px-2 mb-2">
@@ -26,10 +33,12 @@ const BoardColumn: React.FC<BoardColumnProps> = ({ title, tasks, dotColor, count
           </button>
         )}
       </div>
-      <div className={`space-y-4 ${isDone ? 'opacity-70 grayscale-[0.3]' : ''}`}>
-        {tasks.map((task) => (
-          <TaskCard key={task.id} task={task} isDone={isDone} />
-        ))}
+      <div ref={setNodeRef} className={`space-y-4 min-h-[100px] ${isDone ? 'opacity-70 grayscale-[0.3]' : ''}`}>
+        <SortableContext id={id} items={tasks.map(t => t.id)} strategy={verticalListSortingStrategy}>
+          {tasks.map((task) => (
+            <TaskCard key={task.id} task={task} isDone={isDone} />
+          ))}
+        </SortableContext>
       </div>
     </div>
   );

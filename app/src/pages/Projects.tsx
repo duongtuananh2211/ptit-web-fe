@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getProjects } from '../services/mockData';
-import BoardColumn from '../components/BoardColumn';
+import TaskBoard from '../components/TaskBoard';
 
 const Projects: React.FC = () => {
   const [projects, setProjects] = useState<any[]>([]);
@@ -41,17 +41,9 @@ const Projects: React.FC = () => {
         <div className="h-px w-full bg-surface-container-highest mt-6"></div>
       </section>
 
-      {/* Board Grid */}
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <BoardColumn title="To Do" tasks={tasks.todo} dotColor="bg-outline" />
-        <BoardColumn 
-          title="Working" 
-          tasks={tasks.working} 
-          dotColor="bg-primary-container" 
-          countColor="bg-primary-fixed text-on-primary-fixed" 
-        />
-        <BoardColumn title="Stuck" tasks={tasks.stuck} dotColor="bg-error" countColor="bg-error-container text-on-error-container" />
-        <BoardColumn title="Done" tasks={tasks.done} dotColor="bg-[#28A745]" isDone />
+      {/* Board Grid with Drag and Drop */}
+      <section>
+        <TaskBoard initialTasks={tasks} />
       </section>
 
       {/* FAB */}
