@@ -1,29 +1,11 @@
 # Running HorusVis Locally
 
-This guide follows the spirit of Siren's local setup documentation, but it is adapted to the current HorusVis scaffold.
-
-Unlike Siren, HorusVis currently does not include:
-
-- `scripts/`
-- `automation/`
-- `infrastructure/`
-- non-prod database copy workflows
-
-That means local setup is intentionally lightweight and manual.
-
 ## Prerequisites
 
 Install the following before starting:
 
 1. .NET 10 SDK
 1. Node.js and `npm`
-1. A trusted local HTTPS developer certificate
-
-For HTTPS development on Windows or macOS:
-
-```bash
-dotnet dev-certs https --trust
-```
 
 Optional tools:
 
@@ -35,10 +17,6 @@ dotnet tool install --global dotnet-ef
 ```
 
 ## Quick Start Without a Database
-
-The current scaffold can run without PostgreSQL.
-
-If `ConnectionStrings:HorusVis` is empty, the backend falls back to an EF Core in-memory database.
 
 ### 1. Run the backend
 
@@ -88,13 +66,8 @@ Once both processes are running, verify these URLs:
 ### Backend
 
 - `https://localhost:7235/health`
-- `https://localhost:7235/`
 - `https://localhost:7235/swagger`
-- `https://localhost:7235/api/auth/placeholder`
-- `https://localhost:7235/api/projects/placeholder`
-- `https://localhost:7235/api/my-tasks/placeholder`
-- `https://localhost:7235/api/reports/placeholder`
-- `https://localhost:7235/api/admin/placeholder`
+-
 
 ## Swagger and Authentication
 
@@ -135,13 +108,9 @@ Notes:
 
 ### Frontend
 
-- `http://localhost:5173/login`
-- `http://localhost:5173/projects`
-- `http://localhost:5173/my-tasks`
-- `http://localhost:5173/reports`
-- `http://localhost:5173/admin`
+- `http://localhost:5173/
 
-## Using Local PostgreSQL Instead of In-Memory
+## Using Local PostgreSQL
 
 This is optional.
 
@@ -166,10 +135,6 @@ Example connection string:
 ```text
 Host=localhost;Port=5432;Database=horusvis;Username=postgres;Password=postgres
 ```
-
-The current design-time factory in `HorusVis.Data.Migrations` already uses the same local PostgreSQL defaults.
-It now reads `ConnectionStrings:HorusVis` from `HorusVis.Web` appsettings and environment variables instead of using a hardcoded connection string.
-
 ## Migrations Status
 
 The scaffold includes a migrations project and a design-time factory, but no EF Core migrations are checked in yet.
@@ -186,7 +151,7 @@ When HorusVis starts carrying migrations, run them from:
 
 ```bash
 cd backend/src/HorusVis.Data.Migrations
-dotnet ef database update --startup-project ../HorusVis.Web
+dotnet ef database update
 ```
 
 ## Environment Notes
@@ -197,15 +162,3 @@ If you do not use the built-in launch profile, set these explicitly:
 - `DOTNET_ENVIRONMENT=Development`
 
 The frontend reads its API base URL from `VITE_API_BASE_URL`.
-
-## Current Scope and Limitations
-
-At the moment, local HorusVis is still a scaffold:
-
-- backend controllers return placeholder responses
-- frontend routes and pages are placeholder shells
-- there is no local data-copy workflow from non-prod
-- there are no Docker helper scripts yet
-- there is no Swagger or NSwag generation flow required to run locally
-
-This document should evolve as real features, migrations, and operational scripts are added.

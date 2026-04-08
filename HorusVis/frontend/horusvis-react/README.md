@@ -1,6 +1,8 @@
 # HorusVis React
 
-Frontend scaffold for HorusVis using `npm` + `Vite` + `React` + `TypeScript`.
+React frontend for HorusVis SaaS, covering Login, Projects, My Tasks, Reports, and Admin experiences.
+
+Frontend scaffold using `npm` + `Vite` + `React` + `TypeScript`.
 
 Current foundations included in this scaffold:
 

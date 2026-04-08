@@ -18,13 +18,6 @@ This guide follows the migration workflow used in Siren's database documentation
    dotnet build HorusVis.sln
    ```
 
-1. Ensure `ConnectionStringParts:HorusVis` is configured in `HorusVis.Data.Migrations` configuration.
-   - `backend/src/HorusVis.Data.Migrations/appsettings.json`
-   - `backend/src/HorusVis.Data.Migrations/appsettings.{Environment}.json`
-   - environment variables
-
-   The default `appsettings.Development.json` already contains a local PostgreSQL connection. Set `DOTNET_ENVIRONMENT=Development` (or `ASPNETCORE_ENVIRONMENT=Development`) if you want that profile to be picked up automatically.
-
 ## Add a Migration
 
 1. Go to the `HorusVis.Data.Migrations` folder:

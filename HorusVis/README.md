@@ -1,6 +1,6 @@
 # HorusVis
 
-HorusVis is scaffolded as a monorepo with the same high-level layout as Siren, limited to:
+HorusVis is a SaaS task and issue management platform for planning, tracking, and visual analytics, organized as a client-server monorepo.
 
 - `backend/`
 - `frontend/`
