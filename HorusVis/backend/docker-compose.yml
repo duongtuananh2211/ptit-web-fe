@@ -1,0 +1,16 @@
+services:
+  horusvis-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: horusvis-api
+    ports:
+      - "5049:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      # Connection string is read from appsettings.Development.json.
+      # Host is set to the horusvis-postgres container IP on the bridge network.
+      ConnectionStringParts__HorusVis__Host: "172.17.0.3"
+    # Join the default bridge network so we can reach horusvis-postgres by IP
+    network_mode: bridge
+    restart: unless-stopped
