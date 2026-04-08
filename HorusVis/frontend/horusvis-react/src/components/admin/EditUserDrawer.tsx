@@ -2,12 +2,9 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import {
-  fetchAdminRoles,
-  updateAdminUser,
-  type UserAdminDto,
-} from "../../api/adminApi";
-import { useAuthStore } from "../../stores/auth-store-context";
+import { useHorusVisClient } from "../DataProvider/hooks";
+import { UpdateUserRequest } from "@horusvis-web/Reference";
+import type { UserAdminDto } from "../../api/clients";
 
 interface Props {
   user: UserAdminDto | null;
@@ -22,13 +19,12 @@ type FormValues = {
 };
 
 export default function EditUserDrawer({ user, onClose }: Props) {
-  const { accessToken } = useAuthStore();
+  const { adminUsersClient, adminRolesClient } = useHorusVisClient();
   const queryClient = useQueryClient();
 
   const { data: roles } = useQuery({
     queryKey: ["admin", "roles"],
-    queryFn: () => fetchAdminRoles(accessToken!),
-    enabled: !!accessToken,
+    queryFn: () => adminRolesClient.getRoles(),
   });
 
   const {
@@ -60,7 +56,9 @@ export default function EditUserDrawer({ user, onClose }: Props) {
 
   const onSubmit = handleSubmit(async (values) => {
     try {
-      await updateAdminUser(user.id, values, accessToken!);
+      const req = new UpdateUserRequest();
+      req.init(values);
+      await adminUsersClient.updateUser(user.id, req);
       queryClient.invalidateQueries({ queryKey: ["admin", "users"] });
       toast.success("User updated");
       onClose();

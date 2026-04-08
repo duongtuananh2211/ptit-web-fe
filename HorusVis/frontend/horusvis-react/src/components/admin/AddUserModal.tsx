@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { createAdminUser, fetchAdminRoles } from "../../api/adminApi";
-import { useAuthStore } from "../../stores/auth-store-context";
+import { useHorusVisClient } from "../DataProvider/hooks";
+import { CreateUserRequest } from "@horusvis-web/Reference";
 
 interface Props {
   open: boolean;
@@ -19,13 +19,12 @@ type FormValues = {
 };
 
 export default function AddUserModal({ open, onClose }: Props) {
-  const { accessToken } = useAuthStore();
+  const { adminUsersClient, adminRolesClient } = useHorusVisClient();
   const queryClient = useQueryClient();
 
   const { data: roles } = useQuery({
     queryKey: ["admin", "roles"],
-    queryFn: () => fetchAdminRoles(accessToken!),
-    enabled: !!accessToken,
+    queryFn: () => adminRolesClient.getRoles(),
   });
 
   const {
@@ -56,7 +55,9 @@ export default function AddUserModal({ open, onClose }: Props) {
 
   const onSubmit = handleSubmit(async (values) => {
     try {
-      await createAdminUser(values, accessToken!);
+      const req = new CreateUserRequest();
+      req.init(values);
+      await adminUsersClient.createUser(req);
       queryClient.invalidateQueries({ queryKey: ["admin", "users"] });
       toast.success("User created");
       reset();

@@ -9,7 +9,7 @@ import SessionMonitoringCard from "../components/admin/SessionMonitoringCard";
 import SystemLoadCard from "../components/admin/SystemLoadCard";
 import NodeHealthPanel from "../components/admin/NodeHealthPanel";
 import DeploymentStatusPanel from "../components/admin/DeploymentStatusPanel";
-import type { UserAdminDto } from "../api/adminApi";
+import type { UserAdminDto } from "../api/clients";
 
 export default function AdminPage() {
   const [searchTerm, setSearchTerm] = useState("");

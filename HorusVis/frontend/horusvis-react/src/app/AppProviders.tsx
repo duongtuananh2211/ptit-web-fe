@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { PropsWithChildren } from "react";
+import { DataProvider } from "../components/DataProvider";
 import { AppShellStoreProvider } from "../stores/app-shell-store";
 import { AuthStoreProvider } from "../stores/auth-store";
 
@@ -16,7 +17,9 @@ export default function AppProviders({ children }: PropsWithChildren) {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthStoreProvider>
-        <AppShellStoreProvider>{children}</AppShellStoreProvider>
+        <AppShellStoreProvider>
+          <DataProvider>{children}</DataProvider>
+        </AppShellStoreProvider>
       </AuthStoreProvider>
     </QueryClientProvider>
   );

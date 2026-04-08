@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import type { UserAdminDto } from "../../api/adminApi";
+import type { UserAdminDto } from "../../api/clients";
 
 interface Props {
   user: UserAdminDto;

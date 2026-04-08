@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { fetchAdminSessions, revokeSession } from "../../api/adminApi";
-import { useAuthStore } from "../../stores/auth-store-context";
+import { useHorusVisClient } from "../DataProvider/hooks";
 
 function statusStyle(status: string): React.CSSProperties {
   switch (status) {
@@ -21,18 +20,17 @@ function formatDate(value: string | null): string {
 }
 
 export default function SessionMonitoringCard() {
-  const { accessToken } = useAuthStore();
+  const { adminSessionsClient } = useHorusVisClient();
   const queryClient = useQueryClient();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["admin", "sessions"],
-    queryFn: () => fetchAdminSessions(accessToken!),
+    queryFn: () => adminSessionsClient.getSessions(),
     refetchInterval: 30_000,
-    enabled: !!accessToken,
   });
 
   const revokeMutation = useMutation({
-    mutationFn: (sessionId: string) => revokeSession(sessionId, accessToken!),
+    mutationFn: (sessionId: string) => adminSessionsClient.revokeSession(sessionId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin", "sessions"] });
       toast.success("Session revoked");

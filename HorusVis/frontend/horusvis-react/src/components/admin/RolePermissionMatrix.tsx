@@ -1,23 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import {
-  fetchAdminRoles,
-  updateRolePermissions,
-  type PermissionScopeDto,
-} from "../../api/adminApi";
-import { useAuthStore } from "../../stores/auth-store-context";
+import { useHorusVisClient } from "../DataProvider/hooks";
+import type { PermissionScopeDto } from "../../api/clients";
 
 type RoleEdits = Record<string, Set<string>>; // roleId → selected scope set
 
 export default function RolePermissionMatrix() {
-  const { accessToken } = useAuthStore();
+  const { adminRolesClient } = useHorusVisClient();
   const queryClient = useQueryClient();
 
   const rolesQuery = useQuery({
     queryKey: ["admin", "roles"],
-    queryFn: () => fetchAdminRoles(accessToken!),
-    enabled: !!accessToken,
+    queryFn: () => adminRolesClient.getRoles(),
   });
 
   const allPermissions = useMemo(() => {
@@ -56,7 +51,7 @@ export default function RolePermissionMatrix() {
     }: {
       roleId: string;
       scopes: string[];
-    }) => updateRolePermissions(roleId, scopes, accessToken!),
+    }) => adminRolesClient.updateRolePermissions(roleId, scopes),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin", "roles"] });
       toast.success("Permissions saved");

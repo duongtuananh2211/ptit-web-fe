@@ -14,7 +14,10 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@horusvis-web/*": ["../shared/HorusVisWeb/*"]
+    }
   },
-  "include": ["src"]
+  "include": ["src", "../shared/HorusVisWeb"]
 }

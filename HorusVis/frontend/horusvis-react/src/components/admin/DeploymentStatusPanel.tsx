@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchDeployments } from "../../api/adminApi";
-import { useAuthStore } from "../../stores/auth-store-context";
+import { useHorusVisClient } from "../DataProvider/hooks";
 
 function statusStyle(status: string): React.CSSProperties {
   switch (status) {
@@ -22,12 +21,11 @@ function formatDate(value: string | null): string {
 }
 
 export default function DeploymentStatusPanel() {
-  const { accessToken } = useAuthStore();
+  const { deploymentsClient } = useHorusVisClient();
 
   const { data, isLoading } = useQuery({
     queryKey: ["admin", "deployments"],
-    queryFn: () => fetchDeployments(10, accessToken!),
-    enabled: !!accessToken,
+    queryFn: () => deploymentsClient.getDeployments(10),
   });
 
   if (!isLoading && (!data || data.length === 0)) {

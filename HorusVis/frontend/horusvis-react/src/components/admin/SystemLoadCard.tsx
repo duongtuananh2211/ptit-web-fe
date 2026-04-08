@@ -1,14 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchAdminMetrics } from "../../api/adminApi";
-import { useAuthStore } from "../../stores/auth-store-context";
+import { useHorusVisClient } from "../DataProvider/hooks";
 
 export default function SystemLoadCard() {
-  const { accessToken } = useAuthStore();
+  const { adminMetricsClient } = useHorusVisClient();
 
   const { data } = useQuery({
     queryKey: ["admin", "metrics"],
-    queryFn: () => fetchAdminMetrics(accessToken!),
-    enabled: !!accessToken,
+    queryFn: () => adminMetricsClient.getMetrics(),
   });
 
   return (

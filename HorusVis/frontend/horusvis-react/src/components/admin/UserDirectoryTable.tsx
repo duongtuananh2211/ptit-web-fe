@@ -1,11 +1,7 @@
 import { useRef, useEffect } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import {
-  fetchAdminUsers,
-  type PagedUsersResponse,
-  type UserAdminDto,
-} from "../../api/adminApi";
-import { useAuthStore } from "../../stores/auth-store-context";
+import type { PagedUsersResponse, UserAdminDto } from "../../api/clients";
+import { useHorusVisClient } from "../DataProvider/hooks";
 import UserDirectoryRow from "./UserDirectoryRow";
 
 interface Props {
@@ -14,7 +10,7 @@ interface Props {
 }
 
 export default function UserDirectoryTable({ searchTerm, onEditUser }: Props) {
-  const { accessToken } = useAuthStore();
+  const { adminUsersClient } = useHorusVisClient();
   const sentinelRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -27,11 +23,10 @@ export default function UserDirectoryTable({ searchTerm, onEditUser }: Props) {
   } = useInfiniteQuery({
     queryKey: ["admin", "users", searchTerm],
     queryFn: ({ pageParam }: { pageParam: string | undefined }) =>
-      fetchAdminUsers(accessToken!, pageParam, 20),
+      adminUsersClient.getUsers(pageParam, 20),
     initialPageParam: undefined as string | undefined,
     getNextPageParam: (lastPage: PagedUsersResponse) =>
       lastPage.hasMore ? (lastPage.nextCursor ?? undefined) : undefined,
-    enabled: !!accessToken,
   });
 
   const allUsers = data?.pages.flatMap((p) => p.data) ?? [];

@@ -1,0 +1,16 @@
+/HorusVis/backend/.vs
+HorusVis/node_modules/
+HorusVis/dist/
+HorusVis/coverage/
+HorusVis/.DS_Store
+
+HorusVis/backend/**/bin/
+HorusVis/backend/**/obj/
+HorusVis/frontend/**/node_modules/
+HorusVis/frontend/**/dist/
+
+HorusVis/.env
+HorusVis/.env.*
+!HorusVis/.env.example
+
+HorusVis/backend/**/.vs/

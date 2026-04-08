@@ -1,16 +1,24 @@
-import { apiGet } from "./httpClient";
-import type { ScaffoldApiResponse } from "./types";
+import { AdminClient, MyTasksClient, ProjectsClient, ReportsClient } from "@horusvis-web/Reference";
+import { getApiBaseUrl } from "../lib/env";
 
-function createScaffoldApi(endpoint: string) {
-  return {
-    getPlaceholder() {
-      return apiGet<ScaffoldApiResponse>(endpoint);
-    },
-  };
-}
+export { type ScaffoldApiResponse } from "./types";
 
-export const authApi = createScaffoldApi("/api/auth/placeholder");
-export const projectsApi = createScaffoldApi("/api/projects/placeholder");
-export const myTasksApi = createScaffoldApi("/api/my-tasks/placeholder");
-export const reportsApi = createScaffoldApi("/api/reports/placeholder");
-export const adminApi = createScaffoldApi("/api/admin/placeholder");
+export const authApi = {
+  getPlaceholder: () => new AdminClient(getApiBaseUrl()).placeholder(),
+};
+
+export const projectsApi = {
+  getPlaceholder: () => new ProjectsClient(getApiBaseUrl()).placeholder3(),
+};
+
+export const myTasksApi = {
+  getPlaceholder: () => new MyTasksClient(getApiBaseUrl()).placeholder2(),
+};
+
+export const reportsApi = {
+  getPlaceholder: () => new ReportsClient(getApiBaseUrl()).placeholder4(),
+};
+
+export const adminApi = {
+  getPlaceholder: () => new AdminClient(getApiBaseUrl()).placeholder(),
+};

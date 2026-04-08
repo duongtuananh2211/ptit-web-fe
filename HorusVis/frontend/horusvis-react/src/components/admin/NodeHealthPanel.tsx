@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchAdminNodes } from "../../api/adminApi";
-import { useAuthStore } from "../../stores/auth-store-context";
+import { useHorusVisClient } from "../DataProvider/hooks";
 
 function statusStyle(status: string): React.CSSProperties {
   switch (status) {
@@ -21,12 +20,11 @@ function formatDate(value: string | null): string {
 }
 
 export default function NodeHealthPanel() {
-  const { accessToken } = useAuthStore();
+  const { adminMetricsClient } = useHorusVisClient();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["admin", "nodes"],
-    queryFn: () => fetchAdminNodes(accessToken!),
-    enabled: !!accessToken,
+    queryFn: () => adminMetricsClient.getNodes(),
   });
 
   if (isLoading) return <p>Loading nodes…</p>;
