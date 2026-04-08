@@ -1,0 +1,109 @@
+<objective>
+Create an implementation plan for Task 04 — Reports page of HorusVis.
+
+Purpose: Break the Reports workstream into ordered, implementable phases so subsequent Do prompts can execute each phase independently.
+Input: Research findings from 008-task-mgmt-research, task spec from docs/outlines/tasks/04-reports/README.md
+Output: `.prompts/011-reports-plan/reports-plan.md`
+</objective>
+
+<context>
+Research findings: @.prompts/008-task-mgmt-research/task-mgmt-research.md
+Task spec: @docs/outlines/tasks/04-reports/README.md
+
+Key research decisions to incorporate:
+- **Charting**: Recharts v3.8.1 — `BarChart` for bug density, `LineChart` for team velocity, `PieChart` for distribution
+- **KPI cards**: 4 cards — Total Active Bugs | Avg Time To Close | Task Velocity | Critical Priority count
+- **Data refresh**: TanStack Query `staleTime: 5 * 60_000` (5 min polling) — no WebSocket needed
+- **Aggregation strategy**: On-demand server-side (no pre-computed snapshot table for MVP)
+- **EF Core GroupBy**: Use explicit scalar-FK `Join` then `GroupBy` to avoid client-side evaluation warning
+- **Export**: CSV download via `StringBuilder` + `File(bytes, "text/csv", ...)` — no extra library
+- **Recommendations**: Simple rule-based text generation (no ML needed for MVP)
+
+Stack: React 18 + TypeScript + Vite | ASP.NET Core 10 Web API | EF Core 10 | PostgreSQL (schema "horusvis")
+Auth: Bearer token — [Authorize] on all report endpoints
+DAO + UoW pattern already established
+</context>
+
+<planning_requirements>
+The plan must cover:
+
+**Backend phases first**:
+1. Query services:
+   - ReportDashboardQuery: aggregates for all 4 KPI cards
+   - BugDensityQuery: issues grouped by FeatureArea (open count, resolved count, avg time to close)
+   - TeamPerformanceQuery: tasks completed per user in time window
+   - CriticalIssuesQuery: top N open issues ordered by priority + created date
+2. Recommendation service: rule-based text generation (e.g., "Feature area X has 3x avg bug density")
+3. Export service: CSV builder
+4. ReportsController with all API contracts:
+   - GET /api/reports/dashboard
+   - GET /api/reports/bug-density
+   - GET /api/reports/team-performance
+   - GET /api/reports/critical-issues
+   - POST /api/reports/export?format=csv
+5. Authorization: [Authorize] — all users can see reports (no admin-only restriction in SRS)
+
+**Frontend phases after BE**:
+6. API service layer: reportsApi.ts + TypeScript types (KpiCardDto, BugDensityDto, TeamPerformanceDto, CriticalIssueDto)
+7. ReportsPage shell + ReportsHeader (title, search, refresh button, export button)
+8. KpiCardGrid + 4 KpiCard components (value, trend indicator ↑↓, sparkline optional)
+9. BugDensityChart (Recharts BarChart grouped by FeatureArea)
+10. TeamPerformanceChart (Recharts BarChart or LineChart per user)
+11. CriticalIssuesList (ordered list with priority badge)
+12. RecommendationPanel (text block from backend rule engine)
+13. ExportButton (triggers POST /api/reports/export, downloads file)
+14. Refresh flow: RefreshButton invalidates all report queries
+
+Constraints:
+- Real-time: polling only (staleTime 5 min) — no SSE/WebSocket
+- Export: CSV only (PDF/Excel is future enhancement)
+- Recommendations: rule-based text, no ML
+- ReportSnapshots table: exists in DB but not used in MVP (on-demand aggregation)
+
+Success criteria:
+- All 4 KPI cards display accurate numbers from live data
+- Bug density chart renders correctly with FeatureArea grouping
+- Team performance chart shows per-user task completion
+- CSV export downloads a valid file
+- Refresh button triggers data refetch
+- Build passes, no TypeScript errors
+</planning_requirements>
+
+<output_structure>
+Save to: `.prompts/011-reports-plan/reports-plan.md`
+
+Use the XML plan structure:
+```xml
+<plan>
+  <summary>...</summary>
+  <phases>
+    <phase number="N" name="...">
+      <objective>...</objective>
+      <tasks>
+        <task priority="high|medium|low">...</task>
+      </tasks>
+      <deliverables>
+        <deliverable>...</deliverable>
+      </deliverables>
+      <dependencies>...</dependencies>
+    </phase>
+  </phases>
+  <metadata>
+    <confidence level="high|medium|low">...</confidence>
+    <dependencies>...</dependencies>
+    <open_questions>...</open_questions>
+    <assumptions>...</assumptions>
+  </metadata>
+</plan>
+```
+
+Aim for 4–5 phases. Each phase completable in a single Do prompt.
+</output_structure>
+
+<summary_requirements>
+Create `.prompts/011-reports-plan/SUMMARY.md` with one-liner, phase table, decisions needed, blockers, next step.
+
+---
+*Confidence: High|Medium|Low*
+*Full output: reports-plan.md*
+</summary_requirements>

@@ -1,0 +1,128 @@
+<objective>
+Create an implementation plan for Task 02 — Projects page of HorusVis.
+
+Purpose: Break the Projects workstream into ordered, implementable phases (BE then FE) so subsequent Do prompts can execute each phase independently.
+Input: Research findings from 008-task-mgmt-research, task spec from docs/outlines/tasks/02-projects/README.md
+Output: `.prompts/009-projects-plan/projects-plan.md`
+</objective>
+
+<context>
+Research findings: @.prompts/008-task-mgmt-research/task-mgmt-research.md
+Task spec: @docs/outlines/tasks/02-projects/README.md
+
+Key research decisions to incorporate:
+- React Hook Form v7 for all forms (NewProjectModal, EditMemberDrawer)
+- Recharts for KPI cards (VelocityScoreCard, CriticalDatesCard, TeamAvailabilityCard, ProjectBoardPreviewCard)
+- TanStack Query v5 for all API calls; staleTime 5min for overview
+- Zustand for project filter state and selected project
+- EF Core 10 single-round-trip projection query for project overview (no over-fetching)
+- Tab-based navigation: Overview | Board | Timeline | Files
+- FeatureArea tagging: colored badges + multi-select filter
+- Team member management via EditMemberDrawer (Owner / Member / Viewer roles)
+
+Stack: React 18 + TypeScript + Vite | ASP.NET Core 10 Web API | EF Core 10 | PostgreSQL (schema "horusvis")
+Auth: Bearer token already wired — all endpoints require [Authorize]
+DAO + UoW pattern already established — new services use DAOs, controllers call SaveChangesAsync
+</context>
+
+<planning_requirements>
+The plan must cover:
+
+**Backend (BE) phases first** (data layer before UI):
+1. DAO/Repository layer for Projects, ProjectMembers, FeatureAreas
+2. Service layer: ProjectsService, ProjectMembersService, FeatureAreasService, ProjectOverviewQuery
+3. Controller: ProjectsController with all API contracts from task spec
+4. Authorization: require [Authorize]; add owner-check middleware or policy for write operations
+
+**Frontend (FE) phases after BE**:
+5. API service layer: projectsApi.ts, types (ProjectListItem, ProjectDetail, ProjectOverview, etc.)
+6. ProjectsPage shell + routing: /projects and /projects/:id
+7. ProjectHeader + ProjectTabs (Overview / Board / Timeline / Files stub)
+8. Overview tab: KPI cards using Recharts
+9. Board tab: project-scoped Kanban preview (task status distribution — NOT drag/drop, that's task 03)
+10. Team management: ProjectMemberAvatarGroup + EditMemberDrawer
+11. FeatureArea management: FeatureAreaList + badge filter
+12. NewProjectModal with React Hook Form
+
+Constraints:
+- Timeline tab: stub only (defer implementation)
+- Files tab: stub only (defer implementation)
+- Board tab: read-only overview (drag-and-drop Kanban is task 03 scope)
+- No real-time: TanStack Query polling sufficient
+- Pagination on project list if > 20 projects (simple offset is fine for projects list)
+
+Success criteria:
+- All API contracts from task spec are implemented and tested
+- ProjectsPage navigates to project detail and all 4 tabs render
+- KPI cards display live data from backend
+- Members and FeatureAreas are manageable
+- Build passes, no TypeScript errors
+</planning_requirements>
+
+<output_structure>
+Save to: `.prompts/009-projects-plan/projects-plan.md`
+
+Use the XML plan structure:
+```xml
+<plan>
+  <summary>...</summary>
+  <phases>
+    <phase number="N" name="...">
+      <objective>...</objective>
+      <tasks>
+        <task priority="high|medium|low">...</task>
+      </tasks>
+      <deliverables>
+        <deliverable>...</deliverable>
+      </deliverables>
+      <dependencies>...</dependencies>
+    </phase>
+  </phases>
+  <metadata>
+    <confidence level="high|medium|low">...</confidence>
+    <dependencies>...</dependencies>
+    <open_questions>...</open_questions>
+    <assumptions>...</assumptions>
+  </metadata>
+</plan>
+```
+
+Aim for 4–6 phases. Each phase should be completable in a single Do prompt.
+</output_structure>
+
+<summary_requirements>
+Create `.prompts/009-projects-plan/SUMMARY.md` with:
+- One-liner describing the plan
+- Phase breakdown table (number | name | key deliverable)
+- Decisions Needed
+- Blockers
+- Next Step
+
+Template:
+```markdown
+# Projects Plan Summary
+
+**{one-liner}**
+
+## Version
+v1
+
+## Phase Breakdown
+| Phase | Name | Key Deliverable |
+|-------|------|----------------|
+| 1 | ... | ... |
+
+## Decisions Needed
+...
+
+## Blockers
+...
+
+## Next Step
+...
+
+---
+*Confidence: High|Medium|Low*
+*Full output: projects-plan.md*
+```
+</summary_requirements>

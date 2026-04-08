@@ -10,7 +10,7 @@ namespace HorusVis.Data.Services;
 /// </remarks>
 public interface IUnitOfWorkService
 {
-    Task FlushAsync(CancellationToken cancellationToken);
+    Task SaveChangesAsync(CancellationToken cancellationToken);
 
     void SubscribeOnFlushEventHandler(Func<CancellationToken, Task> onFlushHandler);
 }

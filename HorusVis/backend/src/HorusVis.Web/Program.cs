@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using System.Text;
 using HorusVis.Business;
+using HorusVis.Business.Contracts;
 using HorusVis.Core.Options;
 using HorusVis.Data;
 using HorusVis.Web.Options;
@@ -30,14 +31,15 @@ builder.Services.AddCors(corsOptions =>
 	{
 		policy.WithOrigins(frontendOrigin)
 			.AllowAnyHeader()
-			.AllowAnyMethod();
+			.AllowAnyMethod()
+			.AllowCredentials();
 	});
 });
 builder.Services.AddControllers();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 	.AddJwtBearer(options =>
 	{
-		options.RequireHttpsMetadata = false;
+		options.RequireHttpsMetadata = !builder.Environment.IsDevelopment();
 		options.TokenValidationParameters = new TokenValidationParameters
 		{
 			ValidateIssuerSigningKey = true,
@@ -47,7 +49,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 			ValidateAudience = true,
 			ValidAudience = jwtOptions.Audience,
 			ValidateLifetime = true,
-			ClockSkew = TimeSpan.FromMinutes(1),
+			ClockSkew = TimeSpan.Zero,
 			NameClaimType = ClaimTypes.Name,
 			RoleClaimType = ClaimTypes.Role,
 		};
@@ -87,7 +89,10 @@ builder.Services.AddSwaggerGen(options =>
 	});
 });
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+builder.Services.AddScoped<ITokenGenerator>(sp => (ITokenGenerator)sp.GetRequiredService<IJwtTokenService>());
 builder.Services.AddSingleton(TimeProvider.System);
+builder.Services.AddHealthChecks()
+	.AddDbContextCheck<HorusVis.Data.Persistence.HorusVisDbContext>("database");
 builder.Services.AddHorusVisBusiness();
 builder.Services.AddHorusVisData(builder.Configuration);
 
@@ -106,6 +111,25 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
+app.MapHealthChecks("/api/admin/health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+{
+	ResultStatusCodes =
+	{
+		[Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Healthy]   = 200,
+		[Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Degraded]  = 200,
+		[Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus.Unhealthy] = 503,
+	},
+	ResponseWriter = async (ctx, report) =>
+	{
+		ctx.Response.ContentType = "application/json";
+		var result = System.Text.Json.JsonSerializer.Serialize(new
+		{
+			status = report.Status.ToString(),
+			checks = report.Entries.Select(e => new { name = e.Key, status = e.Value.Status.ToString() })
+		});
+		await ctx.Response.WriteAsync(result);
+	}
+}).RequireAuthorization(p => p.RequireRole("admin"));
 app.MapControllers();
 
 app.Run();

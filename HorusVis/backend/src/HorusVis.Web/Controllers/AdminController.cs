@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HorusVis.Web.Controllers;
 
 [ApiController]
-[Authorize(Roles = "Admin")]
+[Authorize(Roles = "admin")]
 [Route("api/admin")]
 public sealed class AdminController : ControllerBase
 {

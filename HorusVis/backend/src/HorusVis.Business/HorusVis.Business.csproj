@@ -1,7 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\HorusVis.Core\HorusVis.Core.csproj" />
+    <ProjectReference Include="..\HorusVis.Data\HorusVis.Data.csproj" />
   </ItemGroup>
 
 </Project>

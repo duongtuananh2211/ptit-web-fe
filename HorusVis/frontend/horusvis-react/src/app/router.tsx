@@ -1,5 +1,6 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import AppShell from "./AppShell";
+import RequireAdminRole from "./RequireAdminRole";
 import AdminPage from "../pages/AdminPage";
 import LoginPage from "../pages/LoginPage";
 import MyTasksPage from "../pages/MyTasksPage";
@@ -33,8 +34,8 @@ export const router = createBrowserRouter([
         element: <ReportsPage />,
       },
       {
-        path: "/admin",
-        element: <AdminPage />,
+        element: <RequireAdminRole />,
+        children: [{ path: "/admin", element: <AdminPage /> }],
       },
     ],
   },

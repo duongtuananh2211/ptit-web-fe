@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using HorusVis.Business.Contracts;
 using HorusVis.Web.Contracts;
 using HorusVis.Web.Options;
 using Microsoft.Extensions.Options;
@@ -10,7 +11,7 @@ namespace HorusVis.Web.Services.Authentication;
 
 public sealed class JwtTokenService(
     IOptions<JwtAuthenticationOptions> jwtOptionsAccessor,
-    TimeProvider timeProvider) : IJwtTokenService
+    TimeProvider timeProvider) : IJwtTokenService, ITokenGenerator
 {
     private readonly JwtAuthenticationOptions _jwtOptions = jwtOptionsAccessor.Value;
     private readonly TimeProvider _timeProvider = timeProvider;
@@ -41,6 +42,7 @@ public sealed class JwtTokenService(
 
         var claims = new List<Claim>
         {
+            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new(ClaimTypes.NameIdentifier, userId),
             new(ClaimTypes.Name, request.UserName.Trim()),
         };
@@ -72,5 +74,18 @@ public sealed class JwtTokenService(
             userId,
             request.UserName.Trim(),
             roles);
+    }
+
+    public (string AccessToken, DateTimeOffset ExpiresAt) GenerateToken(
+        Guid userId, string username, string email, string[] roles)
+    {
+        var response = CreateToken(new ScaffoldLoginRequest
+        {
+            UserId = userId.ToString("N"),
+            UserName = username,
+            Email = email,
+            Roles = roles,
+        });
+        return (response.AccessToken, response.ExpiresAtUtc);
     }
 }

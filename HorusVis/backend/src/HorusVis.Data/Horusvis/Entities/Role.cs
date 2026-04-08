@@ -19,4 +19,8 @@ public class Role
     public required string RoleName { get; set; }
 
     public string? Description { get; set; }
+
+    public bool IsSystem { get; set; } = false;
+
+    public ICollection<RolePermission> RolePermissions { get; set; } = [];
 }

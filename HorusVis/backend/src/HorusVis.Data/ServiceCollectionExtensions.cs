@@ -1,4 +1,5 @@
 using HorusVis.Core.Options;
+using HorusVis.Data.Dao;
 using HorusVis.Data.Options;
 using HorusVis.Data.Persistence;
 using HorusVis.Data.Services;
@@ -64,6 +65,13 @@ public static class ServiceCollectionExtensions
         });
 
         services.TryAddScoped<IUnitOfWorkService, UnitOfWorkService>();
+
+        services.TryAddScoped<IUserDao, Dao.UserDao>();
+        services.TryAddScoped<IUserSessionDao, Dao.UserSessionDao>();
+        services.TryAddScoped<IRoleDao, Dao.RoleDao>();
+        services.TryAddScoped<IPermissionDao, Dao.PermissionDao>();
+        services.TryAddScoped<ISystemNodeDao, Dao.SystemNodeDao>();
+        services.TryAddScoped<IDeploymentDao, Dao.DeploymentDao>();
 
         return services;
     }

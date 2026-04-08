@@ -517,6 +517,9 @@ namespace HorusVis.Data.Migrations.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsSystem")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("RoleCode")
                         .IsRequired()
                         .HasMaxLength(30)

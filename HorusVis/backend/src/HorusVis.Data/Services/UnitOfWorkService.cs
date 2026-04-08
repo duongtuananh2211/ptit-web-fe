@@ -14,7 +14,7 @@ internal sealed class UnitOfWorkService : IUnitOfWorkService
         _context = context;
     }
 
-    public async Task FlushAsync(CancellationToken cancellationToken)
+    public async Task SaveChangesAsync(CancellationToken cancellationToken)
     {
         await _context.SaveChangesAsync(cancellationToken);
     }
