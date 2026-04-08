@@ -1,0 +1,147 @@
+I. MỞ ĐẦU
+1.1. Giới thiệu về nội dung chính đề tài
+●	Tên hệ thống: HorusVis – Nền tảng SaaS quản trị dự án và tự động hóa quy trình cộng tác.
+●	Giải thích ý nghĩa (Slogan/Concept):
+HorusVis là sự kết hợp đầy tính biểu tượng giữa hình tượng "Mắt thần Horus" đại diện cho khả năng quan sát vạn vật và tiền tố “Vis” là sự hợp nhất giữa Visibility (Tính minh bạch) và Visual (Tính trực quan).
+=> Hệ thống khẳng định một tầm nhìn quản trị toàn diện, mang lại khả năng kiểm soát tuyệt đối đối với mọi tiến độ công việc cũng như các lỗi phát sinh trong suốt vòng đời dự án.
+●	Mục tiêu hệ thống: Xây dựng một giải pháp trực tuyến giúp doanh nghiệp lập kế hoạch chiến lược, theo dõi tiến độ thời gian thực và tối ưu hóa sự phối hợp giữa các bộ phận thông qua hệ thống Issue List phân cấp.
+●	Đối tượng sử dụng: Quản trị dự án (PM), Lập trình viên (Developer), Chuyên viên kiểm thử (Tester) và các cấp quản lý doanh nghiệp.
+●	Chức năng chính:
+○	Với người dùng: Đăng nhập; Tương tác trên Board công việc; Cập nhật trạng thái; Khởi tạo Issue (Subtask) để quản lý lỗi sản phẩm.
+○	Với quản trị viên: Quản lý tài khoản SaaS; Phân quyền dự án; Thiết lập quy trình tự động hóa; Thống kê báo cáo hiệu suất.
+1.2. Công nghệ - kỹ thuật sử dụng
+●	Ngôn ngữ lập trình: HTML5, CSS3, JavaScript (Frontend); JSP/Servlet (Backend).
+●	Kỹ thuật cốt lõi: CRUD; Quản lý Session; Kỹ thuật AJAX để cập nhật tiến độ thời gian thực (Real-time).
+●	Cơ sở dữ liệu: SQL Server (Cấu trúc bảng đa tầng: Boards > Tasks > Subtasks/Issues).
+●	Công cụ: VS Code; SQL Server Management Studio.
+
+II. PHÂN TÍCH THIẾT KẾ
+2.1. Mô tả chức năng hệ thống (HorusVis)
+Hệ thống HorusVis tập trung vào sự minh bạch (Visibility) và khả năng kiểm soát luồng công việc phân cấp, giúp kết nối chặt chẽ giữa kế hoạch tổng thể và thực thi chi tiết.
+A. Phân hệ Quản trị Hệ thống (SaaS Administration)
+●	Quản lý tài khoản & Xác thực: Đăng nhập bảo mật và quản lý phiên làm việc (Session) để bảo vệ dữ liệu dự án.
+●	Phân quyền người dùng (Role-based Access Control): Thiết lập vai trò cụ thể cho từng thành viên:
+○	Admin/PM: Toàn quyền khởi tạo dự án, quản lý nhân sự và cấu trúc Board.
+○	Developer: Tập trung xử lý các Task và Issue được gán.
+○	Tester: Chuyên trách kiểm thử, tạo và xác nhận các Issue/Bug.
+B. Phân hệ Lập kế hoạch & Theo dõi (Planning & Tracking)
+●	Quản lý Board dự án: Khởi tạo các không gian làm việc (Boards) riêng biệt cho từng dự án hoặc phòng ban.
+●	Boardview trực quan: Hiển thị danh sách công việc (Tasks) theo dạng lưới, cho phép theo dõi tổng thể tiến độ trong một khung hình.
+●	Hệ thống nhãn trạng thái động: Sử dụng mã màu nhận diện nhanh trạng thái: To Do (Xám), Working (Xanh), Stuck (Đỏ), Done (Xanh lá).
+●	Thiết lập mức độ ưu tiên (Priority): Phân loại công việc từ Low đến Critical để tối ưu hóa nguồn lực xử lý.
+●	Giám sát Timeline & Deadline: Tự động cảnh báo các đầu việc sắp đến hạn hoàn thành.
+C. Phân hệ Cộng tác & Kiểm soát lỗi (Issue Management)
+●	Kiến trúc Task - Subtask phân cấp: Cho phép chia nhỏ một tính năng (Feature) thành các danh sách lỗi (Issue List) hoặc bước triển khai chi tiết.
+●	Khởi tạo Issue (Bug Tracking): Tester có thể tạo Issue trực thuộc một Task cha ngay khi phát hiện sai sót kỹ thuật.
+●	Đặc tả lỗi chuyên sâu: Hỗ trợ nhập mô tả chi tiết, các bước tái hiện (Steps to reproduce) và đính kèm hình ảnh minh họa lỗi.
+●	Luồng xử lý lỗi (Fixing Workflow): Gán Issue trực tiếp cho Developer; trạng thái Issue chuyển từ Open sang Resolved sau khi được sửa.
+●	Ràng buộc tiến độ thông minh: Hệ thống tự động ngăn chặn việc đóng (Close) Task cha nếu vẫn còn các Issue con chưa được xác nhận hoàn thành.
+D. Phân hệ Dashboard & Báo cáo (Visual Analytics)
+●	Dashboard cá nhân: Hiển thị danh sách việc cần làm (To-do list) và các Issue được gán riêng cho từng người dùng.
+●	Thống kê chất lượng dự án: Biểu đồ tỷ lệ lỗi (Bug density) trên từng Feature để đánh giá độ ổn định của sản phẩm.
+●	Báo cáo hiệu suất: Theo dõi tốc độ xử lý công việc và thời gian trung bình để đóng một Issue.
+
+2.2. THIẾT KẾ CƠ SỞ DỮ LIỆU (DATABASE DESIGN)
+Hệ thống sử dụng hệ quản trị CSDL SQL Server để lưu trữ và quản lý dữ liệu tập trung. Cấu trúc CSDL được thiết kế nhằm đảm bảo tính toàn vẹn dữ liệu và tối ưu hóa các truy vấn báo cáo tiến độ dự án.
+A. Sơ đồ thực thể mối quan hệ (ER Diagram)
+Sơ đồ ER mô tả mối quan hệ giữa các thực thể chính trong hệ thống HorusVis:
+●	Users - Tasks: Mối quan hệ 1-n (Một người dùng có thể được giao phụ trách nhiều công việc chính).
+●	Boards - Tasks: Mối quan hệ 1-n (Một bảng dự án chứa nhiều đầu mục công việc).
+●	Tasks - Subtasks: Mối quan hệ 1-n (Một công việc chính có thể chứa nhiều công việc con hoặc danh sách lỗi/ Issue phát sinh).
+●	Users - Subtasks: Mối quan hệ 1-n (Một Tester có thể tạo nhiều Issue và một Developer có thể xử lý nhiều Subtask).
+B. Danh sách các bảng dữ liệu chi tiết
+Dưới đây là mô tả cấu trúc các bảng dữ liệu cốt lõi trong hệ thống:
+1. Bảng Users (Quản lý người dùng) Lưu trữ thông tin tài khoản và phân loại vai trò trong dự án.
+●	UserID (int, PK): Mã định danh duy nhất của người dùng.
+●	Username (varchar): Tên đăng nhập hệ thống.
+●	Password (varchar): Mật khẩu truy cập (đã mã hóa).
+●	FullName (nvarchar): Họ và tên đầy đủ của thành viên.
+●	Role (varchar): Phân quyền người dùng (Admin, Developer, Tester).
+
+2. Bảng Boards (Quản lý bảng công việc) Phân loại các công việc theo từng dự án hoặc phòng ban chuyên biệt.
+●	BoardID (int, PK): Mã định danh bảng công việc.
+●	BoardName (nvarchar): Tên dự án hoặc tên bảng quản trị.
+●	CreatedAt (datetime): Thời điểm khởi tạo bảng.
+
+3. Bảng Tasks (Quản lý công việc chính) Lưu trữ thông tin về các tính năng (Features) hoặc đầu mục công việc lớn.
+●	TaskID (int, PK): Mã định danh công việc.
+●	TaskName (nvarchar): Tên đầu mục công việc/Tính năng.
+●	Status (varchar): Trạng thái hiện tại (To Do, Working, Stuck, Done).
+●	Priority (varchar): Mức độ ưu tiên (Low, Medium, High, Critical).
+●	Deadline (date): Thời hạn hoàn thành công việc.
+●	BoardID (int, FK): Liên kết với bảng Boards.
+●	AssigneeID (int, FK): Liên kết với bảng Users (Người chịu trách nhiệm chính).
+
+4. Bảng Subtasks (Quản lý Issue List / Công việc con)
+Lưu trữ các lỗi kỹ thuật phát sinh hoặc các bước triển khai chi tiết cho từng Task.
+●	SubtaskID (int, PK): Mã định danh công việc con hoặc lỗi.
+●	TaskID (int, FK): Liên kết với Tasks (Xác định Issue thuộc tính năng nào).
+●	Description (nvarchar): Mô tả chi tiết lỗi hoặc nội dung công việc con.
+●	IssueType (varchar): Phân loại (Bug, Task con, Cải tiến).
+●	Status (varchar): Trạng thái xử lý lỗi (Open, In Progress, Resolved, Closed).
+●	ReporterID (int, FK): Liên kết với Users (Người phát hiện lỗi - thường là Tester).
+●	AssigneeID (int, FK): Liên kết với Users (Người xử lý lỗi - thường là Developer).
+
+III. TRIỂN KHAI
+3.1. Cấu trúc Project
+●	Ảnh cây thư mục: Chụp ảnh màn hình cấu trúc dự án trong IDE (như VS Code hoặc IntelliJ).
+●	Giải thích: Trình bày ngắn gọn vai trò của các thư mục chính theo mô hình MVC (như controller, dao, model, view).
+3.2. Các chức năng đã làm
+Ở phần này, với mỗi chức năng tiêu biểu (đặc biệt là luồng tạo Issue List), bạn cần trình bày:
+●	Mô tả ngắn gọn: Cách thức chức năng vận hành.
+●	Ảnh chụp màn hình: Minh họa giao diện thực tế của chức năng trên trình duyệt.
+●	Giải thích luồng xử lý: Mô tả cách dữ liệu đi từ giao diện qua Servlet xuống SQL Server và ngược lại.
+Chức năng: Khởi tạo và Quản lý Issue List (Subtasks)
+●	Mô tả ngắn gọn: Chức năng này cho phép Tester ghi nhận các lỗi phát sinh trực thuộc một Task (Feature) cụ thể. Hệ thống sẽ tự động liên kết Issue này với Task cha để quản lý tiến độ tập trung.
+●	Giải thích luồng xử lý (Workflow):
+1.	Giao diện (Frontend): Tester chọn một Task đang ở trạng thái "Working", nhấn "Add Issue" và nhập thông tin (Mô tả lỗi, mức độ ưu tiên).
+2.	Yêu cầu (Request): JavaScript gửi một yêu cầu (POST Request) chứa dữ liệu Issue và ParentTaskID đến IssueController (Servlet).
+3.	Xử lý (Backend):
+■	IssueController tiếp nhận dữ liệu, kiểm tra quyền hạn của người dùng (Session check).
+■	Gọi lớp IssueDAO để thực hiện câu lệnh INSERT vào bảng Subtasks trong SQL Server.
+■	Đồng thời, một câu lệnh UPDATE được thực thi để chuyển trạng thái Task cha sang "Stuck" (nếu cần thiết) để cảnh báo cho PM.
+4.	Phản hồi (Response): Servlet gửi phản hồi thành công về giao diện. Board View được cập nhật lại để hiển thị danh sách Issue mới ngay bên dưới Task cha.
+
+3.3. Code tiêu biểu
+Trích dẫn các đoạn mã nguồn quan trọng nhất để giảng viên đánh giá kỹ năng lập trình của nhóm:
+●	Controller/ Servlet: Đoạn code xử lý logic điều hướng và phân quyền.
+●	Xử lý CSDL (DAO): Các câu lệnh SQL thực hiện truy vấn Task và Subtask.
+●	Giao diện Frontend: Các đoạn HTML/ CSS hoặc JavaScript xử lý hiệu ứng Board View trực quan.
+Xử lý truy vấn phân cấp
+-- Code SQL - Truy vấn danh sách tất cả Issue thuộc về một Task cụ thể
+SELECT t.TaskName, s.Description, s.Status, u.FullName as Assignee
+FROM Tasks t
+JOIN Subtasks s ON t.TaskID = s.TaskID
+JOIN Users u ON s.AssigneeID = u.UserID
+WHERE t.TaskID = ?;
+
+IV. KẾT QUẢ & ĐÁNH GIÁ 
+4.1. Kết quả đạt được 
+Sau quá trình triển khai, nhóm đã hoàn thành hệ thống "HorusVis" với các kết quả cụ thể như sau: 
+●	Tỷ lệ hoàn thành: Hệ thống đạt 90% so với mục tiêu đề ra ban đầu, đảm bảo các luồng nghiệp vụ chính hoạt động ổn định. 
+●	Giao diện người dùng (Frontend): Xây dựng thành công giao diện Dashboard trực quan, hỗ trợ hiển thị danh sách công việc theo dạng Boardview tương tự Monday.com. 
+●	Chức năng cốt lõi (Backend): 
+o	Thực hiện thành công cơ chế Đăng nhập và quản lý Session cho người dùng. 
+o	Triển khai đầy đủ các thao tác CRUD (Thêm, Xem, Sửa, Xóa) trên các thực thể Task và User. 
+o	Hệ thống phản hồi dữ liệu thời gian thực khi người dùng cập nhật trạng thái hoặc độ ưu tiên của công việc. 
+●	Cơ sở dữ liệu: Thiết kế cấu trúc CSDL tối ưu trên SQL Server, đảm bảo tính toàn vẹn dữ liệu thông qua các ràng buộc khóa chính và khóa ngoại. 
+4.2. Hạn chế 
+Mặc dù đã đạt được những kết quả khả quan, hệ thống vẫn còn một số điểm cần cải thiện: 
+●	Tính năng nâng cao: Chưa tích hợp chức năng thông báo đẩy (Push Notification) qua Email khi có task mới được gán. 
+●	Trải nghiệm người dùng (UX): Hiệu ứng kéo thả (Drag & Drop) để thay đổi vị trí các task chưa được mượt mà trên các trình duyệt cũ. 
+●	Hiệu suất: Khi số lượng dữ liệu task lên đến hàng ngàn bản ghi, tốc độ tải trang Dashboard có dấu hiệu chậm lại, cần tối ưu hóa các câu lệnh truy vấn SQL (Query Optimization). 
+●	Bảo mật: Hệ thống hiện tại chỉ dừng lại ở mức phân quyền cơ bản (Admin/ Member), chưa có các lớp bảo mật chuyên sâu cho dữ liệu nhạy cảm. 
+
+V. KẾT LUẬN 
+Qua quá trình thực hiện đề tài thiết kế hệ thống HorusVis, nhóm 01 đã đạt được những kết quả và kinh nghiệm quý báu:
+●	Kiến thức chuyên môn: Nhóm đã làm chủ quy trình phát triển Web Fullstack (JSP/Servlet, SQL Server) và vận dụng thành công mô hình MVC vào bài toán thực tế của doanh nghiệp.
+●	Kỹ năng BA & Quản trị: Với sự dẫn dắt của Trưởng nhóm, các thành viên đã hiểu rõ cách chuyển hóa yêu cầu nghiệp vụ phức tạp thành cấu trúc dữ liệu phân cấp (Task - Subtask) hiệu quả.
+●	Kinh nghiệm làm việc nhóm: Rút ra được bài học về sự phối hợp nhịp nhàng giữa các vai trò Dev và Tester, tương tự như luồng xử lý Issue thực tế trong hệ thống.
+●	Hướng phát triển: Trong tương lai, HorusVis có thể tích hợp thêm các công cụ tự động hóa quy trình (Automation Workflow) và biểu đồ phân tích năng suất chuyên sâu để trở thành một giải pháp SaaS hoàn chỉnh.
+VI. TÀI LIỆU THAM KHẢO
+1.	Học viện Công nghệ Bưu chính Viễn thông, Giáo trình Lập trình Web, NXB Bưu điện, 2024.
+2.	Oracle Documentation, Java Servlet Technology, 2026.
+3.	Microsoft, SQL Server Documentation - Relational Database Design, 2026.
+4.	W3Schools, HTML/CSS/JavaScript Reference Guide, 2026.
+5.	Monday.com, Visual Management and Board Structures Concept, 2026.
+

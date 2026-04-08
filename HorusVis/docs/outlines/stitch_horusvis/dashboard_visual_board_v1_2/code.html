@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HorusVis - Project Board</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-transition {
+            background: linear-gradient(to bottom, transparent, rgba(241, 243, 255, 0.5));
+        }
+        .glass-header {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .custom-gradient-primary {
+            background: linear-gradient(135deg, #003d9b 0%, #0052cc 100%);
+        }
+        .success-gradient {
+            background: linear-gradient(135deg, #28A745 0%, #1E7E34 100%);
+        }
+        .tracking-tighter-headline { letter-spacing: -0.02em; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#0052cc",
+                        "on-surface-variant": "#434654",
+                        "on-tertiary-fixed-variant": "#92001f",
+                        "surface-dim": "#d2daf0",
+                        "surface-variant": "#dbe2f9",
+                        "on-secondary-fixed": "#0f1c2d",
+                        "on-primary-container": "#c4d2ff",
+                        "surface-container-highest": "#dbe2f9",
+                        "background": "#f9f9ff",
+                        "on-primary-fixed-variant": "#0040a2",
+                        "secondary-fixed-dim": "#bac7de",
+                        "primary": "#003d9b",
+                        "surface-tint": "#0c56d0",
+                        "primary-fixed": "#dae2ff",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f9f9ff",
+                        "outline": "#737685",
+                        "primary-fixed-dim": "#b2c5ff",
+                        "outline-variant": "#c3c6d6",
+                        "secondary-container": "#d6e3fb",
+                        "tertiary-container": "#b4132d",
+                        "surface-container-low": "#f1f3ff",
+                        "secondary": "#525f73",
+                        "secondary-fixed": "#d6e3fb",
+                        "on-tertiary-fixed": "#410008",
+                        "tertiary-fixed": "#ffdad9",
+                        "on-secondary-container": "#586579",
+                        "on-tertiary-container": "#ffc4c3",
+                        "tertiary": "#8c001d",
+                        "on-primary-fixed": "#001848",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e0e8ff",
+                        "surface-container": "#e9edff",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface": "#f9f9ff",
+                        "on-surface": "#141b2c",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#293041",
+                        "on-secondary-fixed-variant": "#3b485a",
+                        "inverse-primary": "#b2c5ff",
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#edf0ff",
+                        "tertiary-fixed-dim": "#ffb3b2",
+                        "on-background": "#141b2c"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+<!-- SideNavBar (Anchor) -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-4 backdrop-blur-xl bg-slate-50/90 dark:bg-slate-900/90 h-screen w-64 border-r-0 z-50">
+<div class="flex items-center gap-3 mb-8 px-2">
+<div class="w-10 h-10 rounded-xl custom-gradient-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">visibility</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xl font-bold tracking-tighter text-slate-900 dark:text-slate-100">HorusVis</span>
+<span class="text-xs font-medium text-slate-500 uppercase tracking-widest">Project Management</span>
+</div>
+</div>
+<button class="mb-6 mx-2 py-3 px-4 rounded-xl custom-gradient-primary text-on-primary font-semibold flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>New Project</span>
+</button>
+<nav class="flex-1 space-y-1">
+<!-- Active Navigation Logic: "Board" is active context, but JSON says Projects/Tasks/Reports -->
+<a class="flex items-center gap-3 px-4 py-3 bg-white dark:bg-slate-800 text-blue-700 dark:text-blue-400 font-semibold rounded-lg shadow-sm transition-colors scale-98 active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">folder_open</span>
+<span class="font-inter body-md tracking-tight">Projects</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors scale-98 active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">assignment_turned_in</span>
+<span class="font-inter body-md tracking-tight">My Tasks</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors scale-98 active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span class="font-inter body-md tracking-tight">Reports</span>
+</a>
+</nav>
+<div class="mt-auto pt-4 border-t border-slate-200/50 dark:border-slate-800/50 space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200/50 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200/50 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span class="text-sm font-medium">Help</span>
+</a>
+</div>
+</aside>
+<!-- TopNavBar (Anchor) -->
+<header class="flex justify-between items-center w-[calc(100%-16rem)] h-16 px-8 ml-64 sticky top-0 z-40 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 shadow-sm dark:shadow-none">
+<div class="flex items-center gap-8">
+<h1 class="text-lg font-semibold text-slate-900 dark:text-slate-50 headline-sm font-inter tracking-tight">Project Board</h1>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-700 transition-all opacity-80 hover:opacity-100 duration-200" href="#">Overview</a>
+<a class="text-blue-700 dark:text-blue-400 border-b-2 border-blue-700 dark:border-blue-400 pb-1 font-medium transition-all" href="#">Board</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-700 transition-all opacity-80 hover:opacity-100 duration-200" href="#">Timeline</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-700 transition-all opacity-80 hover:opacity-100 duration-200" href="#">Files</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="absolute inset-y-0 left-3 flex items-center text-slate-400">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</span>
+<input class="pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-900 border-none rounded-lg text-sm w-64 focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search tasks..." type="text"/>
+</div>
+<button class="w-10 h-10 flex items-center justify-center text-slate-500 hover:bg-slate-100 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center text-slate-500 hover:bg-slate-100 rounded-full transition-colors">
+<span class="material-symbols-outlined">history</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-slate-200 overflow-hidden ml-2 border border-slate-200">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="professional portrait of a creative director in a modern workspace with natural soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHq4zMDYJKj25_IcsEA9MtvHrnVv9_yb9zselyfLBbyzkpP6CGxOK33Go7mSt_KBDv2zTM8lYodILn-WpRUr7N4RO5z6LQEAjNDtK361xMkoil1u-t0mSEym2cYQRSSfklmZsPJs8IKId7h5G605lZZAFOi010gqakCf2-BBQEeNp-7Y6xsJwyA2uTkmkPVXwf0cmEd_kMrkzQa0VJgUaFIpS1vX0an7pRCzJtfog94frYl9nMYjIxxybg2Vx4uPlrCv3MjwrOv7pU"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 p-8 min-h-screen bg-surface">
+<div class="max-w-7xl mx-auto">
+<!-- Board Header -->
+<div class="flex justify-between items-end mb-10">
+<div>
+<h2 class="display-md font-bold text-on-surface tracking-tighter-headline mb-2">Workspace Dashboard</h2>
+<p class="text-on-surface-variant body-md max-w-2xl">Manage your active sprints and track team velocity with high-visibility metrics and architectural task tracking.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 rounded-lg border border-outline-variant/30 text-on-surface-variant text-sm font-semibold hover:bg-surface-container-low transition-colors">Filter</button>
+<button class="px-4 py-2 rounded-lg bg-surface-container-highest text-on-surface-variant text-sm font-semibold hover:bg-surface-dim transition-colors">View Settings</button>
+</div>
+</div>
+<!-- Board Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
+<!-- Column: To Do -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between px-2 mb-2">
+<div class="flex items-center gap-2">
+<h3 class="label-md font-bold text-on-surface tracking-widest uppercase">To Do</h3>
+<span class="bg-surface-container-high px-2 py-0.5 rounded-full text-xs font-bold text-on-surface-variant">3</span>
+</div>
+<button class="text-outline hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[18px]">more_horiz</span></button>
+</div>
+<!-- Task Card 1 -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-transparent hover:border-outline-variant/20 transition-all duration-300 group">
+<div class="flex justify-between items-start mb-4">
+<span class="px-2 py-1 bg-slate-100 text-slate-600 rounded text-[10px] font-bold uppercase tracking-wider">To Do</span>
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-slate-300"></div>
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Low Priority</span>
+</div>
+</div>
+<h4 class="font-semibold text-on-surface leading-snug mb-4 group-hover:text-primary transition-colors">Implement Login System</h4>
+<div class="flex justify-between items-center mt-6">
+<div class="flex items-center gap-3 text-slate-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">notes</span>
+<span class="text-xs font-medium">4</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">attachment</span>
+<span class="text-xs font-medium">2</span>
+</div>
+</div>
+<img alt="Assignee" class="w-7 h-7 rounded-full ring-2 ring-surface" data-alt="close up headshot of a software developer with spectacles in high-key lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1HOoG4i2RVkICl5WYHztCINlsgAxzlnKAi6Gn5LluAxxtO2T1I37mdulf4rQr4yfSEniwveVabPkdCLFfkFnmkMHD6RafHhwgDxGAFxhBFD_Djb0eD5tvq7qyT0ranrWDQlse1egANoC0NP5QUtXpP6dv6mDA7vvoJlH7lbcVibyhHGC2utBC1GvFuyT6Zus5P73XTOjNtVhtmnxYaEVTmfdHBK17lDd6SBNZtpnvqKd9kCAxjkhEmyU3BDP8exZU7AdEb7d0y0Rl"/>
+</div>
+</div>
+<!-- Task Card 2 -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-transparent hover:border-outline-variant/20 transition-all duration-300 group">
+<div class="flex justify-between items-start mb-4">
+<span class="px-2 py-1 bg-slate-100 text-slate-600 rounded text-[10px] font-bold uppercase tracking-wider">To Do</span>
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></div>
+<span class="text-[10px] font-bold text-orange-600 uppercase tracking-tighter">High Priority</span>
+</div>
+</div>
+<h4 class="font-semibold text-on-surface leading-snug mb-4 group-hover:text-primary transition-colors">API Endpoint Documentation</h4>
+<div class="flex justify-between items-center mt-6">
+<div class="flex items-center gap-3 text-slate-400">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">notes</span>
+<span class="text-xs font-medium">12</span>
+</div>
+</div>
+<img alt="Assignee" class="w-7 h-7 rounded-full ring-2 ring-surface" data-alt="professional woman in corporate attire smiling in a clean architectural office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABWhBmVdM_96jwmdng5Hzd4Jl1rUCp6UAW5yoQU00viBZMScxHch3mr8GxY17zCRgmcTogh0xbspKix3aURRTZxbzW8QLy0_lBi7O5A9sl7FKq9JMsBdwFRjgNh1dFBz9k2ukSK3RnC36KHScCw76z0FjMvq22wTWsHar_wx-qdyvfgESqR89zTtIoCJMnoeEBap-DqK_F8MhCtSPfXeAj2vPZpbBDzK2QGJdx7m9oN2Mdaoy1sYxjXPV0V_uRPdfneqGJDWJrN955"/>
+</div>
+</div>
+</div>
+<!-- Column: Working -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between px-2 mb-2">
+<div class="flex items-center gap-2">
+<h3 class="label-md font-bold text-primary tracking-widest uppercase">Working</h3>
+<span class="bg-primary-fixed px-2 py-0.5 rounded-full text-xs font-bold text-on-primary-fixed-variant">1</span>
+</div>
+<button class="text-outline hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[18px]">more_horiz</span></button>
+</div>
+<!-- Task Card 3 -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border-l-4 border-primary shadow-sm group">
+<div class="flex justify-between items-start mb-4">
+<span class="px-2 py-1 bg-secondary-fixed text-on-primary-fixed-variant rounded text-[10px] font-bold uppercase tracking-wider">Working</span>
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-orange-500"></div>
+<span class="text-[10px] font-bold text-orange-600 uppercase tracking-tighter">High Priority</span>
+</div>
+</div>
+<h4 class="font-bold text-on-surface leading-snug mb-3">Design Brand Identity</h4>
+<p class="text-xs text-on-surface-variant line-clamp-2 mb-4">Finalize the typography scale and primary color palette for HorusVis v2.0</p>
+<!-- Progress Track -->
+<div class="w-full h-1 bg-surface-variant rounded-none mb-6">
+<div class="w-3/4 h-full custom-gradient-primary"></div>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex -space-x-2">
+<img alt="Team" class="w-6 h-6 rounded-full border-2 border-surface" data-alt="minimalist portrait of a graphic designer in a bright studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAphIy3W2JSwcqz4nNzRk21y0SQnSJ5wq9CUUTDpYh47Kg6qMI6da-OpJ-BiT4Lox0HlqQyN3rL11yVYRzNQgkwtH78G1GAlj3f5QFDh0X1Sdqbi_4uRNfs41H-6E9fdLy1R8ihRnccaApeV5N47Fmg2f2ObQoQruSfcbS4uZGQYvAaHnXQX41dJ0bxl4pq98CWnU-r37nwRTmX8HTta10gOz8MIkgvnDk5ISL__TwblFg8dLbsbPTOO3CeHDj-NPAkHfhe5sv54r8H"/>
+<img alt="Team" class="w-6 h-6 rounded-full border-2 border-surface" data-alt="close up of a professional male designer with clean aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGwklh9MdP53jFozFZ1TsLdUmD5YIIkO_x_QdFKPGMQljM8xyx1rNg966IxSlMHFWbr-2mETyTiHNov4mu2ZTI6H-YaLEO22vh1CMBal4VHm9J-QVIWqQasaXQX6Jv1dkuIHOThMk_ueY0jp6BbU-rCf4qrEhVYR-fT0GP4oXGvBZgOJyHwlMB_waQqWAKysUBfxpOpZ-hhyuHvnznvWjUL-eNIQQu44L-oPyrM1ska-_WWvmr-HheflqfeU_mTN1wmYCkTjx6B9M2"/>
+<div class="w-6 h-6 rounded-full bg-surface-container-high border-2 border-surface flex items-center justify-center text-[8px] font-bold">+2</div>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Oct 24</span>
+</div>
+</div>
+</div>
+<!-- Column: Stuck -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between px-2 mb-2">
+<div class="flex items-center gap-2">
+<h3 class="label-md font-bold text-error tracking-widest uppercase">Stuck</h3>
+<span class="bg-error-container px-2 py-0.5 rounded-full text-xs font-bold text-on-error-container">1</span>
+</div>
+<button class="text-outline hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[18px]">more_horiz</span></button>
+</div>
+<!-- Task Card 4 -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-error/20 group">
+<div class="flex justify-between items-start mb-4">
+<span class="px-2 py-1 bg-error-container text-on-error-container rounded text-[10px] font-bold uppercase tracking-wider">Stuck</span>
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_rgba(140,0,29,0.5)]"></div>
+<span class="text-[10px] font-bold text-tertiary uppercase tracking-tighter">Critical</span>
+</div>
+</div>
+<h4 class="font-semibold text-on-surface leading-snug mb-4">Database Migration Failure</h4>
+<div class="p-3 rounded-lg bg-error-container/20 border border-error/10 mb-4">
+<p class="text-[11px] font-medium text-on-error-container">Waiting for Dev Ops review on schema v4.2 conflict.</p>
+</div>
+<div class="flex justify-between items-center mt-2">
+<div class="flex items-center gap-1 text-error">
+<span class="material-symbols-outlined text-[16px]">priority_high</span>
+<span class="text-xs font-bold">Action Required</span>
+</div>
+<img alt="Assignee" class="w-7 h-7 rounded-full ring-2 ring-surface" data-alt="professional male engineering lead portrait with focused expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1HDny7N1vt_tTfQNxV6bn8v6wicjMsjpD85Iq01rL45E_Da5RMAIhvNLDMkBEV09yxD1fpK6ossfOC8380ADZMoy_M718t-FkZrpmHS9RGSW3_fu-rKgWYSIldeA50-Ly8sOFNoLfE84p_5OWe27oJdl8B8plkZ3Lu9kRMEQ3avjPQEiIk5e1ESWsSWeSYTrUnCNUbrB1SAFE25RPF0cS_Jk6n1lB1q13BHHxnekYWnBXzoe0QOvko7lukpMYCB0SY-1wb_HrKPTK"/>
+</div>
+</div>
+</div>
+<!-- Column: Done -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between px-2 mb-2">
+<div class="flex items-center gap-2">
+<h3 class="label-md font-bold text-green-600 tracking-widest uppercase">Done</h3>
+<span class="bg-green-50 px-2 py-0.5 rounded-full text-xs font-bold text-green-700">8</span>
+</div>
+<button class="text-outline hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[18px]">more_horiz</span></button>
+</div>
+<!-- Task Card 5 -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-transparent opacity-80 hover:opacity-100 transition-all group">
+<div class="flex justify-between items-start mb-4">
+<span class="px-2 py-1 success-gradient text-on-primary rounded text-[10px] font-bold uppercase tracking-wider">Done</span>
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-slate-300"></div>
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Low Priority</span>
+</div>
+</div>
+<h4 class="font-semibold text-slate-500 leading-snug mb-4 line-through">User Interview Analysis</h4>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-1 text-green-600">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-[10px] font-bold uppercase">Completed</span>
+</div>
+<img alt="Assignee" class="w-7 h-7 rounded-full ring-2 ring-surface" data-alt="creative female researcher headshot with soft bokeh lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUr8GRx4jg5SEZxvAgo6LgVB30sksIzNK3FoyyCq175A9O5GQzDaB6Cj_6xyAS2vJedGWoYLt-kAyOpYmZZ11eD5jxVP4rMNFomVR5qaTcHCGk77uFo8JHTc_HMmDrgRpFbr2ImSdUUcukas5ABzBMvdbF1T-KqP6N5ohE5yzlzHQoUsoU2ywRNnqU4D_pCBt1Dd-8X5wVlCbH-tSoymgMB0jtUiqhh7adOBMYlM6YAIteE8xBEjYJNQEPJzh7oHFZjMW0gZotaoAy"/>
+</div>
+</div>
+<!-- Task Card 6 -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-transparent opacity-80 hover:opacity-100 transition-all group">
+<div class="flex justify-between items-start mb-4">
+<span class="px-2 py-1 success-gradient text-on-primary rounded text-[10px] font-bold uppercase tracking-wider">Done</span>
+<div class="flex items-center gap-1.5">
+<div class="w-2 h-2 rounded-full bg-orange-500"></div>
+<span class="text-[10px] font-bold text-orange-600 uppercase tracking-tighter">High Priority</span>
+</div>
+</div>
+<h4 class="font-semibold text-slate-500 leading-snug mb-4 line-through">Security Audit Phase 1</h4>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-1 text-green-600">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-[10px] font-bold uppercase">Completed</span>
+</div>
+<div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-[14px] text-slate-400">lock</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action for Task (Suppressed as per rules on board, but contextually useful if explicitly needed - here we follow "No shells/FAB on detailed pages", though board is primary. Keeping it simple as board already has New Project CTA in Sidebar) -->
+</body></html>

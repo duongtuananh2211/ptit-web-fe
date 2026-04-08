@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\HorusVis.Business\HorusVis.Business.csproj" />
+    <ProjectReference Include="..\HorusVis.Data\HorusVis.Data.csproj" />
+    <ProjectReference Include="..\HorusVis.Core\HorusVis.Core.csproj" />
+  </ItemGroup>
+
+</Project>

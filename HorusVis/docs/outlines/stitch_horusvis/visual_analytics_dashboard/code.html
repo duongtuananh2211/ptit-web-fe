@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HorusVis - Visual Analytics Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#434654",
+                        "inverse-surface": "#293041",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#d2daf0",
+                        "surface-container-highest": "#dbe2f9",
+                        "surface": "#f9f9ff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#0040a2",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#ffc4c3",
+                        "secondary": "#525f73",
+                        "on-background": "#141b2c",
+                        "surface-bright": "#f9f9ff",
+                        "on-primary-container": "#c4d2ff",
+                        "surface-container": "#e9edff",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#3b485a",
+                        "primary": "#003d9b",
+                        "on-primary-fixed": "#001848",
+                        "surface-variant": "#dbe2f9",
+                        "secondary-fixed-dim": "#bac7de",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#ffb3b2",
+                        "secondary-fixed": "#d6e3fb",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f1f3ff",
+                        "primary-fixed": "#dae2ff",
+                        "inverse-primary": "#b2c5ff",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e0e8ff",
+                        "outline-variant": "#c3c6d6",
+                        "primary-container": "#0052cc",
+                        "on-surface": "#141b2c",
+                        "tertiary-fixed": "#ffdad9",
+                        "outline": "#737685",
+                        "tertiary-container": "#b4132d",
+                        "primary-fixed-dim": "#b2c5ff",
+                        "on-secondary-fixed": "#0f1c2d",
+                        "secondary-container": "#d6e3fb",
+                        "inverse-on-surface": "#edf0ff",
+                        "background": "#f9f9ff",
+                        "on-tertiary-fixed-variant": "#92001f",
+                        "on-tertiary-fixed": "#410008",
+                        "tertiary": "#8c001d",
+                        "on-secondary-container": "#586579",
+                        "surface-tint": "#0c56d0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-tight { letter-spacing: -0.02em; }
+        .label-wide { letter-spacing: 0.05em; text-transform: uppercase; }
+        .glass-sidebar { backdrop-filter: blur(12px); }
+        .primary-gradient { background: linear-gradient(135deg, #003d9b 0%, #0052cc 100%); }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface flex min-h-screen">
+<!-- SideNavBar Component -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-4 z-50 h-screen w-64 border-r border-slate-200/50 bg-[#f1f3ff]/90 glass-sidebar">
+<div class="mb-8 px-4">
+<h1 class="text-lg font-bold text-[#141b2c] editorial-tight">HorusVis</h1>
+<p class="text-xs text-secondary font-medium label-wide">Project Management</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 font-['Inter'] text-sm tracking-wide hover:text-[#0052CC] hover:bg-white/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
+                Projects
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 font-['Inter'] text-sm tracking-wide hover:text-[#0052CC] hover:bg-white/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="assignment_turned_in">assignment_turned_in</span>
+                My Tasks
+            </a>
+<!-- Active State: Reports (Closest match to Dashboard/Analytics) -->
+<a class="flex items-center gap-3 px-4 py-3 text-[#0052CC] font-semibold bg-white rounded-lg shadow-sm font-['Inter'] text-sm tracking-wide transform scale-102 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
+                Reports
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 font-['Inter'] text-sm tracking-wide hover:text-[#0052CC] hover:bg-white/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                Admin
+            </a>
+</nav>
+<div class="mt-auto border-t border-slate-200/50 pt-4 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 font-['Inter'] text-sm tracking-wide hover:text-[#0052CC] hover:bg-white/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                Help
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 font-['Inter'] text-sm tracking-wide hover:text-[#0052CC] hover:bg-white/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                Settings
+            </a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 ml-64 min-h-screen">
+<!-- TopNavBar Component -->
+<header class="flex justify-between items-center px-6 w-full sticky top-0 z-40 w-full h-16 border-b border-slate-100 bg-[#ffffff] transition-colors">
+<div class="flex items-center gap-6">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container-low border-none rounded-full text-sm w-64 focus:ring-2 focus:ring-primary/20" placeholder="Search analytics..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-slate-50 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User profile" data-alt="professional headshot of a software project manager in a bright office setting, looking friendly and capable" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQXnS2nzCK0iNE0Q3xLe86g-8UXyjnBVfOIxPAp2NhuPIQJ3wt-ppNPlg22SOzA8TJ1SO-ZZQmy3bc_V_-h7zJ3Av7d9rwUlC5fwQYgVqv-FB48qDT6XYwfbLFCACklgAMZtgdbntlg53m4Gj0jJEnF-uQtpcHudbPH12OCMdJBaO3WYLjRVLHjE3k5BFEedhO4YidaoIBfP7esDHpzPczMD1abXlcnGGPMrlv4rV6EW67zFy7s7acDVDU3bY4yDkk3y5NmlTDYo-w"/>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-8 max-w-7xl mx-auto space-y-8">
+<!-- Header Section -->
+<div class="flex justify-between items-end">
+<div>
+<h2 class="text-3xl font-black text-on-surface editorial-tight">Visual Analytics</h2>
+<p class="text-on-surface-variant mt-1">Real-time performance monitoring and bug distribution.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 border border-outline-variant rounded-md text-sm font-medium hover:bg-surface-container-low transition-colors">
+                        Export Report
+                    </button>
+<button class="px-4 py-2 primary-gradient text-on-primary rounded-md text-sm font-semibold shadow-sm hover:scale-105 active:scale-95 transition-all">
+                        Refresh Data
+                    </button>
+</div>
+</div>
+<!-- Stats Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-slate-100/50 flex flex-col gap-1">
+<span class="text-xs font-bold label-wide text-secondary">Total Active Bugs</span>
+<div class="flex items-end gap-2">
+<span class="text-4xl font-black text-on-surface editorial-tight">142</span>
+<span class="text-error text-xs font-bold mb-1.5 flex items-center">
+<span class="material-symbols-outlined text-sm">trending_up</span> 12%
+                        </span>
+</div>
+<div class="mt-4 w-full h-1 bg-surface-variant rounded-full">
+<div class="h-full bg-error rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-slate-100/50 flex flex-col gap-1">
+<span class="text-xs font-bold label-wide text-secondary">Avg Time to Close</span>
+<div class="flex items-end gap-2">
+<span class="text-4xl font-black text-on-surface editorial-tight">4.2d</span>
+<span class="text-[#28A745] text-xs font-bold mb-1.5 flex items-center">
+<span class="material-symbols-outlined text-sm">trending_down</span> 0.8d
+                        </span>
+</div>
+<div class="mt-4 w-full h-1 bg-surface-variant rounded-full">
+<div class="h-full primary-gradient rounded-full" style="width: 42%"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-slate-100/50 flex flex-col gap-1">
+<span class="text-xs font-bold label-wide text-secondary">Task Velocity</span>
+<div class="flex items-end gap-2">
+<span class="text-4xl font-black text-on-surface editorial-tight">88%</span>
+<span class="text-[#28A745] text-xs font-bold mb-1.5 flex items-center">
+<span class="material-symbols-outlined text-sm">check_circle</span> Stable
+                        </span>
+</div>
+<div class="mt-4 w-full h-1 bg-surface-variant rounded-full">
+<div class="h-full bg-[#28A745] rounded-full" style="width: 88%"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-slate-100/50 flex flex-col gap-1">
+<span class="text-xs font-bold label-wide text-secondary">Critical Priority</span>
+<div class="flex items-end gap-2">
+<span class="text-4xl font-black text-on-surface editorial-tight">12</span>
+<div class="w-2 h-2 rounded-full bg-tertiary animate-pulse mb-3"></div>
+</div>
+<div class="mt-4 w-full h-1 bg-surface-variant rounded-full">
+<div class="h-full bg-tertiary rounded-full" style="width: 15%"></div>
+</div>
+</div>
+</div>
+<!-- Detailed Visualizations -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Pie Chart Area: Bug Density -->
+<div class="md:col-span-5 bg-surface-container-lowest p-8 rounded-xl border border-slate-100/50">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h3 class="text-lg font-bold text-on-surface">Bug Density</h3>
+<p class="text-sm text-on-surface-variant">Distribution across features</p>
+</div>
+<span class="material-symbols-outlined text-outline">pie_chart</span>
+</div>
+<div class="relative aspect-square flex items-center justify-center">
+<!-- Simulated Pie Chart with layered SVG circles -->
+<svg class="w-56 h-56 transform -rotate-90" viewbox="0 0 36 36">
+<circle cx="18" cy="18" fill="transparent" r="15.9" stroke="#e9edff" stroke-width="3.5"></circle>
+<circle cx="18" cy="18" fill="transparent" r="15.9" stroke="#003d9b" stroke-dasharray="40 100" stroke-width="3.5"></circle>
+<circle cx="18" cy="18" fill="transparent" r="15.9" stroke="#525f73" stroke-dasharray="25 100" stroke-dashoffset="-40" stroke-width="3.5"></circle>
+<circle cx="18" cy="18" fill="transparent" r="15.9" stroke="#ba1a1a" stroke-dasharray="15 100" stroke-dashoffset="-65" stroke-width="3.5"></circle>
+<circle cx="18" cy="18" fill="transparent" r="15.9" stroke="#8c001d" stroke-dasharray="20 100" stroke-dashoffset="-80" stroke-width="3.5"></circle>
+</svg>
+<div class="absolute text-center">
+<span class="block text-2xl font-black">142</span>
+<span class="text-[10px] label-wide text-secondary">Total</span>
+</div>
+</div>
+<div class="mt-8 space-y-3">
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<span>Core Dashboard</span>
+</div>
+<span class="font-bold">40%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span>Data Processing</span>
+</div>
+<span class="font-bold">25%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-error"></span>
+<span>Auth &amp; Access</span>
+</div>
+<span class="font-bold">15%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-tertiary"></span>
+<span>UI Components</span>
+</div>
+<span class="font-bold">20%</span>
+</div>
+</div>
+</div>
+<!-- Bar Chart Area: Team Performance -->
+<div class="md:col-span-7 bg-surface-container-lowest p-8 rounded-xl border border-slate-100/50">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h3 class="text-lg font-bold text-on-surface">Team Performance</h3>
+<p class="text-sm text-on-surface-variant">Task completion speed (pts/week)</p>
+</div>
+<div class="flex gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded-md bg-surface-container-low text-primary">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+</button>
+</div>
+</div>
+<div class="space-y-6">
+<!-- Bar Item -->
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="font-semibold text-on-surface">Platform Alpha Team</span>
+<span class="text-on-surface-variant">42 pts</span>
+</div>
+<div class="w-full h-8 bg-surface-container-low rounded-md overflow-hidden flex items-center px-1">
+<div class="h-6 primary-gradient rounded" style="width: 84%"></div>
+</div>
+</div>
+<!-- Bar Item -->
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="font-semibold text-on-surface">Core Infrastructure</span>
+<span class="text-on-surface-variant">38 pts</span>
+</div>
+<div class="w-full h-8 bg-surface-container-low rounded-md overflow-hidden flex items-center px-1">
+<div class="h-6 primary-gradient rounded" style="width: 76%"></div>
+</div>
+</div>
+<!-- Bar Item -->
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="font-semibold text-on-surface">Mobile Solutions</span>
+<span class="text-on-surface-variant">24 pts</span>
+</div>
+<div class="w-full h-8 bg-surface-container-low rounded-md overflow-hidden flex items-center px-1">
+<div class="h-6 primary-gradient rounded" style="width: 48%"></div>
+</div>
+</div>
+<!-- Bar Item -->
+<div>
+<div class="flex justify-between text-sm mb-2">
+<span class="font-semibold text-on-surface">Analytics Squad</span>
+<span class="text-on-surface-variant">51 pts</span>
+</div>
+<div class="w-full h-8 bg-surface-container-low rounded-md overflow-hidden flex items-center px-1">
+<div class="h-6 primary-gradient rounded" style="width: 100%"></div>
+</div>
+</div>
+</div>
+<div class="mt-12 flex justify-between items-center p-4 bg-surface-container-low rounded-lg">
+<div class="flex gap-4">
+<div class="text-center">
+<span class="block text-xs font-bold label-wide text-secondary">Efficiency</span>
+<span class="text-sm font-bold">+14%</span>
+</div>
+<div class="border-l border-outline-variant h-8"></div>
+<div class="text-center">
+<span class="block text-xs font-bold label-wide text-secondary">Capacity</span>
+<span class="text-sm font-bold">128/150</span>
+</div>
+</div>
+<button class="text-primary text-xs font-bold label-wide flex items-center gap-1 hover:underline">
+                            View Roadmap <span class="material-symbols-outlined text-xs">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Recent Issues Table Replacement (Asymmetric Layout) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-12">
+<div class="md:col-span-2 space-y-4">
+<h3 class="text-lg font-bold text-on-surface">Top Critical Issues</h3>
+<div class="space-y-3">
+<div class="bg-surface-container-lowest p-4 rounded-lg border border-slate-100 flex items-center justify-between hover:bg-slate-50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-error-container flex items-center justify-center text-error">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bug_report</span>
+</div>
+<div>
+<h4 class="text-sm font-bold editorial-tight">HV-492: API Gateway Latency Spike</h4>
+<p class="text-xs text-on-surface-variant">Infrastructure • Reported 2h ago</p>
+</div>
+</div>
+<span class="px-2 py-1 bg-tertiary text-on-tertiary text-[10px] font-bold label-wide rounded">CRITICAL</span>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-lg border border-slate-100 flex items-center justify-between hover:bg-slate-50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-tertiary-fixed flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<div>
+<h4 class="text-sm font-bold editorial-tight">HV-501: Authentication Bypass Vulnerability</h4>
+<p class="text-xs text-on-surface-variant">Security • Reported 5h ago</p>
+</div>
+</div>
+<span class="px-2 py-1 bg-tertiary text-on-tertiary text-[10px] font-bold label-wide rounded">CRITICAL</span>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-lg border border-slate-100 flex items-center justify-between hover:bg-slate-50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-secondary-fixed flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">error</span>
+</div>
+<div>
+<h4 class="text-sm font-bold editorial-tight">HV-488: Memory Leak in UI Canvas</h4>
+<p class="text-xs text-on-surface-variant">Frontend • Reported 1d ago</p>
+</div>
+</div>
+<span class="px-2 py-1 bg-secondary text-on-secondary text-[10px] font-bold label-wide rounded">HIGH</span>
+</div>
+</div>
+</div>
+<div class="bg-primary-container p-6 rounded-xl text-on-primary-container relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="text-lg font-bold editorial-tight mb-2">Automated Optimization</h3>
+<p class="text-sm opacity-90 mb-6">Our engine suggests shifting 2 resources from Mobile to Infra to meet the sprint deadline.</p>
+<button class="w-full py-2 bg-white text-primary font-bold rounded-md text-sm hover:bg-opacity-90 transition-all">
+                            Accept Recommendation
+                        </button>
+</div>
+<!-- Decorative Background Image -->
+<div class="absolute top-0 right-0 w-32 h-32 opacity-20 transform translate-x-8 -translate-y-8">
+<span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'wght' 700;">bolt</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

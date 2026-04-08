@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HorusVis - Project Board</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-surface-variant": "#434654",
+                "inverse-surface": "#293041",
+                "on-tertiary": "#ffffff",
+                "surface-dim": "#d2daf0",
+                "surface-container-highest": "#dbe2f9",
+                "surface": "#f9f9ff",
+                "on-secondary": "#ffffff",
+                "on-primary-fixed-variant": "#0040a2",
+                "error-container": "#ffdad6",
+                "on-tertiary-container": "#ffc4c3",
+                "secondary": "#525f73",
+                "on-background": "#141b2c",
+                "surface-bright": "#f9f9ff",
+                "on-primary-container": "#c4d2ff",
+                "surface-container": "#e9edff",
+                "on-error": "#ffffff",
+                "on-secondary-fixed-variant": "#3b485a",
+                "primary": "#003d9b",
+                "on-primary-fixed": "#001848",
+                "surface-variant": "#dbe2f9",
+                "secondary-fixed-dim": "#bac7de",
+                "error": "#ba1a1a",
+                "tertiary-fixed-dim": "#ffb3b2",
+                "secondary-fixed": "#d6e3fb",
+                "surface-container-lowest": "#ffffff",
+                "surface-container-low": "#f1f3ff",
+                "primary-fixed": "#dae2ff",
+                "inverse-primary": "#b2c5ff",
+                "on-error-container": "#93000a",
+                "on-primary": "#ffffff",
+                "surface-container-high": "#e0e8ff",
+                "outline-variant": "#c3c6d6",
+                "primary-container": "#0052cc",
+                "on-surface": "#141b2c",
+                "tertiary-fixed": "#ffdad9",
+                "outline": "#737685",
+                "tertiary-container": "#b4132d",
+                "primary-fixed-dim": "#b2c5ff",
+                "on-secondary-fixed": "#0f1c2d",
+                "secondary-container": "#d6e3fb",
+                "inverse-on-surface": "#edf0ff",
+                "background": "#f9f9ff",
+                "on-tertiary-fixed-variant": "#92001f",
+                "on-tertiary-fixed": "#410008",
+                "tertiary": "#8c001d",
+                "on-secondary-container": "#586579",
+                "surface-tint": "#0c56d0"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "fontFamily": {
+                "headline": ["Inter"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-sidebar {
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+      .primary-gradient {
+        background: linear-gradient(135deg, #003d9b 0%, #0052cc 100%);
+      }
+      .success-gradient {
+        background: linear-gradient(135deg, #28A745 0%, #1E7E34 100%);
+      }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface flex min-h-screen">
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-4 z-50 h-screen w-64 border-r border-slate-200/50 dark:border-slate-800 bg-[#f1f3ff] dark:bg-slate-950/50 glass-sidebar">
+<div class="mb-10 px-2">
+<h1 class="text-lg font-bold text-[#141b2c] dark:text-slate-100 tracking-tight">HorusVis</h1>
+<p class="text-xs text-on-surface-variant opacity-70">Project Management</p>
+</div>
+<nav class="flex-1 space-y-2">
+<!-- Projects Tab (Active) -->
+<a class="flex items-center gap-3 px-4 py-3 text-[#0052CC] dark:text-[#4089FF] font-semibold bg-white dark:bg-slate-900 rounded-lg shadow-sm transition-all duration-200 scale-102" href="#">
+<span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
+<span class="font-['Inter'] text-sm tracking-wide">Projects</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:text-[#0052CC] hover:bg-white/50 dark:hover:bg-slate-800/50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="assignment_turned_in">assignment_turned_in</span>
+<span class="font-['Inter'] text-sm tracking-wide">My Tasks</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:text-[#0052CC] hover:bg-white/50 dark:hover:bg-slate-800/50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
+<span class="font-['Inter'] text-sm tracking-wide">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:text-[#0052CC] hover:bg-white/50 dark:hover:bg-slate-800/50 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['Inter'] text-sm tracking-wide">Admin</span>
+</a>
+</nav>
+<div class="mt-auto pt-4 border-t border-slate-200/50 space-y-2">
+<a class="flex items-center gap-3 px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-[#0052CC] transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-['Inter'] text-sm tracking-wide">Help</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-600 dark:text-slate-400 hover:text-[#0052CC] transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['Inter'] text-sm tracking-wide">Settings</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-64 min-h-screen flex flex-col">
+<!-- TopNavBar (Shared Component) -->
+<header class="flex justify-between items-center px-6 w-full sticky top-0 z-40 w-full h-16 border-b border-slate-100 bg-[#ffffff] dark:bg-slate-900">
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="absolute inset-y-0 left-3 flex items-center text-outline">
+<span class="material-symbols-outlined text-xl">search</span>
+</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container-low border-none rounded-full text-sm focus:ring-2 focus:ring-primary/20 w-64 transition-all" placeholder="Search projects..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-[#0052CC] font-bold border-b-2 border-[#0052CC] py-5 font-['Inter'] text-sm" href="#">Dashboard</a>
+<a class="text-[#141b2c] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors py-5 font-['Inter'] font-medium text-sm" href="#">Team</a>
+<a class="text-[#141b2c] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors py-5 font-['Inter'] font-medium text-sm" href="#">Analytics</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-slate-50 rounded-full relative transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<img alt="User profile" class="w-8 h-8 rounded-full object-cover border border-slate-200" data-alt="Professional headshot of a middle-aged man with short dark hair in a corporate setting, soft office lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYukwF-S13fikVWvW4a_4YJJVVH4IUXlL3vN9cw_0a9O1Vzw-fqU6XXqWXa6pi6fELMxVi85uSO2na5T6HhK0FML4-svDrNoUlFSySnAZDb9AXQb5tckB_2MvuKf5--4g8qbgi_CaCPY7tvffT9eGi09N7rj41YOYjAK1K4vcqsKKGgOAPDro2b_4O4pEq7LBTNRee_uE_KKrJ-s1AhzwyN0mZ8QfCegEWkZjPiTvpti3buQHfzMLN3edKq-We6r6o6lN8xUqb3lks"/>
+</div>
+</div>
+</header>
+<!-- Project Board Header -->
+<section class="px-8 pt-8 pb-4">
+<div class="flex items-end justify-between">
+<div>
+<nav class="flex items-center gap-2 text-xs font-label uppercase tracking-widest text-outline mb-2">
+<span>Projects</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-on-surface">Horus Cloud Migration</span>
+</nav>
+<h2 class="text-3xl font-black text-on-surface tracking-tight font-headline">Main Project Board</h2>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-surface-container-high text-on-surface font-semibold rounded-xl hover:bg-surface-container-highest transition-all">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+<span class="text-sm">Filter</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2 primary-gradient text-white font-bold rounded-xl shadow-lg hover:scale-102 active:scale-98 transition-all">
+<span class="material-symbols-outlined text-lg">add</span>
+<span class="text-sm">New Task</span>
+</button>
+</div>
+</div>
+<!-- Tonal Separation Line -->
+<div class="h-px w-full bg-surface-container-highest mt-6"></div>
+</section>
+<!-- Board Grid -->
+<section class="flex-1 px-8 py-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- To Do Column -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between px-2 mb-2">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+<h3 class="font-bold text-sm text-on-surface tracking-wide uppercase">To Do</h3>
+<span class="bg-surface-container-high px-2 py-0.5 rounded-full text-[10px] font-bold text-on-surface-variant">3</span>
+</div>
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined text-lg">more_horiz</span></button>
+</div>
+<div class="space-y-4">
+<!-- Card -->
+<div class="bg-surface-container-lowest p-5 rounded-xl transition-all hover:translate-y-[-2px] group">
+<div class="flex justify-between items-start mb-3">
+<span class="px-2 py-1 bg-surface-variant text-on-surface-variant text-[10px] font-bold uppercase tracking-wider rounded">Low</span>
+<span class="material-symbols-outlined text-outline opacity-0 group-hover:opacity-100 transition-opacity">edit</span>
+</div>
+<h4 class="font-semibold text-on-surface text-sm mb-4 leading-relaxed">Update documentation for API endpoints v2.4</h4>
+<div class="flex items-center justify-between mt-4">
+<div class="flex items-center gap-2 text-outline">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+<span class="text-[11px] font-medium">Oct 12</span>
+</div>
+<img alt="Assignee" class="w-6 h-6 rounded-full border-2 border-surface" data-alt="Young professional woman with a warm smile, casual business attire, soft natural window lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC95FYpIJBgzag9nda_U-qDFppVeCuoZTs6o4q3nu4drfv2oJwT3iPWN1YOKKs0UDEaw44cVBlarz5g7glzEz3Jkts0vxzreFSzstGvBKxRlY5o5Y5XV4ouk0nEztUzG3Bc9ByqZ-wibs1iCG6S7Ew_mP1zXPmWRLRCC38zLP5TfhWtVFgFxNdszqxbrdxuSol07NoHhOarZcJyO3HorMs1wrGlsE9ffxLBwET__6SEeFH1O3QNZwV2rS3PM0rmxnZzWf5MOHB2qg0w"/>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-xl transition-all hover:translate-y-[-2px] group">
+<div class="flex justify-between items-start mb-3">
+<span class="px-2 py-1 bg-surface-variant text-on-surface-variant text-[10px] font-bold uppercase tracking-wider rounded">Low</span>
+</div>
+<h4 class="font-semibold text-on-surface text-sm mb-4 leading-relaxed">Weekly sync with stakeholders</h4>
+<div class="flex items-center justify-between mt-4">
+<div class="flex items-center gap-2 text-outline">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+<span class="text-[11px] font-medium">Oct 15</span>
+</div>
+<div class="flex -space-x-2">
+<img class="w-6 h-6 rounded-full border-2 border-surface" data-alt="Portrait of a young man with glasses, professional creative style, bright daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCwW3luc20F64YRemzbmp5IMWa6IFv4QfgNKkMa1aDuPIHZ1xLyWz-7bTbGc54qRG6DobwbAgYIZS9khwobzUdVPG84JNsF2EPAXnSWvU4z-ja2AO6Vs1PDOkXHUe8VEmQc8SdJp4ClLeV1hdF9mPhXuCiXsnrcdvF0GNbDfshrjKbB0einv_5JGuJjnJtfAG52lTz0DmCScdcC1j_xR-IlY7ukKjnR7ccF0eaBw9h0L9BFF9Lvbooz06hbd3LIfgVjLLFgAwNbBnm"/>
+<img class="w-6 h-6 rounded-full border-2 border-surface" data-alt="Man in high-end office wear, studio lighting, professional demeanor" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlkx6EmkhwP5-HYyZNVzRAXv7pDBHvHzIt0WfBiaHqgh-Kw2My7roY1-p5FyWOJKR_qcrz47b21E5g5vhN7monIwd0I6Jlp4-amGW3RbgAzkjbq_tIX8u-J17A33TMpPXiNUXvRM7kRan3w-PD-Q1smKmei6vjSJpxu5kn-uqFyLlj4xbOCAsxprVR00rjwJv5yEXv_IHklb51uKwoB5odpuxn23XZnMm82rAKHovT6uV6doiDbjcV9qeBMflgYtwKOI2Yfh0-r3aN"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Working Column -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between px-2 mb-2">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary-container"></div>
+<h3 class="font-bold text-sm text-on-surface tracking-wide uppercase">Working</h3>
+<span class="bg-primary-fixed text-on-primary-fixed px-2 py-0.5 rounded-full text-[10px] font-bold">2</span>
+</div>
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined text-lg">more_horiz</span></button>
+</div>
+<div class="space-y-4">
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border-l-4 border-primary-container transition-all hover:translate-y-[-2px] group">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-tertiary text-[10px] font-bold uppercase tracking-wider">Critical</span>
+</div>
+</div>
+<h4 class="font-semibold text-on-surface text-sm mb-2 leading-relaxed">Infrastructure Security Audit</h4>
+<div class="w-full h-1 bg-surface-container-low rounded-full overflow-hidden mb-4">
+<div class="h-full primary-gradient w-[65%]"></div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-primary-container">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="text-[11px] font-bold uppercase">Due Today</span>
+</div>
+<img alt="Assignee" class="w-6 h-6 rounded-full border-2 border-surface" data-alt="Modern professional man with a beard, glasses, blurred background office, clean lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDw4YhwVU2nwnqDyHdf_8PXe34iMb4ZJg2J5-yxDjEPGIuI2DD6lTFLddOdmcPnVjQ6ccrHnBQFKS0HQ6YQVfHxj7lhz2oMVNzdnv4KCuMNguXCiQaAzIf-bVzvGUUlnUOnUTbCsNZnPnO12cYb80qB3zpV0obwsYvvwshxBpiBl89DCXs6PG1n520R-clWAbwipVZl-lbxdHiRJQMfyJfjKeHl0hP7FYT-DvGt22FTbWlOfr2l4oyRer8xJLbinlc8Aiz1sImzniSO"/>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-5 rounded-xl shadow-sm border-l-4 border-primary-container transition-all hover:translate-y-[-2px] group">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-1.5">
+<span class="text-on-primary-fixed-variant text-[10px] font-bold uppercase tracking-wider bg-secondary-fixed px-2 py-0.5 rounded">High</span>
+</div>
+</div>
+<h4 class="font-semibold text-on-surface text-sm mb-4 leading-relaxed">Refactoring Auth Service</h4>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-outline">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+<span class="text-[11px] font-medium">Oct 14</span>
+</div>
+<img alt="Assignee" class="w-6 h-6 rounded-full border-2 border-surface" data-alt="Confident woman looking directly at the camera, modern office background, soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWM_ajOBTrx8DC-p9eQdxI5xL_XGVJLMBhwIcBItBbBeGIXRghDnafHhNqXTrqe9Dt2MydUaZ49ApcoUm7RK9uniAFt8uWRZnW0DG1TmiZa_sLQ5NmQutnkwVjJOA2TnF7AWhNMHjfzGF8Rfrq4G7b_wOJ9CucyyMVrmgxT97ujjmJ4wE8YVGe_deY-ZxXDEgbEPAG5P9BHRspuwib19ZWvOnlLzxK3fsZJjXl7K-7tOBkUUgQqvqbqU_BbnFfDjTzWLMmR8oOzEw3"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Stuck Column -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between px-2 mb-2">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<h3 class="font-bold text-sm text-on-surface tracking-wide uppercase">Stuck</h3>
+<span class="bg-error-container text-on-error-container px-2 py-0.5 rounded-full text-[10px] font-bold">1</span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-error-container/30 transition-all hover:translate-y-[-2px] group">
+<div class="flex justify-between items-start mb-3">
+<span class="px-2 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant text-[10px] font-bold uppercase tracking-wider rounded">High</span>
+</div>
+<h4 class="font-semibold text-on-surface text-sm mb-2 leading-relaxed">Third-party payment gateway integration</h4>
+<p class="text-[11px] text-error font-medium flex items-center gap-1 mb-4">
+<span class="material-symbols-outlined text-xs">warning</span>
+                            Awaiting API Keys from Provider
+                        </p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-outline">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+<span class="text-[11px] font-medium">Oct 08</span>
+</div>
+<img alt="Assignee" class="w-6 h-6 rounded-full border-2 border-surface" data-alt="Young woman with bright smile, energetic professional look, outdoor city background with soft bokeh" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCh78VFGkuleVw7-TGm1y_nwKWiFeFjqleC7PIzf0hey2KFLUYsNixvy2JJimtDeMX8QuvSPPsbs8yhzyhyRaU3fvE37ebdPmxWgXBONIwrtP0gzk_btDcC2wLx23y-BiuNtqlSjpkKJIoI-7fbTyUelyDWwxWuAmZSctdL9qZ544pr6G1C6ymiEPWpBbYs1qXHwJ3LqWwBUPpIkSVNOUrGIiaF8ZASmODzXaZH2PHbgVKWQq6VypBbsE3EGssfJRnSQiFeu86JO4Yl"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Done Column -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between px-2 mb-2">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-[#28A745]"></div>
+<h3 class="font-bold text-sm text-on-surface tracking-wide uppercase">Done</h3>
+<span class="bg-surface-container-high px-2 py-0.5 rounded-full text-[10px] font-bold text-on-surface-variant">12</span>
+</div>
+</div>
+<div class="space-y-4 opacity-70 grayscale-[0.3]">
+<div class="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/20 transition-all hover:translate-y-[-2px]">
+<div class="flex justify-between items-start mb-3">
+<span class="px-2 py-1 bg-surface-variant text-on-surface-variant text-[10px] font-bold uppercase tracking-wider rounded line-through">Low</span>
+<span class="material-symbols-outlined text-[#28A745] text-sm">check_circle</span>
+</div>
+<h4 class="font-semibold text-on-surface text-sm mb-4 leading-relaxed line-through">Design system token mapping</h4>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-outline">
+<span class="material-symbols-outlined text-sm">task_alt</span>
+<span class="text-[11px] font-medium">Completed Oct 10</span>
+</div>
+<img alt="Assignee" class="w-6 h-6 rounded-full border-2 border-surface" data-alt="Confident professional man in dark attire, subtle office background, sharp clean lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuIcViAAwzG8AyUFKdS82rSeezo8XANFv2MEp7lTBnUTGomCsY4KLHqFfTq3ve2IfLHq2znf5lNEiXY5dcf9JzMlcB5g7RfOGwekgf9vTspw3_dANDBeQKkTHx_0dB7Md2mhVOp0VmmmwtUAjBCCWCn5Sm-3TwbSkFuOFJoS9YffSOr-hdkL3nMT_Z3aqhcylKglKt2_1SsU0NOICLspGl2Zz6En3_-GA9F3Mc5v_SbzUlI95X16U8ylRHz0SaDJo8FBOxbjeP1HLL"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contextual FAB (Shared Component Strategy) -->
+<div class="fixed bottom-8 right-8 z-50">
+<button class="w-14 h-14 primary-gradient text-white rounded-full flex items-center justify-center shadow-[0_12px_40px_rgba(0,61,155,0.3)] hover:scale-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+</main>
+</body></html>
