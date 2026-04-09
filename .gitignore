@@ -14,3 +14,4 @@ HorusVis/.env.*
 !HorusVis/.env.example
 
 HorusVis/backend/**/.vs/
+/HorusVis/backend/.vs/HorusVis/v18/.suo

@@ -17,7 +17,7 @@ Excluded by request:
 - `backend/` contains the .NET solution and test projects.
 - `frontend/horusvis-react/` contains the React + TypeScript + Vite application using `npm`.
 - `frontend/shared/` contains shared client definitions placeholders.
-- `docs/` contains the same top-level documentation buckets used in Siren.
+- `docs/` contains the same top-level documentation buckets
 
 ## Getting Started
 

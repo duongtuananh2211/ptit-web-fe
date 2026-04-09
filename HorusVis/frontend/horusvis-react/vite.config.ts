@@ -1,15 +1,27 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import { fileURLToPath, URL } from "url";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { fileURLToPath, URL } from 'url';
+
+const BACKEND_URL = process.env.VITE_BACKEND_URL ?? 'https://localhost:7235';
 
 export default defineConfig({
   plugins: [react()],
-  server: {
-    port: 5173,
+  define: {
+    'process.env': {},
   },
   resolve: {
     alias: {
-      "@horusvis-web": fileURLToPath(new URL("../shared/HorusVisWeb", import.meta.url)),
+      '@horusvis-web': fileURLToPath(new URL('../shared/HorusVisWeb', import.meta.url)),
+    },
+  },
+  server: {
+    port: 5173,
+    proxy: {
+      '/api': {
+        target: BACKEND_URL,
+        changeOrigin: true,
+        secure: false, // accept self-signed cert on localhost
+      },
     },
   },
 });

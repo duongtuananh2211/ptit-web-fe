@@ -1,6 +1,6 @@
 # Adding EF Core Migrations
 
-This guide follows the migration workflow used in Siren's database documentation, adapted to HorusVis.
+This guide follows the migration workflow
 
 ## Prerequisites
 
@@ -43,7 +43,7 @@ dotnet ef migrations add AddWorkItemIndexes
 
 ## Cleanup the Generated Files
 
-After generating the migration, clean up the output to match the style used by Siren's guideline.
+After generating the migration, clean up the output
 
 1. Move the migration attributes from `yyyyMMddHHmmss_MIGRATION_NAME.Designer.cs` into `yyyyMMddHHmmss_MIGRATION_NAME.cs`.
 1. Delete `yyyyMMddHHmmss_MIGRATION_NAME.Designer.cs`.

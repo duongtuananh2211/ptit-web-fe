@@ -1,316 +1,260 @@
-:root {
-  font-family: "Segoe UI", "Helvetica Neue", sans-serif;
-  color: #f4efe7;
-  background:
-    radial-gradient(circle at top left, rgba(237, 124, 58, 0.22), transparent 28%),
-    radial-gradient(circle at right, rgba(65, 132, 196, 0.22), transparent 24%),
-    linear-gradient(135deg, #111827 0%, #172033 45%, #0f172a 100%);
-  line-height: 1.5;
-  font-weight: 400;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Prevent flash of light content in dark mode */
+@layer base {
+  html.dark {
+    color-scheme: dark;
+  }
+  
+  /* Ensure task cards render with correct background immediately to prevent flash */
+  /* Only apply to default task cards (not selected, not system, not special states) */
+  .task-card:not(.bg-gray-100):not(.bg-yellow-50):not(.bg-blue-50):not(.bg-blue-100):not(.bg-green-50):not(.bg-purple-50):not(.bg-yellow-50):not(.bg-gray-700):not(.bg-yellow-900):not(.bg-blue-900):not(.bg-green-900):not(.bg-purple-900) {
+    background-color: var(--task-card-bg) !important;
+  }
+  
+  /* Prevent column background flash - use CSS variable for default state */
+  .column-container {
+    background-color: var(--column-bg) !important;
+  }
+  
+  /* Allow hover states to work */
+  .column-container:hover {
+    background-color: var(--column-hover-bg) !important;
+  }
+  
 }
 
-* {
-  box-sizing: border-box;
+/* Prevent scrollable container flash - apply outside @layer for higher priority */
+/* This ensures the background is applied immediately, even during React re-renders */
+/* Use direct colors for light mode, CSS variable for dark mode to prevent flash */
+div[data-tour-id="kanban-columns"],
+.kanban-scrollable-container,
+.overflow-x-auto.w-full,
+.board-drop-area,
+.main-layout-container,
+.kanban-columns-container {
+  /* Light mode default */
+  background-color: rgb(249, 250, 251) !important; /* gray-50 */
+  /* Hint browser to optimize for background changes */
+  will-change: background-color;
+  /* Ensure background is painted immediately */
+  contain: paint;
 }
 
+/* Dark mode override */
+.dark div[data-tour-id="kanban-columns"],
+.dark .kanban-scrollable-container,
+.dark .overflow-x-auto.w-full,
+.dark .board-drop-area,
+.dark .main-layout-container,
+.dark .kanban-columns-container {
+  background-color: rgb(17, 24, 39) !important; /* gray-900 */
+}
+
+/* Also ensure body/html have correct background to prevent any flash */
 html {
-  scroll-behavior: smooth;
+  background-color: var(--main-bg) !important;
 }
 
 body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  background: transparent;
+  background-color: var(--main-bg) !important;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* CSS Variables for Recharts Tooltips */
+:root {
+  --tooltip-bg: #ffffff;
+  --tooltip-border: #e5e7eb;
+  --tooltip-text: #111827;
+  --scrollbar-thumb: rgb(203, 213, 225); /* gray-300 */
+  --scrollbar-track: rgb(241, 245, 249); /* gray-100 */
+  --task-card-bg: rgb(255, 255, 255); /* white */
+  --column-bg: rgb(249, 250, 251); /* gray-50 */
+  --column-hover-bg: rgb(243, 244, 246); /* gray-100 */
+  --page-bg: rgb(249, 250, 251); /* gray-50 */
+  --main-bg: rgb(243, 244, 246); /* gray-100 */
 }
 
-#root {
-  min-height: 100vh;
+.dark {
+  --tooltip-bg: #1f2937;
+  --tooltip-border: #374151;
+  --tooltip-text: #f9fafb;
+  --scrollbar-thumb: rgb(55, 65, 81); /* gray-700 - darker to blend better */
+  --scrollbar-track: rgb(17, 24, 39); /* gray-900 - matches main background */
+  --task-card-bg: rgb(31, 41, 55); /* gray-800 - matches dark mode */
+  --column-bg: rgb(31, 41, 55); /* gray-800 */
+  --column-hover-bg: rgb(55, 65, 81); /* gray-700 */
+  --page-bg: rgb(17, 24, 39); /* gray-900 */
+  --main-bg: rgb(17, 24, 39); /* gray-900 */
 }
 
-.app-shell {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  min-height: 100vh;
+/* Disable drag-and-drop when comment tooltip is active (JS version) */
+.comment-tooltip-active [data-dnd-kit-draggable-handle],
+.comment-tooltip-active [data-sortable-handle],
+.comment-tooltip-active .sortable-item {
+  pointer-events: none !important;
+  cursor: default !important;
 }
 
-.sidebar {
-  padding: 2rem 1.5rem;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(10, 15, 28, 0.46);
-  backdrop-filter: blur(18px);
-  transition: transform 220ms ease, opacity 220ms ease;
+/* Keep tooltip interactive */
+.comment-tooltip-active .comment-tooltip {
+  pointer-events: auto !important;
 }
 
-.brand-block {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
+/* Hide scrollbars for navigation containers */
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer and Edge */
 }
 
-.brand-block p {
-  margin: 0.2rem 0 0;
-  color: rgba(244, 239, 231, 0.65);
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
 }
 
-.brand-mark {
-  display: inline-grid;
-  place-items: center;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 0.9rem;
-  background: linear-gradient(135deg, #ffb347, #ff7043);
-  color: #1f2937;
-  font-weight: 800;
+/* TipTap Editor List Styles - Fix for bullet and numbering issues */
+.ProseMirror ul {
+  list-style-type: disc !important;
+  margin-left: 1.5rem !important;
+  padding-left: 0 !important;
 }
 
-.sidebar-meta {
-  display: grid;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
+.ProseMirror ol {
+  list-style-type: decimal !important;
+  margin-left: 1.5rem !important;
+  padding-left: 0 !important;
 }
 
-.nav-list {
-  display: grid;
-  gap: 0.75rem;
+.ProseMirror li {
+  display: list-item !important;
+  margin-left: 0 !important;
+  padding-left: 0.25rem !important;
 }
 
-.nav-link {
-  display: grid;
-  gap: 0.3rem;
-  padding: 0.9rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.04);
-  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+.ProseMirror ul ul {
+  list-style-type: circle !important;
+  margin-left: 1.5rem !important;
 }
 
-.nav-link:hover {
-  transform: translateX(4px);
-  border-color: rgba(255, 179, 71, 0.45);
-  background: rgba(255, 255, 255, 0.08);
+.ProseMirror ul ul ul {
+  list-style-type: square !important;
+  margin-left: 1.5rem !important;
 }
 
-.nav-link.is-active {
-  border-color: rgba(255, 179, 71, 0.55);
-  background: rgba(255, 179, 71, 0.12);
+/* Ensure list items have proper spacing */
+.ProseMirror li p {
+  margin: 0 !important;
 }
 
-.nav-meta {
-  color: rgba(244, 239, 231, 0.62);
-  font-size: 0.88rem;
+.ProseMirror li + li {
+  margin-top: 0.25rem !important;
 }
 
-.main-panel {
-  padding: 2rem;
+/* Also apply list styles to rendered comments (prose class) */
+.prose ul {
+  list-style-type: disc !important;
+  margin-left: 1.5rem !important;
+  padding-left: 0 !important;
 }
 
-.hero {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  align-items: flex-start;
-  max-width: 50rem;
-  margin-bottom: 2rem;
+.prose ol {
+  list-style-type: decimal !important;
+  margin-left: 1.5rem !important;
+  padding-left: 0 !important;
 }
 
-.hero h1 {
-  margin: 0.5rem 0;
-  font-size: clamp(2.4rem, 4vw, 4.6rem);
-  line-height: 0.98;
+.prose li {
+  display: list-item !important;
+  margin-left: 0 !important;
+  padding-left: 0.25rem !important;
 }
 
-.hero p {
-  max-width: 42rem;
-  color: rgba(244, 239, 231, 0.74);
+.prose ul ul {
+  list-style-type: circle !important;
+  margin-left: 1.5rem !important;
 }
 
-.hero-toolbar {
-  display: flex;
-  justify-content: flex-end;
+.prose ul ul ul {
+  list-style-type: square !important;
+  margin-left: 1.5rem !important;
 }
 
-.eyebrow {
-  display: inline-block;
-  padding: 0.35rem 0.75rem;
-  border-radius: 999px;
-  background: rgba(255, 179, 71, 0.14);
-  color: #ffd38b;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-size: 0.75rem;
+.prose li p {
+  margin: 0 !important;
 }
 
-.content-frame {
-  min-width: 0;
+.prose li + li {
+  margin-top: 0.25rem !important;
 }
 
-.page-stack {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
+/* TipTap specific list classes */
+.tiptap-bullet-list {
+  list-style-type: disc !important;
+  margin-left: 1.5rem !important;
+  padding-left: 0 !important;
 }
 
-.panel-card {
-  height: 100%;
-  padding: 1.4rem;
-  border-radius: 1.4rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.04));
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+.tiptap-ordered-list {
+  list-style-type: decimal !important;
+  margin-left: 1.5rem !important;
+  padding-left: 0 !important;
 }
 
-.panel-card h2 {
-  margin-top: 0;
-  margin-bottom: 0.65rem;
+.tiptap-list-item {
+  display: list-item !important;
+  margin-left: 0 !important;
+  padding-left: 0.25rem !important;
 }
 
-.panel-card p {
-  margin: 0;
-  color: rgba(244, 239, 231, 0.74);
+/* TaskCard Title - Handle text wrapping */
+.task-card h3 {
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
-.panel-secondary {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(12, 17, 30, 0.4));
+/* TaskCard Description Styles - Handle text wrapping and images */
+.task-card-description {
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
-.meta-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.25rem;
+.task-card-description * {
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
 }
 
-.meta-grid strong {
-  display: block;
-  margin-top: 0.3rem;
-  overflow-wrap: anywhere;
+.task-card-description img {
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: 120px !important;
+  border-radius: 4px !important;
+  object-fit: cover !important;
+  margin: 0.5rem 0 !important;
+  display: block !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
 }
 
-.meta-label {
-  color: rgba(244, 239, 231, 0.56);
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+/* Ensure images in shrunken task cards don't break layout */
+.task-card-description.line-clamp-2 img {
+  max-height: 60px !important;
+  margin: 0.25rem 0 !important;
 }
 
-.note-list {
-  margin: 0;
-  padding-left: 1.2rem;
-  color: rgba(244, 239, 231, 0.8);
+/* Compact image mode for inline editing in TaskCards */
+.ProseMirror .tiptap-image[data-compact="true"],
+.prose .tiptap-image[data-compact="true"] {
+  max-width: 150px !important;
+  max-height: 80px !important;
+  object-fit: cover !important;
+  border-radius: 4px !important;
+  margin: 0.25rem 0 !important;
 }
 
-.note-list li + li {
-  margin-top: 0.65rem;
-}
-
-.status-pill,
-.path-pill {
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  border-radius: 999px;
-  padding: 0.35rem 0.75rem;
-  font-size: 0.78rem;
-}
-
-.status-pill {
-  background: rgba(255, 179, 71, 0.16);
-  color: #ffd38b;
-}
-
-.path-pill {
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(244, 239, 231, 0.72);
-  overflow-wrap: anywhere;
-}
-
-.menu-toggle,
-.ghost-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  color: inherit;
-  cursor: pointer;
-  font: inherit;
-  padding: 0.75rem 1rem;
-}
-
-.menu-toggle {
-  min-width: 5.5rem;
-}
-
-.standalone-page {
-  display: grid;
-  place-items: center;
-  min-height: 100vh;
-  padding: 2rem;
-}
-
-.standalone-card {
-  max-width: 32rem;
-}
-
-.accent-sunrise {
-  border-color: rgba(255, 179, 71, 0.4);
-}
-
-.accent-cobalt {
-  border-color: rgba(74, 144, 226, 0.4);
-}
-
-.accent-mint {
-  border-color: rgba(65, 201, 164, 0.38);
-}
-
-.accent-rose {
-  border-color: rgba(243, 114, 160, 0.35);
-}
-
-.accent-vault {
-  border-color: rgba(160, 174, 192, 0.3);
-}
-
-@media (max-width: 900px) {
-  .app-shell {
-    grid-template-columns: 1fr;
-  }
-
-  .sidebar {
-    position: fixed;
-    inset: 0 auto 0 0;
-    width: min(320px, 100vw);
-    z-index: 10;
-    border-right: 0;
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-
-  .sidebar.is-open {
-    transform: translateX(0);
-    opacity: 1;
-  }
-
-  .main-panel {
-    padding: 1.5rem;
-  }
-
-  .hero {
-    flex-direction: column;
-    max-width: none;
-  }
-
-  .page-stack,
-  .meta-grid {
-    grid-template-columns: 1fr;
-  }
+/* TaskDetails word-wrap handling for long unbroken text */
+[data-task-details] .ProseMirror,
+[data-task-details] .prose,
+[data-task-details] p,
+[data-task-details] div {
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
 }

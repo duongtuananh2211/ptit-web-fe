@@ -786,10 +786,30 @@ export class ProjectsClient {
     }
 
     /**
+     * @param status (optional) 
+     * @param search (optional) 
+     * @param pageNumber (optional) 
+     * @param pageSize (optional) 
      * @return OK
      */
-    placeholder3(signal?: AbortSignal): Promise<SwaggerResponse<ScaffoldEndpointResponse>> {
-        let url_ = this.baseUrl + "/api/projects/placeholder";
+    projectsGET(status?: string | undefined, search?: string | undefined, pageNumber?: number | undefined, pageSize?: number | undefined, signal?: AbortSignal): Promise<SwaggerResponse<ProjectListResponse>> {
+        let url_ = this.baseUrl + "/api/projects?";
+        if (status === null)
+            throw new globalThis.Error("The parameter 'status' cannot be null.");
+        else if (status !== undefined)
+            url_ += "Status=" + encodeURIComponent("" + status) + "&";
+        if (search === null)
+            throw new globalThis.Error("The parameter 'search' cannot be null.");
+        else if (search !== undefined)
+            url_ += "Search=" + encodeURIComponent("" + search) + "&";
+        if (pageNumber === null)
+            throw new globalThis.Error("The parameter 'pageNumber' cannot be null.");
+        else if (pageNumber !== undefined)
+            url_ += "PageNumber=" + encodeURIComponent("" + pageNumber) + "&";
+        if (pageSize === null)
+            throw new globalThis.Error("The parameter 'pageSize' cannot be null.");
+        else if (pageSize !== undefined)
+            url_ += "PageSize=" + encodeURIComponent("" + pageSize) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
@@ -801,18 +821,18 @@ export class ProjectsClient {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processPlaceholder3(_response);
+            return this.processProjectsGET(_response);
         });
     }
 
-    protected processPlaceholder3(response: Response): Promise<SwaggerResponse<ScaffoldEndpointResponse>> {
+    protected processProjectsGET(response: Response): Promise<SwaggerResponse<ProjectListResponse>> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ScaffoldEndpointResponse.fromJS(resultData200);
+            result200 = ProjectListResponse.fromJS(resultData200);
             return new SwaggerResponse(status, _headers, result200);
             });
         } else if (status !== 200 && status !== 204) {
@@ -820,7 +840,656 @@ export class ProjectsClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<SwaggerResponse<ScaffoldEndpointResponse>>(new SwaggerResponse(status, _headers, null as any));
+        return Promise.resolve<SwaggerResponse<ProjectListResponse>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @param body (optional) 
+     * @return OK
+     */
+    projectsPOST(body?: CreateProjectRequest | undefined, signal?: AbortSignal): Promise<SwaggerResponse<ProjectDetailResponse>> {
+        let url_ = this.baseUrl + "/api/projects";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processProjectsPOST(_response);
+        });
+    }
+
+    protected processProjectsPOST(response: Response): Promise<SwaggerResponse<ProjectDetailResponse>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProjectDetailResponse.fromJS(resultData200);
+            return new SwaggerResponse(status, _headers, result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<ProjectDetailResponse>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return OK
+     */
+    projectsGET2(projectId: string, signal?: AbortSignal): Promise<SwaggerResponse<ProjectDetailResponse>> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}";
+        if (projectId === undefined || projectId === null)
+            throw new globalThis.Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processProjectsGET2(_response);
+        });
+    }
+
+    protected processProjectsGET2(response: Response): Promise<SwaggerResponse<ProjectDetailResponse>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProjectDetailResponse.fromJS(resultData200);
+            return new SwaggerResponse(status, _headers, result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<ProjectDetailResponse>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @param body (optional) 
+     * @return OK
+     */
+    projectsPUT(projectId: string, body?: UpdateProjectRequest | undefined, signal?: AbortSignal): Promise<SwaggerResponse<ProjectDetailResponse>> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}";
+        if (projectId === undefined || projectId === null)
+            throw new globalThis.Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "PUT",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processProjectsPUT(_response);
+        });
+    }
+
+    protected processProjectsPUT(response: Response): Promise<SwaggerResponse<ProjectDetailResponse>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProjectDetailResponse.fromJS(resultData200);
+            return new SwaggerResponse(status, _headers, result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<ProjectDetailResponse>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return OK
+     */
+    archive(projectId: string, signal?: AbortSignal): Promise<SwaggerResponse<void>> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}/archive";
+        if (projectId === undefined || projectId === null)
+            throw new globalThis.Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            signal,
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processArchive(_response);
+        });
+    }
+
+    protected processArchive(response: Response): Promise<SwaggerResponse<void>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return new SwaggerResponse(status, _headers, null as any);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<void>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return OK
+     */
+    membersAll(projectId: string, signal?: AbortSignal): Promise<SwaggerResponse<ProjectMemberDto[]>> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}/members";
+        if (projectId === undefined || projectId === null)
+            throw new globalThis.Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processMembersAll(_response);
+        });
+    }
+
+    protected processMembersAll(response: Response): Promise<SwaggerResponse<ProjectMemberDto[]>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ProjectMemberDto.fromJS(item));
+            }
+            else {
+                result200 = null as any;
+            }
+            return new SwaggerResponse(status, _headers, result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<ProjectMemberDto[]>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @param body (optional) 
+     * @return OK
+     */
+    membersPOST(projectId: string, body?: AddProjectMemberRequest | undefined, signal?: AbortSignal): Promise<SwaggerResponse<ProjectMemberDto>> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}/members";
+        if (projectId === undefined || projectId === null)
+            throw new globalThis.Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processMembersPOST(_response);
+        });
+    }
+
+    protected processMembersPOST(response: Response): Promise<SwaggerResponse<ProjectMemberDto>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProjectMemberDto.fromJS(resultData200);
+            return new SwaggerResponse(status, _headers, result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<ProjectMemberDto>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @param body (optional) 
+     * @return OK
+     */
+    membersPUT(projectId: string, memberId: string, body?: UpdateProjectMemberRequest | undefined, signal?: AbortSignal): Promise<SwaggerResponse<ProjectMemberDto>> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}/members/{memberId}";
+        if (projectId === undefined || projectId === null)
+            throw new globalThis.Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        if (memberId === undefined || memberId === null)
+            throw new globalThis.Error("The parameter 'memberId' must be defined.");
+        url_ = url_.replace("{memberId}", encodeURIComponent("" + memberId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "PUT",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processMembersPUT(_response);
+        });
+    }
+
+    protected processMembersPUT(response: Response): Promise<SwaggerResponse<ProjectMemberDto>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProjectMemberDto.fromJS(resultData200);
+            return new SwaggerResponse(status, _headers, result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<ProjectMemberDto>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return OK
+     */
+    membersDELETE(projectId: string, memberId: string, signal?: AbortSignal): Promise<SwaggerResponse<void>> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}/members/{memberId}";
+        if (projectId === undefined || projectId === null)
+            throw new globalThis.Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        if (memberId === undefined || memberId === null)
+            throw new globalThis.Error("The parameter 'memberId' must be defined.");
+        url_ = url_.replace("{memberId}", encodeURIComponent("" + memberId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            signal,
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processMembersDELETE(_response);
+        });
+    }
+
+    protected processMembersDELETE(response: Response): Promise<SwaggerResponse<void>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return new SwaggerResponse(status, _headers, null as any);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<void>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return OK
+     */
+    featureAreasAll(projectId: string, signal?: AbortSignal): Promise<SwaggerResponse<FeatureAreaDto[]>> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}/feature-areas";
+        if (projectId === undefined || projectId === null)
+            throw new globalThis.Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processFeatureAreasAll(_response);
+        });
+    }
+
+    protected processFeatureAreasAll(response: Response): Promise<SwaggerResponse<FeatureAreaDto[]>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(FeatureAreaDto.fromJS(item));
+            }
+            else {
+                result200 = null as any;
+            }
+            return new SwaggerResponse(status, _headers, result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<FeatureAreaDto[]>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @param body (optional) 
+     * @return OK
+     */
+    featureAreasPOST(projectId: string, body?: CreateFeatureAreaRequest | undefined, signal?: AbortSignal): Promise<SwaggerResponse<FeatureAreaDto>> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}/feature-areas";
+        if (projectId === undefined || projectId === null)
+            throw new globalThis.Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: RequestInit = {
+            body: content_,
+            method: "POST",
+            signal,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processFeatureAreasPOST(_response);
+        });
+    }
+
+    protected processFeatureAreasPOST(response: Response): Promise<SwaggerResponse<FeatureAreaDto>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = FeatureAreaDto.fromJS(resultData200);
+            return new SwaggerResponse(status, _headers, result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<FeatureAreaDto>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return OK
+     */
+    featureAreasDELETE(projectId: string, areaId: string, signal?: AbortSignal): Promise<SwaggerResponse<void>> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}/feature-areas/{areaId}";
+        if (projectId === undefined || projectId === null)
+            throw new globalThis.Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        if (areaId === undefined || areaId === null)
+            throw new globalThis.Error("The parameter 'areaId' must be defined.");
+        url_ = url_.replace("{areaId}", encodeURIComponent("" + areaId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            signal,
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processFeatureAreasDELETE(_response);
+        });
+    }
+
+    protected processFeatureAreasDELETE(response: Response): Promise<SwaggerResponse<void>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return new SwaggerResponse(status, _headers, null as any);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<void>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return OK
+     */
+    overview(projectId: string, signal?: AbortSignal): Promise<SwaggerResponse<ProjectOverviewDto>> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}/overview";
+        if (projectId === undefined || projectId === null)
+            throw new globalThis.Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processOverview(_response);
+        });
+    }
+
+    protected processOverview(response: Response): Promise<SwaggerResponse<ProjectOverviewDto>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProjectOverviewDto.fromJS(resultData200);
+            return new SwaggerResponse(status, _headers, result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<ProjectOverviewDto>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return OK
+     */
+    boardPreview(projectId: string, signal?: AbortSignal): Promise<SwaggerResponse<ProjectBoardPreviewDto>> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}/board-preview";
+        if (projectId === undefined || projectId === null)
+            throw new globalThis.Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processBoardPreview(_response);
+        });
+    }
+
+    protected processBoardPreview(response: Response): Promise<SwaggerResponse<ProjectBoardPreviewDto>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ProjectBoardPreviewDto.fromJS(resultData200);
+            return new SwaggerResponse(status, _headers, result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<ProjectBoardPreviewDto>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return OK
+     */
+    backlog(projectId: string, signal?: AbortSignal): Promise<SwaggerResponse<BacklogDto>> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}/backlog";
+        if (projectId === undefined || projectId === null)
+            throw new globalThis.Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processBacklog(_response);
+        });
+    }
+
+    protected processBacklog(response: Response): Promise<SwaggerResponse<BacklogDto>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = BacklogDto.fromJS(resultData200);
+            return new SwaggerResponse(status, _headers, result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<BacklogDto>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @param sprintId (optional) 
+     * @return OK
+     */
+    board(projectId: string, sprintId?: string | undefined, signal?: AbortSignal): Promise<SwaggerResponse<void>> {
+        let url_ = this.baseUrl + "/api/projects/{projectId}/board?";
+        if (projectId === undefined || projectId === null)
+            throw new globalThis.Error("The parameter 'projectId' must be defined.");
+        url_ = url_.replace("{projectId}", encodeURIComponent("" + projectId));
+        if (sprintId === null)
+            throw new globalThis.Error("The parameter 'sprintId' cannot be null.");
+        else if (sprintId !== undefined)
+            url_ += "sprintId=" + encodeURIComponent("" + sprintId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processBoard(_response);
+        });
+    }
+
+    protected processBoard(response: Response): Promise<SwaggerResponse<void>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return new SwaggerResponse(status, _headers, null as any);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<void>>(new SwaggerResponse(status, _headers, null as any));
     }
 }
 
@@ -835,10 +1504,15 @@ export class ReportsClient {
     }
 
     /**
+     * @param projectId (optional) 
      * @return OK
      */
-    placeholder4(signal?: AbortSignal): Promise<SwaggerResponse<ScaffoldEndpointResponse>> {
-        let url_ = this.baseUrl + "/api/reports/placeholder";
+    dashboard(projectId?: string | undefined, signal?: AbortSignal): Promise<SwaggerResponse<ReportDashboardDto>> {
+        let url_ = this.baseUrl + "/api/reports/dashboard?";
+        if (projectId === null)
+            throw new globalThis.Error("The parameter 'projectId' cannot be null.");
+        else if (projectId !== undefined)
+            url_ += "projectId=" + encodeURIComponent("" + projectId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_: RequestInit = {
@@ -850,18 +1524,18 @@ export class ReportsClient {
         };
 
         return this.http.fetch(url_, options_).then((_response: Response) => {
-            return this.processPlaceholder4(_response);
+            return this.processDashboard(_response);
         });
     }
 
-    protected processPlaceholder4(response: Response): Promise<SwaggerResponse<ScaffoldEndpointResponse>> {
+    protected processDashboard(response: Response): Promise<SwaggerResponse<ReportDashboardDto>> {
         const status = response.status;
         let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
         if (status === 200) {
             return response.text().then((_responseText) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ScaffoldEndpointResponse.fromJS(resultData200);
+            result200 = ReportDashboardDto.fromJS(resultData200);
             return new SwaggerResponse(status, _headers, result200);
             });
         } else if (status !== 200 && status !== 204) {
@@ -869,8 +1543,1102 @@ export class ReportsClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             });
         }
-        return Promise.resolve<SwaggerResponse<ScaffoldEndpointResponse>>(new SwaggerResponse(status, _headers, null as any));
+        return Promise.resolve<SwaggerResponse<ReportDashboardDto>>(new SwaggerResponse(status, _headers, null as any));
     }
+
+    /**
+     * @param projectId (optional) 
+     * @param days (optional) 
+     * @return OK
+     */
+    bugDensity(projectId?: string | undefined, days?: number | undefined, signal?: AbortSignal): Promise<SwaggerResponse<BugDensityItemDto[]>> {
+        let url_ = this.baseUrl + "/api/reports/bug-density?";
+        if (projectId === null)
+            throw new globalThis.Error("The parameter 'projectId' cannot be null.");
+        else if (projectId !== undefined)
+            url_ += "projectId=" + encodeURIComponent("" + projectId) + "&";
+        if (days === null)
+            throw new globalThis.Error("The parameter 'days' cannot be null.");
+        else if (days !== undefined)
+            url_ += "days=" + encodeURIComponent("" + days) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processBugDensity(_response);
+        });
+    }
+
+    protected processBugDensity(response: Response): Promise<SwaggerResponse<BugDensityItemDto[]>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(BugDensityItemDto.fromJS(item));
+            }
+            else {
+                result200 = null as any;
+            }
+            return new SwaggerResponse(status, _headers, result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<BugDensityItemDto[]>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @param projectId (optional) 
+     * @param days (optional) 
+     * @return OK
+     */
+    teamPerformance(projectId?: string | undefined, days?: number | undefined, signal?: AbortSignal): Promise<SwaggerResponse<TeamPerformanceItemDto[]>> {
+        let url_ = this.baseUrl + "/api/reports/team-performance?";
+        if (projectId === null)
+            throw new globalThis.Error("The parameter 'projectId' cannot be null.");
+        else if (projectId !== undefined)
+            url_ += "projectId=" + encodeURIComponent("" + projectId) + "&";
+        if (days === null)
+            throw new globalThis.Error("The parameter 'days' cannot be null.");
+        else if (days !== undefined)
+            url_ += "days=" + encodeURIComponent("" + days) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processTeamPerformance(_response);
+        });
+    }
+
+    protected processTeamPerformance(response: Response): Promise<SwaggerResponse<TeamPerformanceItemDto[]>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(TeamPerformanceItemDto.fromJS(item));
+            }
+            else {
+                result200 = null as any;
+            }
+            return new SwaggerResponse(status, _headers, result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<TeamPerformanceItemDto[]>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @param projectId (optional) 
+     * @param topN (optional) 
+     * @return OK
+     */
+    criticalIssues(projectId?: string | undefined, topN?: number | undefined, signal?: AbortSignal): Promise<SwaggerResponse<CriticalIssueDto[]>> {
+        let url_ = this.baseUrl + "/api/reports/critical-issues?";
+        if (projectId === null)
+            throw new globalThis.Error("The parameter 'projectId' cannot be null.");
+        else if (projectId !== undefined)
+            url_ += "projectId=" + encodeURIComponent("" + projectId) + "&";
+        if (topN === null)
+            throw new globalThis.Error("The parameter 'topN' cannot be null.");
+        else if (topN !== undefined)
+            url_ += "topN=" + encodeURIComponent("" + topN) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processCriticalIssues(_response);
+        });
+    }
+
+    protected processCriticalIssues(response: Response): Promise<SwaggerResponse<CriticalIssueDto[]>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(CriticalIssueDto.fromJS(item));
+            }
+            else {
+                result200 = null as any;
+            }
+            return new SwaggerResponse(status, _headers, result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<CriticalIssueDto[]>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @param projectId (optional) 
+     * @return OK
+     */
+    recommendations(projectId?: string | undefined, signal?: AbortSignal): Promise<SwaggerResponse<RecommendationItemDto[]>> {
+        let url_ = this.baseUrl + "/api/reports/recommendations?";
+        if (projectId === null)
+            throw new globalThis.Error("The parameter 'projectId' cannot be null.");
+        else if (projectId !== undefined)
+            url_ += "projectId=" + encodeURIComponent("" + projectId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processRecommendations(_response);
+        });
+    }
+
+    protected processRecommendations(response: Response): Promise<SwaggerResponse<RecommendationItemDto[]>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(RecommendationItemDto.fromJS(item));
+            }
+            else {
+                result200 = null as any;
+            }
+            return new SwaggerResponse(status, _headers, result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<RecommendationItemDto[]>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @param format (optional) 
+     * @param projectId (optional) 
+     * @return OK
+     */
+    export(format?: string | undefined, projectId?: string | undefined, signal?: AbortSignal): Promise<SwaggerResponse<void>> {
+        let url_ = this.baseUrl + "/api/reports/export?";
+        if (format === null)
+            throw new globalThis.Error("The parameter 'format' cannot be null.");
+        else if (format !== undefined)
+            url_ += "format=" + encodeURIComponent("" + format) + "&";
+        if (projectId === null)
+            throw new globalThis.Error("The parameter 'projectId' cannot be null.");
+        else if (projectId !== undefined)
+            url_ += "projectId=" + encodeURIComponent("" + projectId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            signal,
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processExport(_response);
+        });
+    }
+
+    protected processExport(response: Response): Promise<SwaggerResponse<void>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return new SwaggerResponse(status, _headers, null as any);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<void>>(new SwaggerResponse(status, _headers, null as any));
+    }
+}
+
+export class SprintsClient {
+    private http: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> };
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, http?: { fetch(url: RequestInfo, init?: RequestInit): Promise<Response> }) {
+        this.http = http ? http : window as any;
+        this.baseUrl = baseUrl ?? "";
+    }
+
+    /**
+     * @return OK
+     */
+    sprintsAll(signal?: AbortSignal): Promise<SwaggerResponse<SprintDto[]>> {
+        let url_ = this.baseUrl + "/api/sprints";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processSprintsAll(_response);
+        });
+    }
+
+    protected processSprintsAll(response: Response): Promise<SwaggerResponse<SprintDto[]>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(SprintDto.fromJS(item));
+            }
+            else {
+                result200 = null as any;
+            }
+            return new SwaggerResponse(status, _headers, result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<SprintDto[]>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return OK
+     */
+    current(signal?: AbortSignal): Promise<SwaggerResponse<void>> {
+        let url_ = this.baseUrl + "/api/sprints/current";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processCurrent(_response);
+        });
+    }
+
+    protected processCurrent(response: Response): Promise<SwaggerResponse<void>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return new SwaggerResponse(status, _headers, null as any);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<void>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return OK
+     */
+    sprints(id: string, signal?: AbortSignal): Promise<SwaggerResponse<SprintDto>> {
+        let url_ = this.baseUrl + "/api/sprints/{id}";
+        if (id === undefined || id === null)
+            throw new globalThis.Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processSprints(_response);
+        });
+    }
+
+    protected processSprints(response: Response): Promise<SwaggerResponse<SprintDto>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = SprintDto.fromJS(resultData200);
+            return new SwaggerResponse(status, _headers, result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<SprintDto>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return OK
+     */
+    byCode(code: string, signal?: AbortSignal): Promise<SwaggerResponse<SprintDto>> {
+        let url_ = this.baseUrl + "/api/sprints/by-code/{code}";
+        if (code === undefined || code === null)
+            throw new globalThis.Error("The parameter 'code' must be defined.");
+        url_ = url_.replace("{code}", encodeURIComponent("" + code));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processByCode(_response);
+        });
+    }
+
+    protected processByCode(response: Response): Promise<SwaggerResponse<SprintDto>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = SprintDto.fromJS(resultData200);
+            return new SwaggerResponse(status, _headers, result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<SprintDto>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return OK
+     */
+    board2(id: string, signal?: AbortSignal): Promise<SwaggerResponse<SprintBoardDto>> {
+        let url_ = this.baseUrl + "/api/sprints/{id}/board";
+        if (id === undefined || id === null)
+            throw new globalThis.Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processBoard2(_response);
+        });
+    }
+
+    protected processBoard2(response: Response): Promise<SwaggerResponse<SprintBoardDto>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = SprintBoardDto.fromJS(resultData200);
+            return new SwaggerResponse(status, _headers, result200);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<SprintBoardDto>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return OK
+     */
+    tasksPOST(id: string, taskId: string, signal?: AbortSignal): Promise<SwaggerResponse<void>> {
+        let url_ = this.baseUrl + "/api/sprints/{id}/tasks/{taskId}";
+        if (id === undefined || id === null)
+            throw new globalThis.Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        if (taskId === undefined || taskId === null)
+            throw new globalThis.Error("The parameter 'taskId' must be defined.");
+        url_ = url_.replace("{taskId}", encodeURIComponent("" + taskId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            signal,
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processTasksPOST(_response);
+        });
+    }
+
+    protected processTasksPOST(response: Response): Promise<SwaggerResponse<void>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return new SwaggerResponse(status, _headers, null as any);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<void>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return OK
+     */
+    tasksDELETE(taskId: string, signal?: AbortSignal): Promise<SwaggerResponse<void>> {
+        let url_ = this.baseUrl + "/api/sprints/tasks/{taskId}";
+        if (taskId === undefined || taskId === null)
+            throw new globalThis.Error("The parameter 'taskId' must be defined.");
+        url_ = url_.replace("{taskId}", encodeURIComponent("" + taskId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            signal,
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processTasksDELETE(_response);
+        });
+    }
+
+    protected processTasksDELETE(response: Response): Promise<SwaggerResponse<void>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return new SwaggerResponse(status, _headers, null as any);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<void>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return OK
+     */
+    issuesPOST(id: string, issueId: string, signal?: AbortSignal): Promise<SwaggerResponse<void>> {
+        let url_ = this.baseUrl + "/api/sprints/{id}/issues/{issueId}";
+        if (id === undefined || id === null)
+            throw new globalThis.Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        if (issueId === undefined || issueId === null)
+            throw new globalThis.Error("The parameter 'issueId' must be defined.");
+        url_ = url_.replace("{issueId}", encodeURIComponent("" + issueId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "POST",
+            signal,
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processIssuesPOST(_response);
+        });
+    }
+
+    protected processIssuesPOST(response: Response): Promise<SwaggerResponse<void>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return new SwaggerResponse(status, _headers, null as any);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<void>>(new SwaggerResponse(status, _headers, null as any));
+    }
+
+    /**
+     * @return OK
+     */
+    issuesDELETE(issueId: string, signal?: AbortSignal): Promise<SwaggerResponse<void>> {
+        let url_ = this.baseUrl + "/api/sprints/issues/{issueId}";
+        if (issueId === undefined || issueId === null)
+            throw new globalThis.Error("The parameter 'issueId' must be defined.");
+        url_ = url_.replace("{issueId}", encodeURIComponent("" + issueId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "DELETE",
+            signal,
+            headers: {
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processIssuesDELETE(_response);
+        });
+    }
+
+    protected processIssuesDELETE(response: Response): Promise<SwaggerResponse<void>> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            return new SwaggerResponse(status, _headers, null as any);
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<SwaggerResponse<void>>(new SwaggerResponse(status, _headers, null as any));
+    }
+}
+
+export class AddProjectMemberRequest implements IAddProjectMemberRequest {
+    userId?: string;
+    projectRole?: string | undefined;
+
+    constructor(data?: IAddProjectMemberRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.userId = _data["userId"];
+            this.projectRole = _data["projectRole"];
+        }
+    }
+
+    static fromJS(data: any): AddProjectMemberRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new AddProjectMemberRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userId"] = this.userId;
+        data["projectRole"] = this.projectRole;
+        return data;
+    }
+}
+
+export interface IAddProjectMemberRequest {
+    userId?: string;
+    projectRole?: string | undefined;
+}
+
+export class BacklogDto implements IBacklogDto {
+    tasks?: BacklogTaskItem[] | undefined;
+    issues?: BacklogIssueItem[] | undefined;
+
+    constructor(data?: IBacklogDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["tasks"])) {
+                this.tasks = [] as any;
+                for (let item of _data["tasks"])
+                    this.tasks!.push(BacklogTaskItem.fromJS(item));
+            }
+            if (Array.isArray(_data["issues"])) {
+                this.issues = [] as any;
+                for (let item of _data["issues"])
+                    this.issues!.push(BacklogIssueItem.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): BacklogDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new BacklogDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.tasks)) {
+            data["tasks"] = [];
+            for (let item of this.tasks)
+                data["tasks"].push(item ? item.toJSON() : undefined as any);
+        }
+        if (Array.isArray(this.issues)) {
+            data["issues"] = [];
+            for (let item of this.issues)
+                data["issues"].push(item ? item.toJSON() : undefined as any);
+        }
+        return data;
+    }
+}
+
+export interface IBacklogDto {
+    tasks?: BacklogTaskItem[] | undefined;
+    issues?: BacklogIssueItem[] | undefined;
+}
+
+export class BacklogIssueItem implements IBacklogIssueItem {
+    id?: string;
+    issueCode?: string | undefined;
+    title?: string | undefined;
+    severity?: string | undefined;
+    status?: string | undefined;
+    projectId?: string;
+    projectName?: string | undefined;
+
+    constructor(data?: IBacklogIssueItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.issueCode = _data["issueCode"];
+            this.title = _data["title"];
+            this.severity = _data["severity"];
+            this.status = _data["status"];
+            this.projectId = _data["projectId"];
+            this.projectName = _data["projectName"];
+        }
+    }
+
+    static fromJS(data: any): BacklogIssueItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new BacklogIssueItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["issueCode"] = this.issueCode;
+        data["title"] = this.title;
+        data["severity"] = this.severity;
+        data["status"] = this.status;
+        data["projectId"] = this.projectId;
+        data["projectName"] = this.projectName;
+        return data;
+    }
+}
+
+export interface IBacklogIssueItem {
+    id?: string;
+    issueCode?: string | undefined;
+    title?: string | undefined;
+    severity?: string | undefined;
+    status?: string | undefined;
+    projectId?: string;
+    projectName?: string | undefined;
+}
+
+export class BacklogTaskItem implements IBacklogTaskItem {
+    id?: string;
+    title?: string | undefined;
+    status?: string | undefined;
+    priority?: string | undefined;
+    projectId?: string;
+    projectName?: string | undefined;
+    featureAreaId?: string | undefined;
+    featureAreaName?: string | undefined;
+
+    constructor(data?: IBacklogTaskItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+            this.status = _data["status"];
+            this.priority = _data["priority"];
+            this.projectId = _data["projectId"];
+            this.projectName = _data["projectName"];
+            this.featureAreaId = _data["featureAreaId"];
+            this.featureAreaName = _data["featureAreaName"];
+        }
+    }
+
+    static fromJS(data: any): BacklogTaskItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new BacklogTaskItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        data["status"] = this.status;
+        data["priority"] = this.priority;
+        data["projectId"] = this.projectId;
+        data["projectName"] = this.projectName;
+        data["featureAreaId"] = this.featureAreaId;
+        data["featureAreaName"] = this.featureAreaName;
+        return data;
+    }
+}
+
+export interface IBacklogTaskItem {
+    id?: string;
+    title?: string | undefined;
+    status?: string | undefined;
+    priority?: string | undefined;
+    projectId?: string;
+    projectName?: string | undefined;
+    featureAreaId?: string | undefined;
+    featureAreaName?: string | undefined;
+}
+
+export class BoardColumnDto implements IBoardColumnDto {
+    status?: string | undefined;
+    taskCount?: number;
+    tasks?: BoardTaskPreviewItem[] | undefined;
+
+    constructor(data?: IBoardColumnDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.status = _data["status"];
+            this.taskCount = _data["taskCount"];
+            if (Array.isArray(_data["tasks"])) {
+                this.tasks = [] as any;
+                for (let item of _data["tasks"])
+                    this.tasks!.push(BoardTaskPreviewItem.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): BoardColumnDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new BoardColumnDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["status"] = this.status;
+        data["taskCount"] = this.taskCount;
+        if (Array.isArray(this.tasks)) {
+            data["tasks"] = [];
+            for (let item of this.tasks)
+                data["tasks"].push(item ? item.toJSON() : undefined as any);
+        }
+        return data;
+    }
+}
+
+export interface IBoardColumnDto {
+    status?: string | undefined;
+    taskCount?: number;
+    tasks?: BoardTaskPreviewItem[] | undefined;
+}
+
+export class BoardTaskPreviewItem implements IBoardTaskPreviewItem {
+    id?: string;
+    title?: string | undefined;
+    priority?: string | undefined;
+    assigneeUserId?: string | undefined;
+
+    constructor(data?: IBoardTaskPreviewItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+            this.priority = _data["priority"];
+            this.assigneeUserId = _data["assigneeUserId"];
+        }
+    }
+
+    static fromJS(data: any): BoardTaskPreviewItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new BoardTaskPreviewItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        data["priority"] = this.priority;
+        data["assigneeUserId"] = this.assigneeUserId;
+        return data;
+    }
+}
+
+export interface IBoardTaskPreviewItem {
+    id?: string;
+    title?: string | undefined;
+    priority?: string | undefined;
+    assigneeUserId?: string | undefined;
+}
+
+export class BugDensityItemDto implements IBugDensityItemDto {
+    featureArea?: string | undefined;
+    openCount?: number;
+    resolvedCount?: number;
+    avgTimeToCloseHours?: number | undefined;
+
+    constructor(data?: IBugDensityItemDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.featureArea = _data["featureArea"];
+            this.openCount = _data["openCount"];
+            this.resolvedCount = _data["resolvedCount"];
+            this.avgTimeToCloseHours = _data["avgTimeToCloseHours"];
+        }
+    }
+
+    static fromJS(data: any): BugDensityItemDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new BugDensityItemDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["featureArea"] = this.featureArea;
+        data["openCount"] = this.openCount;
+        data["resolvedCount"] = this.resolvedCount;
+        data["avgTimeToCloseHours"] = this.avgTimeToCloseHours;
+        return data;
+    }
+}
+
+export interface IBugDensityItemDto {
+    featureArea?: string | undefined;
+    openCount?: number;
+    resolvedCount?: number;
+    avgTimeToCloseHours?: number | undefined;
+}
+
+export class CreateFeatureAreaRequest implements ICreateFeatureAreaRequest {
+    areaCode?: string | undefined;
+    areaName?: string | undefined;
+    colorHex?: string | undefined;
+    sortOrder?: number | undefined;
+
+    constructor(data?: ICreateFeatureAreaRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.areaCode = _data["areaCode"];
+            this.areaName = _data["areaName"];
+            this.colorHex = _data["colorHex"];
+            this.sortOrder = _data["sortOrder"];
+        }
+    }
+
+    static fromJS(data: any): CreateFeatureAreaRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateFeatureAreaRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["areaCode"] = this.areaCode;
+        data["areaName"] = this.areaName;
+        data["colorHex"] = this.colorHex;
+        data["sortOrder"] = this.sortOrder;
+        return data;
+    }
+}
+
+export interface ICreateFeatureAreaRequest {
+    areaCode?: string | undefined;
+    areaName?: string | undefined;
+    colorHex?: string | undefined;
+    sortOrder?: number | undefined;
+}
+
+export class CreateProjectRequest implements ICreateProjectRequest {
+    projectKey?: string | undefined;
+    projectName?: string | undefined;
+    description?: string | undefined;
+    startDate?: Date | undefined;
+    endDate?: Date | undefined;
+
+    constructor(data?: ICreateProjectRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.projectKey = _data["projectKey"];
+            this.projectName = _data["projectName"];
+            this.description = _data["description"];
+            this.startDate = _data["startDate"] ? new Date(_data["startDate"].toString()) : undefined as any;
+            this.endDate = _data["endDate"] ? new Date(_data["endDate"].toString()) : undefined as any;
+        }
+    }
+
+    static fromJS(data: any): CreateProjectRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateProjectRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["projectKey"] = this.projectKey;
+        data["projectName"] = this.projectName;
+        data["description"] = this.description;
+        data["startDate"] = this.startDate ? formatDate(this.startDate) : undefined as any;
+        data["endDate"] = this.endDate ? formatDate(this.endDate) : undefined as any;
+        return data;
+    }
+}
+
+export interface ICreateProjectRequest {
+    projectKey?: string | undefined;
+    projectName?: string | undefined;
+    description?: string | undefined;
+    startDate?: Date | undefined;
+    endDate?: Date | undefined;
 }
 
 export class CreateUserRequest implements ICreateUserRequest {
@@ -925,6 +2693,126 @@ export interface ICreateUserRequest {
     roleCode?: string | undefined;
 }
 
+export class CriticalIssueDto implements ICriticalIssueDto {
+    id?: string;
+    issueCode?: string | undefined;
+    title?: string | undefined;
+    priority?: string | undefined;
+    severity?: string | undefined;
+    status?: string | undefined;
+    assigneeName?: string | undefined;
+    openedAt?: Date;
+    dueDate?: Date | undefined;
+
+    constructor(data?: ICriticalIssueDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.issueCode = _data["issueCode"];
+            this.title = _data["title"];
+            this.priority = _data["priority"];
+            this.severity = _data["severity"];
+            this.status = _data["status"];
+            this.assigneeName = _data["assigneeName"];
+            this.openedAt = _data["openedAt"] ? new Date(_data["openedAt"].toString()) : undefined as any;
+            this.dueDate = _data["dueDate"] ? new Date(_data["dueDate"].toString()) : undefined as any;
+        }
+    }
+
+    static fromJS(data: any): CriticalIssueDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CriticalIssueDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["issueCode"] = this.issueCode;
+        data["title"] = this.title;
+        data["priority"] = this.priority;
+        data["severity"] = this.severity;
+        data["status"] = this.status;
+        data["assigneeName"] = this.assigneeName;
+        data["openedAt"] = this.openedAt ? this.openedAt.toISOString() : undefined as any;
+        data["dueDate"] = this.dueDate ? formatDate(this.dueDate) : undefined as any;
+        return data;
+    }
+}
+
+export interface ICriticalIssueDto {
+    id?: string;
+    issueCode?: string | undefined;
+    title?: string | undefined;
+    priority?: string | undefined;
+    severity?: string | undefined;
+    status?: string | undefined;
+    assigneeName?: string | undefined;
+    openedAt?: Date;
+    dueDate?: Date | undefined;
+}
+
+export class FeatureAreaDto implements IFeatureAreaDto {
+    id?: string;
+    areaCode?: string | undefined;
+    areaName?: string | undefined;
+    colorHex?: string | undefined;
+    sortOrder?: number | undefined;
+
+    constructor(data?: IFeatureAreaDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.areaCode = _data["areaCode"];
+            this.areaName = _data["areaName"];
+            this.colorHex = _data["colorHex"];
+            this.sortOrder = _data["sortOrder"];
+        }
+    }
+
+    static fromJS(data: any): FeatureAreaDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new FeatureAreaDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["areaCode"] = this.areaCode;
+        data["areaName"] = this.areaName;
+        data["colorHex"] = this.colorHex;
+        data["sortOrder"] = this.sortOrder;
+        return data;
+    }
+}
+
+export interface IFeatureAreaDto {
+    id?: string;
+    areaCode?: string | undefined;
+    areaName?: string | undefined;
+    colorHex?: string | undefined;
+    sortOrder?: number | undefined;
+}
+
 export class LoginRequest implements ILoginRequest {
     usernameOrEmail?: string | undefined;
     password?: string | undefined;
@@ -963,6 +2851,474 @@ export class LoginRequest implements ILoginRequest {
 export interface ILoginRequest {
     usernameOrEmail?: string | undefined;
     password?: string | undefined;
+}
+
+export class MilestoneDto implements IMilestoneDto {
+    title?: string | undefined;
+    dueDate?: Date;
+
+    constructor(data?: IMilestoneDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.title = _data["title"];
+            this.dueDate = _data["dueDate"] ? new Date(_data["dueDate"].toString()) : undefined as any;
+        }
+    }
+
+    static fromJS(data: any): MilestoneDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MilestoneDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["title"] = this.title;
+        data["dueDate"] = this.dueDate ? formatDate(this.dueDate) : undefined as any;
+        return data;
+    }
+}
+
+export interface IMilestoneDto {
+    title?: string | undefined;
+    dueDate?: Date;
+}
+
+export class ProjectBoardPreviewDto implements IProjectBoardPreviewDto {
+    columns?: BoardColumnDto[] | undefined;
+
+    constructor(data?: IProjectBoardPreviewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["columns"])) {
+                this.columns = [] as any;
+                for (let item of _data["columns"])
+                    this.columns!.push(BoardColumnDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ProjectBoardPreviewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectBoardPreviewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.columns)) {
+            data["columns"] = [];
+            for (let item of this.columns)
+                data["columns"].push(item ? item.toJSON() : undefined as any);
+        }
+        return data;
+    }
+}
+
+export interface IProjectBoardPreviewDto {
+    columns?: BoardColumnDto[] | undefined;
+}
+
+export class ProjectDetailResponse implements IProjectDetailResponse {
+    id?: string;
+    projectKey?: string | undefined;
+    projectName?: string | undefined;
+    description?: string | undefined;
+    status?: string | undefined;
+    ownerUserId?: string;
+    ownerDisplayName?: string | undefined;
+    startDate?: Date | undefined;
+    endDate?: Date | undefined;
+    createdAt?: Date;
+    members?: ProjectMemberDto[] | undefined;
+    featureAreas?: FeatureAreaDto[] | undefined;
+
+    constructor(data?: IProjectDetailResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.projectKey = _data["projectKey"];
+            this.projectName = _data["projectName"];
+            this.description = _data["description"];
+            this.status = _data["status"];
+            this.ownerUserId = _data["ownerUserId"];
+            this.ownerDisplayName = _data["ownerDisplayName"];
+            this.startDate = _data["startDate"] ? new Date(_data["startDate"].toString()) : undefined as any;
+            this.endDate = _data["endDate"] ? new Date(_data["endDate"].toString()) : undefined as any;
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : undefined as any;
+            if (Array.isArray(_data["members"])) {
+                this.members = [] as any;
+                for (let item of _data["members"])
+                    this.members!.push(ProjectMemberDto.fromJS(item));
+            }
+            if (Array.isArray(_data["featureAreas"])) {
+                this.featureAreas = [] as any;
+                for (let item of _data["featureAreas"])
+                    this.featureAreas!.push(FeatureAreaDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ProjectDetailResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectDetailResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["projectKey"] = this.projectKey;
+        data["projectName"] = this.projectName;
+        data["description"] = this.description;
+        data["status"] = this.status;
+        data["ownerUserId"] = this.ownerUserId;
+        data["ownerDisplayName"] = this.ownerDisplayName;
+        data["startDate"] = this.startDate ? formatDate(this.startDate) : undefined as any;
+        data["endDate"] = this.endDate ? formatDate(this.endDate) : undefined as any;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : undefined as any;
+        if (Array.isArray(this.members)) {
+            data["members"] = [];
+            for (let item of this.members)
+                data["members"].push(item ? item.toJSON() : undefined as any);
+        }
+        if (Array.isArray(this.featureAreas)) {
+            data["featureAreas"] = [];
+            for (let item of this.featureAreas)
+                data["featureAreas"].push(item ? item.toJSON() : undefined as any);
+        }
+        return data;
+    }
+}
+
+export interface IProjectDetailResponse {
+    id?: string;
+    projectKey?: string | undefined;
+    projectName?: string | undefined;
+    description?: string | undefined;
+    status?: string | undefined;
+    ownerUserId?: string;
+    ownerDisplayName?: string | undefined;
+    startDate?: Date | undefined;
+    endDate?: Date | undefined;
+    createdAt?: Date;
+    members?: ProjectMemberDto[] | undefined;
+    featureAreas?: FeatureAreaDto[] | undefined;
+}
+
+export class ProjectListItem implements IProjectListItem {
+    id?: string;
+    projectKey?: string | undefined;
+    projectName?: string | undefined;
+    status?: string | undefined;
+    ownerUserId?: string;
+    ownerDisplayName?: string | undefined;
+    startDate?: Date | undefined;
+    endDate?: Date | undefined;
+    memberCount?: number;
+
+    constructor(data?: IProjectListItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.projectKey = _data["projectKey"];
+            this.projectName = _data["projectName"];
+            this.status = _data["status"];
+            this.ownerUserId = _data["ownerUserId"];
+            this.ownerDisplayName = _data["ownerDisplayName"];
+            this.startDate = _data["startDate"] ? new Date(_data["startDate"].toString()) : undefined as any;
+            this.endDate = _data["endDate"] ? new Date(_data["endDate"].toString()) : undefined as any;
+            this.memberCount = _data["memberCount"];
+        }
+    }
+
+    static fromJS(data: any): ProjectListItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectListItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["projectKey"] = this.projectKey;
+        data["projectName"] = this.projectName;
+        data["status"] = this.status;
+        data["ownerUserId"] = this.ownerUserId;
+        data["ownerDisplayName"] = this.ownerDisplayName;
+        data["startDate"] = this.startDate ? formatDate(this.startDate) : undefined as any;
+        data["endDate"] = this.endDate ? formatDate(this.endDate) : undefined as any;
+        data["memberCount"] = this.memberCount;
+        return data;
+    }
+}
+
+export interface IProjectListItem {
+    id?: string;
+    projectKey?: string | undefined;
+    projectName?: string | undefined;
+    status?: string | undefined;
+    ownerUserId?: string;
+    ownerDisplayName?: string | undefined;
+    startDate?: Date | undefined;
+    endDate?: Date | undefined;
+    memberCount?: number;
+}
+
+export class ProjectListResponse implements IProjectListResponse {
+    items?: ProjectListItem[] | undefined;
+    totalCount?: number;
+    pageNumber?: number;
+    pageSize?: number;
+
+    constructor(data?: IProjectListResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(ProjectListItem.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+            this.pageNumber = _data["pageNumber"];
+            this.pageSize = _data["pageSize"];
+        }
+    }
+
+    static fromJS(data: any): ProjectListResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectListResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item ? item.toJSON() : undefined as any);
+        }
+        data["totalCount"] = this.totalCount;
+        data["pageNumber"] = this.pageNumber;
+        data["pageSize"] = this.pageSize;
+        return data;
+    }
+}
+
+export interface IProjectListResponse {
+    items?: ProjectListItem[] | undefined;
+    totalCount?: number;
+    pageNumber?: number;
+    pageSize?: number;
+}
+
+export class ProjectMemberDto implements IProjectMemberDto {
+    memberId?: string;
+    userId?: string;
+    displayName?: string | undefined;
+    email?: string | undefined;
+    avatarUrl?: string | undefined;
+    projectRole?: string | undefined;
+    memberStatus?: string | undefined;
+    joinedAt?: Date;
+
+    constructor(data?: IProjectMemberDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.memberId = _data["memberId"];
+            this.userId = _data["userId"];
+            this.displayName = _data["displayName"];
+            this.email = _data["email"];
+            this.avatarUrl = _data["avatarUrl"];
+            this.projectRole = _data["projectRole"];
+            this.memberStatus = _data["memberStatus"];
+            this.joinedAt = _data["joinedAt"] ? new Date(_data["joinedAt"].toString()) : undefined as any;
+        }
+    }
+
+    static fromJS(data: any): ProjectMemberDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectMemberDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["memberId"] = this.memberId;
+        data["userId"] = this.userId;
+        data["displayName"] = this.displayName;
+        data["email"] = this.email;
+        data["avatarUrl"] = this.avatarUrl;
+        data["projectRole"] = this.projectRole;
+        data["memberStatus"] = this.memberStatus;
+        data["joinedAt"] = this.joinedAt ? this.joinedAt.toISOString() : undefined as any;
+        return data;
+    }
+}
+
+export interface IProjectMemberDto {
+    memberId?: string;
+    userId?: string;
+    displayName?: string | undefined;
+    email?: string | undefined;
+    avatarUrl?: string | undefined;
+    projectRole?: string | undefined;
+    memberStatus?: string | undefined;
+    joinedAt?: Date;
+}
+
+export class ProjectOverviewDto implements IProjectOverviewDto {
+    velocityScore?: number;
+    nextMilestone?: MilestoneDto;
+    teamWorkload?: TeamWorkloadItem[] | undefined;
+    taskSummary?: TaskSummaryDto;
+
+    constructor(data?: IProjectOverviewDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.velocityScore = _data["velocityScore"];
+            this.nextMilestone = _data["nextMilestone"] ? MilestoneDto.fromJS(_data["nextMilestone"]) : undefined as any;
+            if (Array.isArray(_data["teamWorkload"])) {
+                this.teamWorkload = [] as any;
+                for (let item of _data["teamWorkload"])
+                    this.teamWorkload!.push(TeamWorkloadItem.fromJS(item));
+            }
+            this.taskSummary = _data["taskSummary"] ? TaskSummaryDto.fromJS(_data["taskSummary"]) : undefined as any;
+        }
+    }
+
+    static fromJS(data: any): ProjectOverviewDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ProjectOverviewDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["velocityScore"] = this.velocityScore;
+        data["nextMilestone"] = this.nextMilestone ? this.nextMilestone.toJSON() : undefined as any;
+        if (Array.isArray(this.teamWorkload)) {
+            data["teamWorkload"] = [];
+            for (let item of this.teamWorkload)
+                data["teamWorkload"].push(item ? item.toJSON() : undefined as any);
+        }
+        data["taskSummary"] = this.taskSummary ? this.taskSummary.toJSON() : undefined as any;
+        return data;
+    }
+}
+
+export interface IProjectOverviewDto {
+    velocityScore?: number;
+    nextMilestone?: MilestoneDto;
+    teamWorkload?: TeamWorkloadItem[] | undefined;
+    taskSummary?: TaskSummaryDto;
+}
+
+export class RecommendationItemDto implements IRecommendationItemDto {
+    ruleKey?: string | undefined;
+    title?: string | undefined;
+    detail?: string | undefined;
+
+    constructor(data?: IRecommendationItemDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.ruleKey = _data["ruleKey"];
+            this.title = _data["title"];
+            this.detail = _data["detail"];
+        }
+    }
+
+    static fromJS(data: any): RecommendationItemDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RecommendationItemDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["ruleKey"] = this.ruleKey;
+        data["title"] = this.title;
+        data["detail"] = this.detail;
+        return data;
+    }
+}
+
+export interface IRecommendationItemDto {
+    ruleKey?: string | undefined;
+    title?: string | undefined;
+    detail?: string | undefined;
 }
 
 export class RegisterRequest implements IRegisterRequest {
@@ -1013,6 +3369,70 @@ export interface IRegisterRequest {
     password?: string | undefined;
 }
 
+export class ReportDashboardDto implements IReportDashboardDto {
+    totalActiveBugs?: number;
+    avgTimeToCloseHours?: number | undefined;
+    taskVelocityPoints?: number;
+    criticalPriorityCount?: number;
+    totalActiveBugsTrend?: number | undefined;
+    avgTimeToCloseTrend?: number | undefined;
+    taskVelocityTrend?: number | undefined;
+    criticalPriorityTrend?: number | undefined;
+
+    constructor(data?: IReportDashboardDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalActiveBugs = _data["totalActiveBugs"];
+            this.avgTimeToCloseHours = _data["avgTimeToCloseHours"];
+            this.taskVelocityPoints = _data["taskVelocityPoints"];
+            this.criticalPriorityCount = _data["criticalPriorityCount"];
+            this.totalActiveBugsTrend = _data["totalActiveBugsTrend"];
+            this.avgTimeToCloseTrend = _data["avgTimeToCloseTrend"];
+            this.taskVelocityTrend = _data["taskVelocityTrend"];
+            this.criticalPriorityTrend = _data["criticalPriorityTrend"];
+        }
+    }
+
+    static fromJS(data: any): ReportDashboardDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ReportDashboardDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalActiveBugs"] = this.totalActiveBugs;
+        data["avgTimeToCloseHours"] = this.avgTimeToCloseHours;
+        data["taskVelocityPoints"] = this.taskVelocityPoints;
+        data["criticalPriorityCount"] = this.criticalPriorityCount;
+        data["totalActiveBugsTrend"] = this.totalActiveBugsTrend;
+        data["avgTimeToCloseTrend"] = this.avgTimeToCloseTrend;
+        data["taskVelocityTrend"] = this.taskVelocityTrend;
+        data["criticalPriorityTrend"] = this.criticalPriorityTrend;
+        return data;
+    }
+}
+
+export interface IReportDashboardDto {
+    totalActiveBugs?: number;
+    avgTimeToCloseHours?: number | undefined;
+    taskVelocityPoints?: number;
+    criticalPriorityCount?: number;
+    totalActiveBugsTrend?: number | undefined;
+    avgTimeToCloseTrend?: number | undefined;
+    taskVelocityTrend?: number | undefined;
+    criticalPriorityTrend?: number | undefined;
+}
+
 export class ScaffoldEndpointResponse implements IScaffoldEndpointResponse {
     feature?: string | undefined;
     status?: string | undefined;
@@ -1055,6 +3475,526 @@ export interface IScaffoldEndpointResponse {
     feature?: string | undefined;
     status?: string | undefined;
     description?: string | undefined;
+}
+
+export class SprintBoardColumn implements ISprintBoardColumn {
+    status?: string | undefined;
+    taskCount?: number;
+    tasks?: SprintBoardTaskItem[] | undefined;
+
+    constructor(data?: ISprintBoardColumn) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.status = _data["status"];
+            this.taskCount = _data["taskCount"];
+            if (Array.isArray(_data["tasks"])) {
+                this.tasks = [] as any;
+                for (let item of _data["tasks"])
+                    this.tasks!.push(SprintBoardTaskItem.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): SprintBoardColumn {
+        data = typeof data === 'object' ? data : {};
+        let result = new SprintBoardColumn();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["status"] = this.status;
+        data["taskCount"] = this.taskCount;
+        if (Array.isArray(this.tasks)) {
+            data["tasks"] = [];
+            for (let item of this.tasks)
+                data["tasks"].push(item ? item.toJSON() : undefined as any);
+        }
+        return data;
+    }
+}
+
+export interface ISprintBoardColumn {
+    status?: string | undefined;
+    taskCount?: number;
+    tasks?: SprintBoardTaskItem[] | undefined;
+}
+
+export class SprintBoardDto implements ISprintBoardDto {
+    sprint?: SprintDto;
+    taskColumns?: SprintBoardColumn[] | undefined;
+    issues?: SprintBoardIssueItem[] | undefined;
+
+    constructor(data?: ISprintBoardDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.sprint = _data["sprint"] ? SprintDto.fromJS(_data["sprint"]) : undefined as any;
+            if (Array.isArray(_data["taskColumns"])) {
+                this.taskColumns = [] as any;
+                for (let item of _data["taskColumns"])
+                    this.taskColumns!.push(SprintBoardColumn.fromJS(item));
+            }
+            if (Array.isArray(_data["issues"])) {
+                this.issues = [] as any;
+                for (let item of _data["issues"])
+                    this.issues!.push(SprintBoardIssueItem.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): SprintBoardDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SprintBoardDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["sprint"] = this.sprint ? this.sprint.toJSON() : undefined as any;
+        if (Array.isArray(this.taskColumns)) {
+            data["taskColumns"] = [];
+            for (let item of this.taskColumns)
+                data["taskColumns"].push(item ? item.toJSON() : undefined as any);
+        }
+        if (Array.isArray(this.issues)) {
+            data["issues"] = [];
+            for (let item of this.issues)
+                data["issues"].push(item ? item.toJSON() : undefined as any);
+        }
+        return data;
+    }
+}
+
+export interface ISprintBoardDto {
+    sprint?: SprintDto;
+    taskColumns?: SprintBoardColumn[] | undefined;
+    issues?: SprintBoardIssueItem[] | undefined;
+}
+
+export class SprintBoardIssueItem implements ISprintBoardIssueItem {
+    id?: string;
+    issueCode?: string | undefined;
+    title?: string | undefined;
+    severity?: string | undefined;
+    status?: string | undefined;
+    assigneeUserId?: string | undefined;
+    assigneeName?: string | undefined;
+
+    constructor(data?: ISprintBoardIssueItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.issueCode = _data["issueCode"];
+            this.title = _data["title"];
+            this.severity = _data["severity"];
+            this.status = _data["status"];
+            this.assigneeUserId = _data["assigneeUserId"];
+            this.assigneeName = _data["assigneeName"];
+        }
+    }
+
+    static fromJS(data: any): SprintBoardIssueItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new SprintBoardIssueItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["issueCode"] = this.issueCode;
+        data["title"] = this.title;
+        data["severity"] = this.severity;
+        data["status"] = this.status;
+        data["assigneeUserId"] = this.assigneeUserId;
+        data["assigneeName"] = this.assigneeName;
+        return data;
+    }
+}
+
+export interface ISprintBoardIssueItem {
+    id?: string;
+    issueCode?: string | undefined;
+    title?: string | undefined;
+    severity?: string | undefined;
+    status?: string | undefined;
+    assigneeUserId?: string | undefined;
+    assigneeName?: string | undefined;
+}
+
+export class SprintBoardTaskItem implements ISprintBoardTaskItem {
+    id?: string;
+    title?: string | undefined;
+    status?: string | undefined;
+    priority?: string | undefined;
+    assigneeUserId?: string | undefined;
+    assigneeName?: string | undefined;
+
+    constructor(data?: ISprintBoardTaskItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+            this.status = _data["status"];
+            this.priority = _data["priority"];
+            this.assigneeUserId = _data["assigneeUserId"];
+            this.assigneeName = _data["assigneeName"];
+        }
+    }
+
+    static fromJS(data: any): SprintBoardTaskItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new SprintBoardTaskItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        data["status"] = this.status;
+        data["priority"] = this.priority;
+        data["assigneeUserId"] = this.assigneeUserId;
+        data["assigneeName"] = this.assigneeName;
+        return data;
+    }
+}
+
+export interface ISprintBoardTaskItem {
+    id?: string;
+    title?: string | undefined;
+    status?: string | undefined;
+    priority?: string | undefined;
+    assigneeUserId?: string | undefined;
+    assigneeName?: string | undefined;
+}
+
+export class SprintDto implements ISprintDto {
+    id?: string;
+    sprintCode?: string | undefined;
+    startDate?: Date;
+    endDate?: Date;
+    goal?: string | undefined;
+    isCurrent?: boolean;
+
+    constructor(data?: ISprintDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.sprintCode = _data["sprintCode"];
+            this.startDate = _data["startDate"] ? new Date(_data["startDate"].toString()) : undefined as any;
+            this.endDate = _data["endDate"] ? new Date(_data["endDate"].toString()) : undefined as any;
+            this.goal = _data["goal"];
+            this.isCurrent = _data["isCurrent"];
+        }
+    }
+
+    static fromJS(data: any): SprintDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SprintDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["sprintCode"] = this.sprintCode;
+        data["startDate"] = this.startDate ? formatDate(this.startDate) : undefined as any;
+        data["endDate"] = this.endDate ? formatDate(this.endDate) : undefined as any;
+        data["goal"] = this.goal;
+        data["isCurrent"] = this.isCurrent;
+        return data;
+    }
+}
+
+export interface ISprintDto {
+    id?: string;
+    sprintCode?: string | undefined;
+    startDate?: Date;
+    endDate?: Date;
+    goal?: string | undefined;
+    isCurrent?: boolean;
+}
+
+export class TaskSummaryDto implements ITaskSummaryDto {
+    todo?: number;
+    working?: number;
+    stuck?: number;
+    done?: number;
+
+    constructor(data?: ITaskSummaryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.todo = _data["todo"];
+            this.working = _data["working"];
+            this.stuck = _data["stuck"];
+            this.done = _data["done"];
+        }
+    }
+
+    static fromJS(data: any): TaskSummaryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TaskSummaryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["todo"] = this.todo;
+        data["working"] = this.working;
+        data["stuck"] = this.stuck;
+        data["done"] = this.done;
+        return data;
+    }
+}
+
+export interface ITaskSummaryDto {
+    todo?: number;
+    working?: number;
+    stuck?: number;
+    done?: number;
+}
+
+export class TeamPerformanceItemDto implements ITeamPerformanceItemDto {
+    userId?: string;
+    fullName?: string | undefined;
+    avatarUrl?: string | undefined;
+    tasksCompleted?: number;
+    totalPoints?: number;
+
+    constructor(data?: ITeamPerformanceItemDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.userId = _data["userId"];
+            this.fullName = _data["fullName"];
+            this.avatarUrl = _data["avatarUrl"];
+            this.tasksCompleted = _data["tasksCompleted"];
+            this.totalPoints = _data["totalPoints"];
+        }
+    }
+
+    static fromJS(data: any): TeamPerformanceItemDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new TeamPerformanceItemDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userId"] = this.userId;
+        data["fullName"] = this.fullName;
+        data["avatarUrl"] = this.avatarUrl;
+        data["tasksCompleted"] = this.tasksCompleted;
+        data["totalPoints"] = this.totalPoints;
+        return data;
+    }
+}
+
+export interface ITeamPerformanceItemDto {
+    userId?: string;
+    fullName?: string | undefined;
+    avatarUrl?: string | undefined;
+    tasksCompleted?: number;
+    totalPoints?: number;
+}
+
+export class TeamWorkloadItem implements ITeamWorkloadItem {
+    userId?: string;
+    displayName?: string | undefined;
+    taskCount?: number;
+
+    constructor(data?: ITeamWorkloadItem) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.userId = _data["userId"];
+            this.displayName = _data["displayName"];
+            this.taskCount = _data["taskCount"];
+        }
+    }
+
+    static fromJS(data: any): TeamWorkloadItem {
+        data = typeof data === 'object' ? data : {};
+        let result = new TeamWorkloadItem();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["userId"] = this.userId;
+        data["displayName"] = this.displayName;
+        data["taskCount"] = this.taskCount;
+        return data;
+    }
+}
+
+export interface ITeamWorkloadItem {
+    userId?: string;
+    displayName?: string | undefined;
+    taskCount?: number;
+}
+
+export class UpdateProjectMemberRequest implements IUpdateProjectMemberRequest {
+    projectRole?: string | undefined;
+    memberStatus?: string | undefined;
+
+    constructor(data?: IUpdateProjectMemberRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.projectRole = _data["projectRole"];
+            this.memberStatus = _data["memberStatus"];
+        }
+    }
+
+    static fromJS(data: any): UpdateProjectMemberRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateProjectMemberRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["projectRole"] = this.projectRole;
+        data["memberStatus"] = this.memberStatus;
+        return data;
+    }
+}
+
+export interface IUpdateProjectMemberRequest {
+    projectRole?: string | undefined;
+    memberStatus?: string | undefined;
+}
+
+export class UpdateProjectRequest implements IUpdateProjectRequest {
+    projectName?: string | undefined;
+    description?: string | undefined;
+    status?: string | undefined;
+    startDate?: Date | undefined;
+    endDate?: Date | undefined;
+
+    constructor(data?: IUpdateProjectRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (this as any)[property] = (data as any)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.projectName = _data["projectName"];
+            this.description = _data["description"];
+            this.status = _data["status"];
+            this.startDate = _data["startDate"] ? new Date(_data["startDate"].toString()) : undefined as any;
+            this.endDate = _data["endDate"] ? new Date(_data["endDate"].toString()) : undefined as any;
+        }
+    }
+
+    static fromJS(data: any): UpdateProjectRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateProjectRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["projectName"] = this.projectName;
+        data["description"] = this.description;
+        data["status"] = this.status;
+        data["startDate"] = this.startDate ? formatDate(this.startDate) : undefined as any;
+        data["endDate"] = this.endDate ? formatDate(this.endDate) : undefined as any;
+        return data;
+    }
+}
+
+export interface IUpdateProjectRequest {
+    projectName?: string | undefined;
+    description?: string | undefined;
+    status?: string | undefined;
+    startDate?: Date | undefined;
+    endDate?: Date | undefined;
 }
 
 export class UpdateRoleRequest implements IUpdateRoleRequest {
@@ -1147,6 +4087,12 @@ export interface IUpdateUserRequest {
     email?: string | undefined;
     status?: string | undefined;
     roleCode?: string | undefined;
+}
+
+function formatDate(d: Date) {
+    return d.getFullYear() + '-' + 
+        (d.getMonth() < 9 ? ('0' + (d.getMonth()+1)) : (d.getMonth()+1)) + '-' +
+        (d.getDate() < 10 ? ('0' + d.getDate()) : d.getDate());
 }
 
 export class SwaggerResponse<TResult> {

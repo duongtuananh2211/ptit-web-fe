@@ -29,6 +29,13 @@ public class WorkTask
     [ForeignKey(nameof(FeatureAreaId))]
     public FeatureArea? FeatureArea { get; set; }
 
+    /// <summary>Backlog when null; assigned to a sprint when set.</summary>
+    public Guid? SprintId { get; set; }
+
+    [DeleteBehavior(DeleteBehavior.SetNull)]
+    [ForeignKey(nameof(SprintId))]
+    public Sprint? Sprint { get; set; }
+
     [Required]
     [MaxLength(200)]
     public required string Title { get; set; }
