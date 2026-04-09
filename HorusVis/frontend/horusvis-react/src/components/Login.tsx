@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { login } from '../api';
-import { Copy, Check } from 'lucide-react';
-import { useSettings } from '../contexts/SettingsContext';
+import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { login } from "../api";
+import { Copy, Check } from "lucide-react";
+import { useSettings } from "../contexts/SettingsContext";
 
 interface LoginProps {
   onLogin: (userData: any, token: string) => Promise<void>;
@@ -12,24 +12,29 @@ interface LoginProps {
   onForgotPassword?: () => void;
 }
 
-export default function Login({ onLogin, siteSettings, hasDefaultAdmin = true, intendedDestination, onForgotPassword }: LoginProps) {
-  const { t, i18n } = useTranslation('auth');
+export default function Login({
+  onLogin,
+  hasDefaultAdmin = true,
+  intendedDestination,
+  onForgotPassword,
+}: LoginProps) {
+  const { t, i18n } = useTranslation("auth");
   const { siteSettings: contextSiteSettings } = useSettings(); // Use SettingsContext for settings
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-  
+  const [error, setError] = useState("");
+
   // Get current language for toggle
   // Note: i18next LanguageDetector automatically detects browser language on initial load
   // and saves it to localStorage. The language is already set when this component mounts.
-  const currentLanguage = i18n.language || 'en';
-  
+  const currentLanguage = i18n.language || "en";
+
   // Handle language toggle on login page
   // For non-authenticated users: Changes language and saves to localStorage only
   // This has no effect until user logs in - then App.tsx will read localStorage and save to DB
   const handleLanguageToggle = async () => {
-    const newLanguage = currentLanguage === 'en' ? 'fr' : 'en';
+    const newLanguage = currentLanguage === "en" ? "fr" : "en";
     await i18n.changeLanguage(newLanguage);
     // i18next automatically saves to localStorage, which will be used when user logs in
   };
@@ -41,7 +46,7 @@ export default function Login({ onLogin, siteSettings, hasDefaultAdmin = true, i
   } | null>(null);
   const [backendAvailable, setBackendAvailable] = useState<boolean>(true);
   const [checkingBackend, setCheckingBackend] = useState<boolean>(false);
-  
+
   // Copy to clipboard function
   const copyToClipboard = async (text: string, itemId: string) => {
     try {
@@ -49,12 +54,12 @@ export default function Login({ onLogin, siteSettings, hasDefaultAdmin = true, i
       setCopiedItem(itemId);
       setTimeout(() => setCopiedItem(null), 2000); // Reset after 2 seconds
     } catch (err) {
-      console.error('Failed to copy to clipboard:', err);
+      console.error("Failed to copy to clipboard:", err);
     }
   };
 
   // Check if demo mode is enabled
-  const isDemoMode = process.env.DEMO_ENABLED === 'true';
+  const isDemoMode = process.env.DEMO_ENABLED === "true";
 
   // Check backend availability on mount and periodically
   useEffect(() => {
@@ -66,27 +71,27 @@ export default function Login({ onLogin, siteSettings, hasDefaultAdmin = true, i
       try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
-        
+
         // Use a lightweight endpoint for health check instead of /api/settings
         // This avoids duplicate settings fetches (SettingsContext handles settings)
-        const response = await fetch('/api/auth/check-default-admin', { 
+        const response = await fetch("/api/auth/check-default-admin", {
           signal: controller.signal,
-          cache: 'no-store'
+          cache: "no-store",
         });
-        
+
         clearTimeout(timeoutId);
-        
+
         if (response.ok) {
           setBackendAvailable(true);
           setCheckingBackend(false);
           retryCount = 0; // Reset retry count on success
         } else {
-          throw new Error('Backend responded with error');
+          throw new Error("Backend responded with error");
         }
       } catch (error) {
-        console.error('Backend health check failed:', error);
+        console.error("Backend health check failed:", error);
         retryCount++;
-        
+
         if (retryCount >= maxRetries) {
           setBackendAvailable(false);
           setCheckingBackend(false);
@@ -115,17 +120,17 @@ export default function Login({ onLogin, siteSettings, hasDefaultAdmin = true, i
 
     const fetchAdminCredentials = async () => {
       try {
-        const response = await fetch('/api/auth/demo-credentials');
+        const response = await fetch("/api/auth/demo-credentials");
         if (response.ok) {
           const credentials = await response.json();
           setAdminCredentials(credentials.admin);
         }
       } catch (error) {
-        console.error('Failed to fetch admin credentials:', error);
+        console.error("Failed to fetch admin credentials:", error);
         // Fallback to default credentials
         setAdminCredentials({
-          email: 'admin@kanban.local',
-          password: 'admin'
+          email: "admin@kanban.local",
+          password: "admin",
         });
       }
     };
@@ -135,45 +140,45 @@ export default function Login({ onLogin, siteSettings, hasDefaultAdmin = true, i
 
   // Check for token expiration redirect
   useEffect(() => {
-    const tokenExpired = sessionStorage.getItem('tokenExpiredRedirect');
-    if (tokenExpired === 'true') {
-      setError(t('login.sessionExpired'));
-      sessionStorage.removeItem('tokenExpiredRedirect');
+    const tokenExpired = sessionStorage.getItem("tokenExpiredRedirect");
+    if (tokenExpired === "true") {
+      setError(t("login.sessionExpired"));
+      sessionStorage.removeItem("tokenExpiredRedirect");
     }
   }, [t]);
 
   // Check for OAuth errors in URL parameters
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const errorParam = urlParams.get('error');
-    
+    const errorParam = urlParams.get("error");
+
     if (errorParam) {
-      let errorMessage = t('login.loginFailed');
-      
+      let errorMessage = t("login.loginFailed");
+
       switch (errorParam) {
-        case 'account_deactivated':
-          errorMessage = t('login.accountDeactivated');
+        case "account_deactivated":
+          errorMessage = t("login.accountDeactivated");
           break;
-        case 'user_not_invited':
-          errorMessage = t('login.accessDenied');
+        case "user_not_invited":
+          errorMessage = t("login.accessDenied");
           break;
-        case 'oauth_failed':
-          errorMessage = t('login.oauthFailed');
+        case "oauth_failed":
+          errorMessage = t("login.oauthFailed");
           break;
-        case 'oauth_not_configured':
-          errorMessage = t('login.oauthNotConfigured');
+        case "oauth_not_configured":
+          errorMessage = t("login.oauthNotConfigured");
           break;
-        case 'oauth_userinfo_failed':
-          errorMessage = t('login.oauthUserinfoFailed');
+        case "oauth_userinfo_failed":
+          errorMessage = t("login.oauthUserinfoFailed");
           break;
       }
-      
+
       setError(errorMessage);
-      
+
       // Clean up the URL by removing the error parameter
-      const newUrl = new URL(window.location);
-      newUrl.searchParams.delete('error');
-      window.history.replaceState({}, '', newUrl);
+      const newUrl = new URL(window.location.href);
+      newUrl.searchParams.delete("error");
+      window.history.replaceState({}, "", newUrl);
     }
   }, []);
 
@@ -187,17 +192,16 @@ export default function Login({ onLogin, siteSettings, hasDefaultAdmin = true, i
     }
   }, [contextSiteSettings]);
 
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setIsLoading(true);
 
     try {
       const response = await login(email, password);
       await onLogin(response.user, response.token);
     } catch (error: any) {
-      setError(error.response?.data?.error || t('login.loginFailed'));
+      setError(error.response?.data?.error || t("login.loginFailed"));
     } finally {
       setIsLoading(false);
     }
@@ -205,269 +209,296 @@ export default function Login({ onLogin, siteSettings, hasDefaultAdmin = true, i
 
   const handleGoogleSignIn = async () => {
     if (!googleOAuthEnabled) {
-      setError('Google OAuth is not configured. Please contact an administrator.');
+      setError(
+        "Google OAuth is not configured. Please contact an administrator.",
+      );
       return;
     }
 
-    setError('');
+    setError("");
     setIsLoading(true);
 
     try {
       // Store intended destination before OAuth redirect
       if (intendedDestination) {
-        localStorage.setItem('oauthIntendedDestination', intendedDestination);
+        localStorage.setItem("oauthIntendedDestination", intendedDestination);
       } else {
         // Clear any stale intended destination for normal login
-        localStorage.removeItem('oauthIntendedDestination');
+        localStorage.removeItem("oauthIntendedDestination");
       }
 
       // Redirect to Google OAuth
-      const response = await fetch('/api/auth/google/url');
+      const response = await fetch("/api/auth/google/url");
       if (response.ok) {
         const { url } = await response.json();
         window.location.href = url;
       } else {
-        throw new Error('Failed to get Google OAuth URL');
+        throw new Error("Failed to get Google OAuth URL");
       }
     } catch (error: any) {
-      setError('Google sign-in failed. Please try again.');
+      setError("Google sign-in failed. Please try again.");
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative">
-      {/* Language Toggle - Top Right */}
-      <div className="absolute top-4 right-4">
-        <button
-          onClick={handleLanguageToggle}
-          className="px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md transition-colors border border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-500"
-          title={currentLanguage === 'en' ? 'Switch to French' : 'Passer en anglais'}
-        >
-          {currentLanguage === 'en' ? 'FR' : 'EN'}
-        </button>
+    <div className="flex min-h-screen items-center bg-[#f9f9ff] text-[#141b2c]">
+      <div className="fixed inset-0 -z-10 overflow-hidden">
+        <div className="absolute -top-28 -left-24 h-80 w-80 rounded-full bg-[#dae2ff] blur-3xl opacity-70" />
+        <div className="absolute -bottom-24 -right-16 h-72 w-72 rounded-full bg-[#d6e3fb] blur-3xl opacity-70" />
       </div>
-      
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <div className="mx-auto h-12 w-12 bg-blue-600 rounded-full flex items-center justify-center">
-            <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-            </svg>
-          </div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-gray-100">
-            {t('login.signInToAccount')}
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
-            {t('login.welcome')}
-          </p>
-        </div>
-        
-        {/* Backend Unavailable Message */}
-        {!backendAvailable && !checkingBackend && (
-          <div className="bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 dark:border-yellow-600 p-6 rounded-lg">
-            <div className="flex items-start">
-              <div className="flex-shrink-0">
-                <svg className="h-6 w-6 text-yellow-400 dark:text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-              </div>
-              <div className="ml-3">
-                <h3 className="text-sm font-medium text-yellow-800 dark:text-yellow-200">
-                  {t('login.systemUnavailable')}
+
+      <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 lg:px-8">
+        <div className="flex justify-center">
+          <section className="w-full max-w-3xl">
+            <div className="rounded-3xl bg-white p-6 shadow-[0_12px_40px_rgba(20,27,44,0.06)] sm:p-8">
+              <div className="mb-6">
+                <h3 className="mt-2 text-3xl font-black tracking-[-0.02em]">
+                  {t("login.signInToAccount")}
                 </h3>
-                <div className="mt-2 text-sm text-yellow-700 dark:text-yellow-300">
-                  <p>
-                    {t('login.systemUnavailableMessage')}
-                  </p>
-                  <p className="mt-2">
-                    {t('login.systemUnavailableContact')}
-                  </p>
-                </div>
-                <div className="mt-4">
+                <p className="mt-2 text-sm text-[#434654]">
+                  {t("login.welcome")}
+                </p>
+              </div>
+
+              {!backendAvailable && !checkingBackend && (
+                <div className="mb-5 rounded-2xl bg-[#fff4de] p-5 text-sm text-[#7a4c00]">
+                  <h4 className="font-bold uppercase tracking-[0.08em]">
+                    {t("login.systemUnavailable")}
+                  </h4>
+                  <p className="mt-2">{t("login.systemUnavailableMessage")}</p>
+                  <p className="mt-1">{t("login.systemUnavailableContact")}</p>
                   <button
                     type="button"
                     onClick={() => window.location.reload()}
-                    className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-yellow-800 dark:text-yellow-200 bg-yellow-100 dark:bg-yellow-900/40 hover:bg-yellow-200 dark:hover:bg-yellow-900/60 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+                    className="mt-4 rounded-xl bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.08em] text-[#7a4c00] transition-all hover:bg-[#fff8ea]"
                   >
-                    <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                    </svg>
-                    {t('login.retryConnection')}
+                    {t("login.retryConnection")}
                   </button>
                 </div>
-              </div>
-            </div>
-          </div>
-        )}
+              )}
 
-        {/* Loading Spinner while checking backend */}
-        {checkingBackend && (
-          <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-400 dark:border-blue-600 p-6 rounded-lg">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <svg className="animate-spin h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-              </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium text-blue-800 dark:text-blue-200">
-                  {t('login.connectingToServer')}
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-        
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit} style={{ display: backendAvailable ? 'block' : 'none' }}>
-          <div className="rounded-md shadow-sm -space-y-px bg-white dark:bg-gray-800 p-6 rounded-lg">
-            <div>
-              <label htmlFor="email" className="sr-only">
-                {t('login.emailAddress')}
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder={t('login.emailAddress')}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                {t('login.password')}
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder={t('login.password')}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-          </div>
+              {checkingBackend && (
+                <div className="mb-5 flex items-center gap-3 rounded-2xl bg-[#e9edff] p-5 text-[#0040a2]">
+                  <svg
+                    className="h-5 w-5 animate-spin"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  <p className="text-sm font-semibold">
+                    {t("login.connectingToServer")}
+                  </p>
+                </div>
+              )}
 
-          {error && (
-            <div className="text-red-600 text-sm text-center">
-              {error}
-            </div>
-          )}
-
-          <div className="text-center">
-            <button
-              type="button"
-              onClick={() => {
-                localStorage.clear();
-                window.location.reload();
-              }}
-              className="text-sm text-gray-500 hover:text-gray-700 underline"
-            >
-              {t('login.clearSession')}
-            </button>
-          </div>
-
-          <div className="space-y-3">
-            <button
-              type="submit"
-              disabled={isLoading}
-              className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white ${
-                isLoading 
-                  ? 'bg-blue-400 cursor-not-allowed' 
-                  : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
-              }`}
-            >
-              {isLoading ? (
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-              ) : null}
-              {isLoading ? t('login.loading') : t('login.submit')}
-            </button>
-            
-            {/* Google Sign-In Button - Only show if OAuth is configured */}
-            {googleOAuthEnabled && (
-              <button
-                type="button"
-                onClick={handleGoogleSignIn}
-                disabled={isLoading}
-                className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              <form
+                className="space-y-5"
+                onSubmit={handleSubmit}
+                style={{ display: backendAvailable ? "block" : "none" }}
               >
-                <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
-                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                </svg>
-                {t('login.signInWithGoogle')}
-              </button>
-            )}
-          </div>
+                <div className="space-y-3">
+                  <label
+                    htmlFor="email"
+                    className="block text-[10px] font-bold uppercase tracking-[0.12em] text-[#737685]"
+                  >
+                    {t("login.emailAddress")}
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    className="w-full rounded-xl bg-[#f1f3ff] px-4 py-3 text-sm text-[#141b2c] placeholder:text-[#737685] outline-none ring-0 transition-all focus:bg-[#e9edff] focus:shadow-[0_0_0_2px_rgba(0,82,204,0.18)]"
+                    placeholder={t("login.emailAddress")}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
 
-          {/* Forgot Password Link */}
-          {onForgotPassword && (
-            <div className="text-center">
-              <button
-                type="button"
-                onClick={onForgotPassword}
-                className="text-sm text-blue-600 hover:text-blue-500 underline"
-              >
-                {t('login.forgotYourPassword')}
-              </button>
-            </div>
-          )}
+                <div className="space-y-3">
+                  <label
+                    htmlFor="password"
+                    className="block text-[10px] font-bold uppercase tracking-[0.12em] text-[#737685]"
+                  >
+                    {t("login.password")}
+                  </label>
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    autoComplete="current-password"
+                    required
+                    className="w-full rounded-xl bg-[#f1f3ff] px-4 py-3 text-sm text-[#141b2c] placeholder:text-[#737685] outline-none ring-0 transition-all focus:bg-[#e9edff] focus:shadow-[0_0_0_2px_rgba(0,82,204,0.18)]"
+                    placeholder={t("login.password")}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
 
-          {isDemoMode && hasDefaultAdmin && adminCredentials && (
-            <div className="text-center text-sm text-gray-600">
-              <p className="font-semibold mb-2">{t('login.demoCredentials')}</p>
-              <div className="space-y-2">
-                <div className="bg-blue-50 border border-blue-200 rounded-md p-3">
-                  <p className="text-xs font-medium text-blue-800 mb-2">Admin Account</p>
-                  <div className="space-y-1">
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-xs text-blue-700">{adminCredentials.email}</span>
-                      <button
-                        onClick={() => copyToClipboard(adminCredentials.email, 'admin-email')}
-                        className="ml-2 p-1 hover:bg-blue-100 rounded transition-colors"
-                        title={t('login.copyEmail')}
-                      >
-                        {copiedItem === 'admin-email' ? (
-                          <Check className="w-3 h-3 text-green-600" />
-                        ) : (
-                          <Copy className="w-3 h-3 text-blue-600" />
-                        )}
-                      </button>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-xs text-blue-700">{adminCredentials.password}</span>
-                      <button
-                        onClick={() => copyToClipboard(adminCredentials.password, 'admin-password')}
-                        className="ml-2 p-1 hover:bg-blue-100 rounded transition-colors"
-                        title={t('login.copyPassword')}
-                      >
-                        {copiedItem === 'admin-password' ? (
-                          <Check className="w-3 h-3 text-green-600" />
-                        ) : (
-                          <Copy className="w-3 h-3 text-blue-600" />
-                        )}
-                      </button>
+                {error && (
+                  <div className="rounded-xl bg-[#ffdad6] px-4 py-3 text-sm font-medium text-[#93000a]">
+                    {error}
+                  </div>
+                )}
+
+                <div className="space-y-3">
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className={`w-full rounded-xl px-4 py-3 text-sm font-bold text-white transition-all ${
+                      isLoading
+                        ? "cursor-not-allowed bg-[#8cb1eb]"
+                        : "bg-gradient-to-br from-[#003d9b] to-[#0052cc] shadow-[0_12px_28px_rgba(0,82,204,0.25)] hover:scale-[1.01]"
+                    }`}
+                  >
+                    <span className="inline-flex items-center justify-center gap-2">
+                      {isLoading && (
+                        <svg
+                          className="h-4 w-4 animate-spin"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                      )}
+                      {isLoading ? t("login.loading") : t("login.submit")}
+                    </span>
+                  </button>
+
+                  {googleOAuthEnabled && (
+                    <button
+                      type="button"
+                      onClick={handleGoogleSignIn}
+                      disabled={isLoading}
+                      className="w-full rounded-xl bg-[#f1f3ff] px-4 py-3 text-sm font-semibold text-[#141b2c] transition-all hover:bg-[#e9edff]"
+                    >
+                      <span className="inline-flex items-center justify-center gap-2">
+                        <svg className="h-5 w-5" viewBox="0 0 24 24">
+                          <path
+                            fill="#4285F4"
+                            d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                          />
+                          <path
+                            fill="#34A853"
+                            d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                          />
+                          <path
+                            fill="#FBBC05"
+                            d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                          />
+                          <path
+                            fill="#EA4335"
+                            d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                          />
+                        </svg>
+                        {t("login.signInWithGoogle")}
+                      </span>
+                    </button>
+                  )}
+                </div>
+
+                <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+                  {onForgotPassword && (
+                    <button
+                      type="button"
+                      onClick={onForgotPassword}
+                      className="text-xs font-semibold uppercase tracking-[0.08em] text-[#0052cc] underline underline-offset-2"
+                    >
+                      {t("login.forgotYourPassword")}
+                    </button>
+                  )}
+                </div>
+
+                {isDemoMode && hasDefaultAdmin && adminCredentials && (
+                  <div className="rounded-2xl bg-[#f1f3ff] p-4">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-[#737685]">
+                      {t("login.demoCredentials")}
+                    </p>
+                    <p className="mt-2 text-xs font-semibold text-[#434654]">
+                      Admin Account
+                    </p>
+                    <div className="mt-3 space-y-2">
+                      <div className="flex items-center justify-between rounded-xl bg-white px-3 py-2">
+                        <span className="font-mono text-xs text-[#0052cc]">
+                          {adminCredentials.email}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            copyToClipboard(
+                              adminCredentials.email,
+                              "admin-email",
+                            )
+                          }
+                          className="ml-2 rounded p-1 transition-colors hover:bg-[#f1f3ff]"
+                          title={t("login.copyEmail")}
+                        >
+                          {copiedItem === "admin-email" ? (
+                            <Check className="h-3.5 w-3.5 text-[#28a745]" />
+                          ) : (
+                            <Copy className="h-3.5 w-3.5 text-[#0052cc]" />
+                          )}
+                        </button>
+                      </div>
+                      <div className="flex items-center justify-between rounded-xl bg-white px-3 py-2">
+                        <span className="font-mono text-xs text-[#0052cc]">
+                          {adminCredentials.password}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            copyToClipboard(
+                              adminCredentials.password,
+                              "admin-password",
+                            )
+                          }
+                          className="ml-2 rounded p-1 transition-colors hover:bg-[#f1f3ff]"
+                          title={t("login.copyPassword")}
+                        >
+                          {copiedItem === "admin-password" ? (
+                            <Check className="h-3.5 w-3.5 text-[#28a745]" />
+                          ) : (
+                            <Copy className="h-3.5 w-3.5 text-[#0052cc]" />
+                          )}
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                )}
+              </form>
             </div>
-          )}
-        </form>
+          </section>
+        </div>
       </div>
     </div>
   );
 }
+
