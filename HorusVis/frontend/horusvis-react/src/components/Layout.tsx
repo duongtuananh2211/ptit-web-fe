@@ -1,11 +1,14 @@
 import { NavLink, Outlet } from "react-router-dom";
+import { authService } from "../services/authService";
 
 const Layout = () => {
+  const isAdmin = authService.isAdmin();
+
   const navItems = [
     { name: "Projects", icon: "folder_open", path: "/projects" },
     { name: "My Tasks", icon: "assignment_turned_in", path: "/tasks" },
     { name: "Reports", icon: "bar_chart", path: "/reports" },
-    { name: "Admin", icon: "settings", path: "/admin" },
+    ...(isAdmin ? [{ name: "Admin", icon: "settings", path: "/admin" }] : []),
   ];
 
   return (
