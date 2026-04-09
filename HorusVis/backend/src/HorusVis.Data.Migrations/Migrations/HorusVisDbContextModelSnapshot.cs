@@ -128,6 +128,9 @@ namespace HorusVis.Data.Migrations.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("SprintId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("text");
@@ -161,6 +164,8 @@ namespace HorusVis.Data.Migrations.Migrations
                     b.HasIndex("ProjectId");
 
                     b.HasIndex("ReporterUserId");
+
+                    b.HasIndex("SprintId");
 
                     b.HasIndex("TaskId");
 
@@ -558,6 +563,33 @@ namespace HorusVis.Data.Migrations.Migrations
                     b.ToTable("RolePermissions", "horusvis");
                 });
 
+            modelBuilder.Entity("HorusVis.Data.Horusvis.Entities.Sprint", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateOnly>("EndDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Goal")
+                        .HasColumnType("text");
+
+                    b.Property<string>("SprintCode")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<DateOnly>("StartDate")
+                        .HasColumnType("date");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SprintCode")
+                        .IsUnique();
+
+                    b.ToTable("Sprints", "horusvis");
+                });
+
             modelBuilder.Entity("HorusVis.Data.Horusvis.Entities.Subtask", b =>
                 {
                     b.Property<Guid>("Id")
@@ -894,6 +926,9 @@ namespace HorusVis.Data.Migrations.Migrations
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("SprintId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateOnly?>("StartDate")
                         .HasColumnType("date");
 
@@ -916,6 +951,8 @@ namespace HorusVis.Data.Migrations.Migrations
                     b.HasIndex("FeatureAreaId");
 
                     b.HasIndex("ProjectId");
+
+                    b.HasIndex("SprintId");
 
                     b.ToTable("Tasks", "horusvis");
                 });
@@ -960,6 +997,11 @@ namespace HorusVis.Data.Migrations.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("HorusVis.Data.Horusvis.Entities.Sprint", "Sprint")
+                        .WithMany()
+                        .HasForeignKey("SprintId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("HorusVis.Data.Horusvis.Entities.WorkTask", "Task")
                         .WithMany()
                         .HasForeignKey("TaskId")
@@ -975,6 +1017,8 @@ namespace HorusVis.Data.Migrations.Migrations
                     b.Navigation("Project");
 
                     b.Navigation("ReporterUser");
+
+                    b.Navigation("Sprint");
 
                     b.Navigation("Task");
 
@@ -1141,7 +1185,7 @@ namespace HorusVis.Data.Migrations.Migrations
                         .IsRequired();
 
                     b.HasOne("HorusVis.Data.Horusvis.Entities.Role", "Role")
-                        .WithMany()
+                        .WithMany("RolePermissions")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1291,11 +1335,23 @@ namespace HorusVis.Data.Migrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("HorusVis.Data.Horusvis.Entities.Sprint", "Sprint")
+                        .WithMany()
+                        .HasForeignKey("SprintId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.Navigation("CreatedByUser");
 
                     b.Navigation("FeatureArea");
 
                     b.Navigation("Project");
+
+                    b.Navigation("Sprint");
+                });
+
+            modelBuilder.Entity("HorusVis.Data.Horusvis.Entities.Role", b =>
+                {
+                    b.Navigation("RolePermissions");
                 });
 #pragma warning restore 612, 618
         }

@@ -71,6 +71,13 @@ public class Issue
 
     public DateOnly? DueDate { get; set; }
 
+    /// <summary>Backlog when null; assigned to a sprint when set.</summary>
+    public Guid? SprintId { get; set; }
+
+    [DeleteBehavior(DeleteBehavior.SetNull)]
+    [ForeignKey(nameof(SprintId))]
+    public Sprint? Sprint { get; set; }
+
     public required DateTimeOffset OpenedAt { get; set; }
 
     public DateTimeOffset? ResolvedAt { get; set; }

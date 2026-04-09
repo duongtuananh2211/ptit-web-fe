@@ -1,36 +1,39 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using HorusVis.Data.Persistence;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace HorusVis.Data.Migrations.Migrations
+namespace HorusVis.Data.Migrations.Migrations;
+
+/// <inheritdoc />
+[DbContext(typeof(HorusVisDbContext))]
+[Migration("20260408082335_AddRoleIsSystem")]
+public class AddRoleIsSystem : Migration
 {
     /// <inheritdoc />
-    public partial class AddRoleIsSystem : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AddColumn<bool>(
-                name: "IsSystem",
-                schema: "horusvis",
-                table: "Roles",
-                type: "boolean",
-                nullable: false,
-                defaultValue: false);
+        migrationBuilder.AddColumn<bool>(
+            name: "IsSystem",
+            schema: "horusvis",
+            table: "Roles",
+            type: "boolean",
+            nullable: false,
+            defaultValue: false);
 
-            migrationBuilder.Sql("""
-                UPDATE horusvis."Roles" SET "IsSystem" = true
-                WHERE "RoleCode" IN ('admin', 'user');
-                """);
-        }
+        migrationBuilder.Sql("""
+            UPDATE horusvis."Roles" SET "IsSystem" = true
+            WHERE "RoleCode" IN ('admin', 'user');
+            """);
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "IsSystem",
-                schema: "horusvis",
-                table: "Roles");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropColumn(
+            name: "IsSystem",
+            schema: "horusvis",
+            table: "Roles");
     }
 }

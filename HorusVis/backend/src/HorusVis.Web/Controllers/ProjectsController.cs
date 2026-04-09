@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using HorusVis.Business.Contracts;
 using HorusVis.Business.Models.Projects;
+using HorusVis.Business.Models.Sprints;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +13,8 @@ namespace HorusVis.Web.Controllers;
 public sealed class ProjectsController(
     IProjectsService projects,
     IProjectMembersService members,
-    IFeatureAreasService featureAreas) : ControllerBase
+    IFeatureAreasService featureAreas,
+    ISprintsService sprints) : ControllerBase
 {
     // ─── Projects CRUD ────────────────────────────────────────────────────────
 
@@ -210,6 +212,42 @@ public sealed class ProjectsController(
             return Ok(result);
         }
         catch (KeyNotFoundException e) { return NotFound(new { e.Message }); }
+    }
+
+    // ─── Backlog ──────────────────────────────────────────────────────────────
+
+    [HttpGet("{projectId:guid}/backlog")]
+    public async Task<ActionResult<BacklogDto>> GetBacklog(Guid projectId, CancellationToken ct)
+    {
+        try
+        {
+            var callerId = GetCallerId();
+            var result   = await sprints.GetProjectBacklogAsync(projectId, callerId, ct);
+            return Ok(result);
+        }
+        catch (UnauthorizedAccessException) { return Forbid(); }
+        catch (KeyNotFoundException e)      { return NotFound(new { e.Message }); }
+    }
+
+    /// <summary>
+    /// Returns the sprint board for a specific project.
+    /// Pass ?sprintId={guid} to view a specific sprint, or omit to use the current sprint.
+    /// Returns 204 when no sprint is active and sprintId was not specified.
+    /// </summary>
+    [HttpGet("{projectId:guid}/board")]
+    public async Task<IActionResult> GetProjectBoard(
+        Guid projectId,
+        [FromQuery] Guid? sprintId,
+        CancellationToken ct)
+    {
+        try
+        {
+            var callerId = GetCallerId();
+            var result   = await sprints.GetProjectSprintBoardAsync(projectId, sprintId, callerId, ct);
+            return result is null ? NoContent() : Ok(result);
+        }
+        catch (UnauthorizedAccessException) { return Forbid(); }
+        catch (KeyNotFoundException e)      { return NotFound(new { e.Message }); }
     }
 
     // ─── helper ───────────────────────────────────────────────────────────────

@@ -31,5 +31,3 @@ At the moment:
 
 - HorusVis has a scaffold `HorusVisDbContext`
 - HorusVis has a separate `HorusVis.Data.Migrations` project
-- HorusVis does not yet have committed migrations in the repository
-- HorusVis does not yet have Siren-style deployment automation for migrations

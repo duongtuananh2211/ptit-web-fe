@@ -1,54 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\VuND\\Board\\HorusVis\\backend\\",
+  "WorkspaceRootPath": "D:\\VuND\\ptit-web-fe\\HorusVis\\backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{32EDAB6E-C7C3-4FAA-BCD4-5E2655331177}|src\\HorusVis.Data.Migrations\\HorusVis.Data.Migrations.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.data.migrations\\migrations\\20260408035933_seedadminuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{32EDAB6E-C7C3-4FAA-BCD4-5E2655331177}|src\\HorusVis.Data.Migrations\\HorusVis.Data.Migrations.csproj|solutionrelative:src\\horusvis.data.migrations\\migrations\\20260408035933_seedadminuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{911FCA3B-1360-409C-9365-30B79EFF08BC}|src\\HorusVis.Business\\HorusVis.Business.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.business\\services\\authenticationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{911FCA3B-1360-409C-9365-30B79EFF08BC}|src\\HorusVis.Business\\HorusVis.Business.csproj|solutionrelative:src\\horusvis.business\\services\\authenticationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C1A70FEA-3CEB-443E-B00D-B36BF4E60D97}|src\\HorusVis.Data\\HorusVis.Data.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.data\\assemblymarker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C1A70FEA-3CEB-443E-B00D-B36BF4E60D97}|src\\HorusVis.Data\\HorusVis.Data.csproj|solutionrelative:src\\horusvis.data\\assemblymarker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C1A70FEA-3CEB-443E-B00D-B36BF4E60D97}|src\\HorusVis.Data\\HorusVis.Data.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.data\\services\\unitofworkservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C1A70FEA-3CEB-443E-B00D-B36BF4E60D97}|src\\HorusVis.Data\\HorusVis.Data.csproj|solutionrelative:src\\horusvis.data\\services\\unitofworkservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.web\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|solutionrelative:src\\horusvis.web\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{32EDAB6E-C7C3-4FAA-BCD4-5E2655331177}|src\\HorusVis.Data.Migrations\\HorusVis.Data.Migrations.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.data.migrations\\migrations\\20260407174335_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{32EDAB6E-C7C3-4FAA-BCD4-5E2655331177}|src\\HorusVis.Data.Migrations\\HorusVis.Data.Migrations.csproj|solutionrelative:src\\horusvis.data.migrations\\migrations\\20260407174335_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C1A70FEA-3CEB-443E-B00D-B36BF4E60D97}|src\\HorusVis.Data\\HorusVis.Data.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.data\\persistence\\datetimeoffsetconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C1A70FEA-3CEB-443E-B00D-B36BF4E60D97}|src\\HorusVis.Data\\HorusVis.Data.csproj|solutionrelative:src\\horusvis.data\\persistence\\datetimeoffsetconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.web\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|solutionrelative:src\\horusvis.web\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.web\\horusvis.web.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|solutionrelative:src\\horusvis.web\\horusvis.web.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{41C4888C-2951-4804-AA2E-8F1065C94771}|Solution Items{41C4888C-2951-4804-AA2E-8F1065C94771}|D:\\VuND\\Board\\HorusVis\\backend\\Directory.Packages.props||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{41C4888C-2951-4804-AA2E-8F1065C94771}|Solution Items{41C4888C-2951-4804-AA2E-8F1065C94771}|solutionrelative:Directory.Packages.props||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.web\\horusvis.web.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
-      "RelativeMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|solutionrelative:src\\horusvis.web\\horusvis.web.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{41C4888C-2951-4804-AA2E-8F1065C94771}|Solution Items{41C4888C-2951-4804-AA2E-8F1065C94771}|D:\\VuND\\Board\\HorusVis\\backend\\Directory.Build.props||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{41C4888C-2951-4804-AA2E-8F1065C94771}|Solution Items{41C4888C-2951-4804-AA2E-8F1065C94771}|solutionrelative:Directory.Build.props||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+      "AbsoluteMoniker": "D:0:0:{32EDAB6E-C7C3-4FAA-BCD4-5E2655331177}|src\\HorusVis.Data.Migrations\\HorusVis.Data.Migrations.csproj|d:\\vund\\ptit-web-fe\\horusvis\\backend\\src\\horusvis.data.migrations\\migrations\\20260409042227_updatesprintdates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{32EDAB6E-C7C3-4FAA-BCD4-5E2655331177}|src\\HorusVis.Data.Migrations\\HorusVis.Data.Migrations.csproj|solutionrelative:src\\horusvis.data.migrations\\migrations\\20260409042227_updatesprintdates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -63,155 +19,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "20260408035933_SeedAdminUser.cs",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Data.Migrations\\Migrations\\20260408035933_SeedAdminUser.cs",
-              "RelativeDocumentMoniker": "src\\HorusVis.Data.Migrations\\Migrations\\20260408035933_SeedAdminUser.cs",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Data.Migrations\\Migrations\\20260408035933_SeedAdminUser.cs",
-              "RelativeToolTip": "src\\HorusVis.Data.Migrations\\Migrations\\20260408035933_SeedAdminUser.cs",
-              "ViewState": "AgIAAB0AAAAAAAAAAAAQwBgAAAAhAAAAAAAAAA==",
+              "Title": "20260409042227_UpdateSprintDates.cs",
+              "DocumentMoniker": "D:\\VuND\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Data.Migrations\\Migrations\\20260409042227_UpdateSprintDates.cs",
+              "RelativeDocumentMoniker": "src\\HorusVis.Data.Migrations\\Migrations\\20260409042227_UpdateSprintDates.cs",
+              "ToolTip": "D:\\VuND\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Data.Migrations\\Migrations\\20260409042227_UpdateSprintDates.cs",
+              "RelativeToolTip": "src\\HorusVis.Data.Migrations\\Migrations\\20260409042227_UpdateSprintDates.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-08T04:04:41.216Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AuthenticationService.cs",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Business\\Services\\AuthenticationService.cs",
-              "RelativeDocumentMoniker": "src\\HorusVis.Business\\Services\\AuthenticationService.cs",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Business\\Services\\AuthenticationService.cs",
-              "RelativeToolTip": "src\\HorusVis.Business\\Services\\AuthenticationService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-08T04:04:25.248Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "UnitOfWorkService.cs",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Data\\Services\\UnitOfWorkService.cs",
-              "RelativeDocumentMoniker": "src\\HorusVis.Data\\Services\\UnitOfWorkService.cs",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Data\\Services\\UnitOfWorkService.cs",
-              "RelativeToolTip": "src\\HorusVis.Data\\Services\\UnitOfWorkService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABLAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-08T03:22:13.547Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AssemblyMarker.cs",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Data\\AssemblyMarker.cs",
-              "RelativeDocumentMoniker": "src\\HorusVis.Data\\AssemblyMarker.cs",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Data\\AssemblyMarker.cs",
-              "RelativeToolTip": "src\\HorusVis.Data\\AssemblyMarker.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-08T03:22:10.853Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "20260407174335_InitialCreate.cs",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Data.Migrations\\Migrations\\20260407174335_InitialCreate.cs",
-              "RelativeDocumentMoniker": "src\\HorusVis.Data.Migrations\\Migrations\\20260407174335_InitialCreate.cs",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Data.Migrations\\Migrations\\20260407174335_InitialCreate.cs",
-              "RelativeToolTip": "src\\HorusVis.Data.Migrations\\Migrations\\20260407174335_InitialCreate.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAAACEAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-07T17:44:00.067Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "DateTimeOffsetConverter.cs",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Data\\Persistence\\DateTimeOffsetConverter.cs",
-              "RelativeDocumentMoniker": "src\\HorusVis.Data\\Persistence\\DateTimeOffsetConverter.cs",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Data\\Persistence\\DateTimeOffsetConverter.cs",
-              "RelativeToolTip": "src\\HorusVis.Data\\Persistence\\DateTimeOffsetConverter.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-07T16:54:08.397Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "HorusVis.Web",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\HorusVis.Web.csproj",
-              "RelativeDocumentMoniker": "src\\HorusVis.Web\\HorusVis.Web.csproj",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\HorusVis.Web.csproj",
-              "RelativeToolTip": "src\\HorusVis.Web\\HorusVis.Web.csproj",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-04-07T12:48:03.137Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "HorusVis.Web.csproj",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\HorusVis.Web.csproj",
-              "RelativeDocumentMoniker": "src\\HorusVis.Web\\HorusVis.Web.csproj",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\HorusVis.Web.csproj",
-              "RelativeToolTip": "src\\HorusVis.Web\\HorusVis.Web.csproj",
-              "ViewState": "AgIAAAAAAADJmZmZmRkWwAkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-04-07T07:09:12.412Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Directory.Build.props",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\Directory.Build.props",
-              "RelativeDocumentMoniker": "Directory.Build.props",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\Directory.Build.props",
-              "RelativeToolTip": "Directory.Build.props",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
-              "WhenOpened": "2026-04-07T07:26:52.875Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Directory.Packages.props",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\Directory.Packages.props",
-              "RelativeDocumentMoniker": "Directory.Packages.props",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\Directory.Packages.props",
-              "RelativeToolTip": "Directory.Packages.props",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
-              "WhenOpened": "2026-04-07T07:26:48.598Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "launchSettings.json",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\Properties\\launchSettings.json",
-              "RelativeDocumentMoniker": "src\\HorusVis.Web\\Properties\\launchSettings.json",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\Properties\\launchSettings.json",
-              "RelativeToolTip": "src\\HorusVis.Web\\Properties\\launchSettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-04-07T07:14:26.352Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "src\\HorusVis.Web\\Controllers\\AuthController.cs",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "src\\HorusVis.Web\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAQwDYAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-07T07:09:21.335Z",
+              "WhenOpened": "2026-04-09T06:08:22.41Z",
               "EditorCaption": ""
             }
           ]
