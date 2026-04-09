@@ -1,16 +1,11 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Outlet } from "react-router-dom";
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout = () => {
   const navItems = [
-    { name: 'Projects', icon: 'folder_open', path: '/projects' },
-    { name: 'My Tasks', icon: 'assignment_turned_in', path: '/tasks' },
-    { name: 'Reports', icon: 'bar_chart', path: '/reports' },
-    { name: 'Admin', icon: 'settings', path: '/admin' },
+    { name: "Projects", icon: "folder_open", path: "/projects" },
+    { name: "My Tasks", icon: "assignment_turned_in", path: "/tasks" },
+    { name: "Reports", icon: "bar_chart", path: "/reports" },
+    { name: "Admin", icon: "settings", path: "/admin" },
   ];
 
   return (
@@ -18,8 +13,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       {/* Sidebar */}
       <aside className="fixed left-0 top-0 h-full flex flex-col p-4 z-50 w-64 border-r border-slate-200/50 bg-[#f1f3ff]/90 glass-sidebar">
         <div className="mb-8 px-4">
-          <h1 className="text-lg font-bold text-[#141b2c] editorial-tight">HorusVis</h1>
-          <p className="text-xs text-secondary font-medium label-wide">Project Management</p>
+          <h1 className="text-lg font-bold text-[#141b2c] editorial-tight">
+            HorusVis
+          </h1>
+          <p className="text-xs text-secondary font-medium label-wide">
+            Project Management
+          </p>
         </div>
         <nav className="flex-1 space-y-2">
           {navItems.map((item) => (
@@ -29,8 +28,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               className={({ isActive }) =>
                 `flex items-center gap-3 px-4 py-3 font-['Inter'] text-sm tracking-wide transition-all rounded-lg ${
                   isActive
-                    ? 'text-[#0052CC] font-semibold bg-white shadow-sm transform scale-102'
-                    : 'text-slate-600 hover:text-[#0052CC] hover:bg-white/50'
+                    ? "text-[#0052CC] font-semibold bg-white shadow-sm transform scale-102"
+                    : "text-slate-600 hover:text-[#0052CC] hover:bg-white/50"
                 }`
               }
             >
@@ -57,7 +56,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <header className="flex justify-between items-center px-6 w-full sticky top-0 z-40 h-16 border-b border-slate-100 bg-[#ffffff] transition-colors">
           <div className="flex items-center gap-6">
             <div className="relative">
-              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">
+                search
+              </span>
               <input
                 className="pl-10 pr-4 py-1.5 bg-surface-container-low border-none rounded-full text-sm w-64 focus:ring-2 focus:ring-primary/20"
                 placeholder="Search analytics..."
@@ -80,7 +81,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
         {/* Page Content */}
         <div className="p-8 max-w-7xl mx-auto">
-          {children}
+          <Outlet />
         </div>
       </main>
     </div>
@@ -88,3 +89,4 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 };
 
 export default Layout;
+
