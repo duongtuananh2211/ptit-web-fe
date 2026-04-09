@@ -14,17 +14,25 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IPasswordService, PasswordService>();
         services.AddSingleton<IRefreshTokenService, RefreshTokenService>();
 
+        // API Services
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IProjectsService, ProjectsService>();
-        services.AddScoped<IProjectMembersService, ProjectMembersService>();
-        services.AddScoped<IFeatureAreasService, FeatureAreasService>();
-        services.AddScoped<ISprintsService, SprintsService>();
+        services.AddScoped<ITasksService, TasksService>();
+        services.AddScoped<IIssuesService, IssuesService>();
+        services.AddScoped<ISubtasksService, SubtasksService>();
         services.AddScoped<IMyTasksService, MyTasksService>();
         services.AddScoped<IRecommendationService, RecommendationService>();
         services.AddScoped<IReportExportService, ReportExportService>();
         services.AddScoped<IReportsService, ReportsService>();
         services.AddScoped<IAdministrationService, AdministrationService>();
 
+        // Utility & Query Services
+        services.AddScoped<TaskProgressCalculator>();
+        services.AddScoped<MyBoardQuery>();
+        services.AddScoped<TaskDetailQuery>();
+        services.AddScoped<IssueDetailQuery>();
+
         return services;
     }
 }
+
