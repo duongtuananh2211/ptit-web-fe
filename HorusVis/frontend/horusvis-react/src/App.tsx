@@ -12,6 +12,8 @@ import Projects from "./pages/Projects";
 import MyTasks from "./pages/MyTasks";
 import Reports from "./pages/Reports";
 import Admin from "./pages/Admin";
+import AdminCreateUser from "./pages/AdminCreateUser";
+import AdminEditUser from "./pages/AdminEditUser";
 import "./index.css";
 
 function App() {
@@ -28,6 +30,8 @@ function App() {
           <Route path="/tasks" element={<MyTasks />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/users/new" element={<AdminCreateUser />} />
+          <Route path="/admin/users/:userId/edit" element={<AdminEditUser />} />
         </Route>
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
