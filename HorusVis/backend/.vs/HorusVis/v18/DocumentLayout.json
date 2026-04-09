@@ -1,69 +1,89 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\VuND\\Board\\HorusVis\\backend\\",
+  "WorkspaceRootPath": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.web\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|d:\\thuyvt\\ptit\\ptit-web-fe\\horusvis\\backend\\src\\horusvis.web\\controllers\\issuescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|solutionrelative:src\\horusvis.web\\controllers\\issuescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|d:\\thuyvt\\ptit\\ptit-web-fe\\horusvis\\backend\\src\\horusvis.web\\controllers\\taskscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|solutionrelative:src\\horusvis.web\\controllers\\taskscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|d:\\thuyvt\\ptit\\ptit-web-fe\\horusvis\\backend\\src\\horusvis.web\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|solutionrelative:src\\horusvis.web\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{911FCA3B-1360-409C-9365-30B79EFF08BC}|src\\HorusVis.Business\\HorusVis.Business.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.business\\services\\authenticationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{911FCA3B-1360-409C-9365-30B79EFF08BC}|src\\HorusVis.Business\\HorusVis.Business.csproj|solutionrelative:src\\horusvis.business\\services\\authenticationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{911FCA3B-1360-409C-9365-30B79EFF08BC}|src\\HorusVis.Business\\HorusVis.Business.csproj|d:\\thuyvt\\ptit\\ptit-web-fe\\horusvis\\backend\\src\\horusvis.business\\services\\tasksservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{911FCA3B-1360-409C-9365-30B79EFF08BC}|src\\HorusVis.Business\\HorusVis.Business.csproj|solutionrelative:src\\horusvis.business\\services\\tasksservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.web\\contracts\\scaffoldloginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{32EDAB6E-C7C3-4FAA-BCD4-5E2655331177}|src\\HorusVis.Data.Migrations\\HorusVis.Data.Migrations.csproj|d:\\thuyvt\\ptit\\ptit-web-fe\\horusvis\\backend\\src\\horusvis.data.migrations\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{32EDAB6E-C7C3-4FAA-BCD4-5E2655331177}|src\\HorusVis.Data.Migrations\\HorusVis.Data.Migrations.csproj|solutionrelative:src\\horusvis.data.migrations\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{911FCA3B-1360-409C-9365-30B79EFF08BC}|src\\HorusVis.Business\\HorusVis.Business.csproj|d:\\thuyvt\\ptit\\ptit-web-fe\\horusvis\\backend\\src\\horusvis.business\\services\\issuedetailquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{911FCA3B-1360-409C-9365-30B79EFF08BC}|src\\HorusVis.Business\\HorusVis.Business.csproj|solutionrelative:src\\horusvis.business\\services\\issuedetailquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{911FCA3B-1360-409C-9365-30B79EFF08BC}|src\\HorusVis.Business\\HorusVis.Business.csproj|d:\\thuyvt\\ptit\\ptit-web-fe\\horusvis\\backend\\src\\horusvis.business\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{911FCA3B-1360-409C-9365-30B79EFF08BC}|src\\HorusVis.Business\\HorusVis.Business.csproj|solutionrelative:src\\horusvis.business\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{911FCA3B-1360-409C-9365-30B79EFF08BC}|src\\HorusVis.Business\\HorusVis.Business.csproj|d:\\thuyvt\\ptit\\ptit-web-fe\\horusvis\\backend\\src\\horusvis.business\\services\\subtasksservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{911FCA3B-1360-409C-9365-30B79EFF08BC}|src\\HorusVis.Business\\HorusVis.Business.csproj|solutionrelative:src\\horusvis.business\\services\\subtasksservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{911FCA3B-1360-409C-9365-30B79EFF08BC}|src\\HorusVis.Business\\HorusVis.Business.csproj|d:\\thuyvt\\ptit\\ptit-web-fe\\horusvis\\backend\\src\\horusvis.business\\services\\mytasksservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{911FCA3B-1360-409C-9365-30B79EFF08BC}|src\\HorusVis.Business\\HorusVis.Business.csproj|solutionrelative:src\\horusvis.business\\services\\mytasksservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|d:\\thuyvt\\ptit\\ptit-web-fe\\horusvis\\backend\\src\\horusvis.web\\contracts\\scaffoldloginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|solutionrelative:src\\horusvis.web\\contracts\\scaffoldloginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.web\\contracts\\scaffoldendpointresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|d:\\thuyvt\\ptit\\ptit-web-fe\\horusvis\\backend\\src\\horusvis.web\\contracts\\scaffoldendpointresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|solutionrelative:src\\horusvis.web\\contracts\\scaffoldendpointresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.web\\services\\authentication\\jwttokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|d:\\thuyvt\\ptit\\ptit-web-fe\\horusvis\\backend\\src\\horusvis.web\\services\\authentication\\jwttokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|solutionrelative:src\\horusvis.web\\services\\authentication\\jwttokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CBEE9B16-7EFD-4395-BE8F-69BF715BFEF8}|tests\\HorusVis.Business.Tests\\HorusVis.Business.Tests.csproj|d:\\vund\\board\\horusvis\\backend\\tests\\horusvis.business.tests\\authservicerefreshtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{CBEE9B16-7EFD-4395-BE8F-69BF715BFEF8}|tests\\HorusVis.Business.Tests\\HorusVis.Business.Tests.csproj|d:\\thuyvt\\ptit\\ptit-web-fe\\horusvis\\backend\\tests\\horusvis.business.tests\\authservicerefreshtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CBEE9B16-7EFD-4395-BE8F-69BF715BFEF8}|tests\\HorusVis.Business.Tests\\HorusVis.Business.Tests.csproj|solutionrelative:tests\\horusvis.business.tests\\authservicerefreshtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{32EDAB6E-C7C3-4FAA-BCD4-5E2655331177}|src\\HorusVis.Data.Migrations\\HorusVis.Data.Migrations.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.data.migrations\\migrations\\20260408035933_seedadminuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{32EDAB6E-C7C3-4FAA-BCD4-5E2655331177}|src\\HorusVis.Data.Migrations\\HorusVis.Data.Migrations.csproj|solutionrelative:src\\horusvis.data.migrations\\migrations\\20260408035933_seedadminuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C1A70FEA-3CEB-443E-B00D-B36BF4E60D97}|src\\HorusVis.Data\\HorusVis.Data.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.data\\assemblymarker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C1A70FEA-3CEB-443E-B00D-B36BF4E60D97}|src\\HorusVis.Data\\HorusVis.Data.csproj|d:\\thuyvt\\ptit\\ptit-web-fe\\horusvis\\backend\\src\\horusvis.data\\assemblymarker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C1A70FEA-3CEB-443E-B00D-B36BF4E60D97}|src\\HorusVis.Data\\HorusVis.Data.csproj|solutionrelative:src\\horusvis.data\\assemblymarker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C1A70FEA-3CEB-443E-B00D-B36BF4E60D97}|src\\HorusVis.Data\\HorusVis.Data.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.data\\services\\unitofworkservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C1A70FEA-3CEB-443E-B00D-B36BF4E60D97}|src\\HorusVis.Data\\HorusVis.Data.csproj|d:\\thuyvt\\ptit\\ptit-web-fe\\horusvis\\backend\\src\\horusvis.data\\services\\unitofworkservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C1A70FEA-3CEB-443E-B00D-B36BF4E60D97}|src\\HorusVis.Data\\HorusVis.Data.csproj|solutionrelative:src\\horusvis.data\\services\\unitofworkservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{32EDAB6E-C7C3-4FAA-BCD4-5E2655331177}|src\\HorusVis.Data.Migrations\\HorusVis.Data.Migrations.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.data.migrations\\migrations\\20260407174335_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{32EDAB6E-C7C3-4FAA-BCD4-5E2655331177}|src\\HorusVis.Data.Migrations\\HorusVis.Data.Migrations.csproj|solutionrelative:src\\horusvis.data.migrations\\migrations\\20260407174335_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C1A70FEA-3CEB-443E-B00D-B36BF4E60D97}|src\\HorusVis.Data\\HorusVis.Data.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.data\\persistence\\datetimeoffsetconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C1A70FEA-3CEB-443E-B00D-B36BF4E60D97}|src\\HorusVis.Data\\HorusVis.Data.csproj|d:\\thuyvt\\ptit\\ptit-web-fe\\horusvis\\backend\\src\\horusvis.data\\persistence\\datetimeoffsetconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C1A70FEA-3CEB-443E-B00D-B36BF4E60D97}|src\\HorusVis.Data\\HorusVis.Data.csproj|solutionrelative:src\\horusvis.data\\persistence\\datetimeoffsetconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.web\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "AbsoluteMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|d:\\thuyvt\\ptit\\ptit-web-fe\\horusvis\\backend\\src\\horusvis.web\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|solutionrelative:src\\horusvis.web\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.web\\horusvis.web.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|d:\\thuyvt\\ptit\\ptit-web-fe\\horusvis\\backend\\src\\horusvis.web\\horusvis.web.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|solutionrelative:src\\horusvis.web\\horusvis.web.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{41C4888C-2951-4804-AA2E-8F1065C94771}|Solution Items{41C4888C-2951-4804-AA2E-8F1065C94771}|D:\\VuND\\Board\\HorusVis\\backend\\Directory.Packages.props||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "AbsoluteMoniker": "D:0:0:{41C4888C-2951-4804-AA2E-8F1065C94771}|Solution Items{41C4888C-2951-4804-AA2E-8F1065C94771}|D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\Directory.Packages.props||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{41C4888C-2951-4804-AA2E-8F1065C94771}|Solution Items{41C4888C-2951-4804-AA2E-8F1065C94771}|solutionrelative:Directory.Packages.props||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|d:\\vund\\board\\horusvis\\backend\\src\\horusvis.web\\horusvis.web.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "AbsoluteMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|d:\\thuyvt\\ptit\\ptit-web-fe\\horusvis\\backend\\src\\horusvis.web\\horusvis.web.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
       "RelativeMoniker": "D:0:0:{41AD8DB6-31B9-4CF8-9D0B-D1B02AB34448}|src\\HorusVis.Web\\HorusVis.Web.csproj|solutionrelative:src\\horusvis.web\\horusvis.web.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{41C4888C-2951-4804-AA2E-8F1065C94771}|Solution Items{41C4888C-2951-4804-AA2E-8F1065C94771}|D:\\VuND\\Board\\HorusVis\\backend\\Directory.Build.props||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "AbsoluteMoniker": "D:0:0:{41C4888C-2951-4804-AA2E-8F1065C94771}|Solution Items{41C4888C-2951-4804-AA2E-8F1065C94771}|D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\Directory.Build.props||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{41C4888C-2951-4804-AA2E-8F1065C94771}|Solution Items{41C4888C-2951-4804-AA2E-8F1065C94771}|solutionrelative:Directory.Build.props||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     }
   ],
@@ -74,15 +94,180 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 15,
+          "SelectedChildIndex": 17,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:20:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:27:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:26:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:18:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:19:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:23:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:24:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:25:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:323948898:0:{81164725-9a96-4ece-a4cb-440d8fd285e5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{809f6ff3-8092-454a-8003-6d4091f9b5bb}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:17:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{99b8fa2f-ab90-4f57-9c32-949f146f1914}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Web\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "src\\HorusVis.Web\\Controllers\\AuthController.cs",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Web\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "src\\HorusVis.Web\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-07T07:09:21.335Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "TasksService.cs",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Business\\Services\\TasksService.cs",
+              "RelativeDocumentMoniker": "src\\HorusVis.Business\\Services\\TasksService.cs",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Business\\Services\\TasksService.cs",
+              "RelativeToolTip": "src\\HorusVis.Business\\Services\\TasksService.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAAAEMAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-08T17:10:57.333Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Data.Migrations\\appsettings.json",
+              "RelativeDocumentMoniker": "src\\HorusVis.Data.Migrations\\appsettings.json",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Data.Migrations\\appsettings.json",
+              "RelativeToolTip": "src\\HorusVis.Data.Migrations\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-09T06:08:47.468Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SubtasksService.cs",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Business\\Services\\SubtasksService.cs",
+              "RelativeDocumentMoniker": "src\\HorusVis.Business\\Services\\SubtasksService.cs",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Business\\Services\\SubtasksService.cs",
+              "RelativeToolTip": "src\\HorusVis.Business\\Services\\SubtasksService.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAmwCEAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-08T17:06:06.238Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IssueDetailQuery.cs",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Business\\Services\\IssueDetailQuery.cs",
+              "RelativeDocumentMoniker": "src\\HorusVis.Business\\Services\\IssueDetailQuery.cs",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Business\\Services\\IssueDetailQuery.cs",
+              "RelativeToolTip": "src\\HorusVis.Business\\Services\\IssueDetailQuery.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAmwCEAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-08T17:10:54.212Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "IssuesController.cs",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Web\\Controllers\\IssuesController.cs",
+              "RelativeDocumentMoniker": "src\\HorusVis.Web\\Controllers\\IssuesController.cs",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Web\\Controllers\\IssuesController.cs",
+              "RelativeToolTip": "src\\HorusVis.Web\\Controllers\\IssuesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-08T17:05:27.833Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TasksController.cs",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Web\\Controllers\\TasksController.cs",
+              "RelativeDocumentMoniker": "src\\HorusVis.Web\\Controllers\\TasksController.cs",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Web\\Controllers\\TasksController.cs",
+              "RelativeToolTip": "src\\HorusVis.Web\\Controllers\\TasksController.cs",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAAAFQAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T06:35:35.695Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ServiceCollectionExtensions.cs",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Business\\ServiceCollectionExtensions.cs",
+              "RelativeDocumentMoniker": "src\\HorusVis.Business\\ServiceCollectionExtensions.cs",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Business\\ServiceCollectionExtensions.cs",
+              "RelativeToolTip": "src\\HorusVis.Business\\ServiceCollectionExtensions.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAcwBMAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-08T17:06:00.112Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "MyTasksService.cs",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Business\\Services\\MyTasksService.cs",
+              "RelativeDocumentMoniker": "src\\HorusVis.Business\\Services\\MyTasksService.cs",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Business\\Services\\MyTasksService.cs",
+              "RelativeToolTip": "src\\HorusVis.Business\\Services\\MyTasksService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-08T17:06:33.94Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "ScaffoldEndpointResponse.cs",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\Contracts\\ScaffoldEndpointResponse.cs",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Web\\Contracts\\ScaffoldEndpointResponse.cs",
               "RelativeDocumentMoniker": "src\\HorusVis.Web\\Contracts\\ScaffoldEndpointResponse.cs",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\Contracts\\ScaffoldEndpointResponse.cs",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Web\\Contracts\\ScaffoldEndpointResponse.cs",
               "RelativeToolTip": "src\\HorusVis.Web\\Contracts\\ScaffoldEndpointResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -91,11 +276,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 9,
               "Title": "ScaffoldLoginRequest.cs",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\Contracts\\ScaffoldLoginRequest.cs",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Web\\Contracts\\ScaffoldLoginRequest.cs",
               "RelativeDocumentMoniker": "src\\HorusVis.Web\\Contracts\\ScaffoldLoginRequest.cs",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\Contracts\\ScaffoldLoginRequest.cs",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Web\\Contracts\\ScaffoldLoginRequest.cs",
               "RelativeToolTip": "src\\HorusVis.Web\\Contracts\\ScaffoldLoginRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -104,11 +289,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 11,
               "Title": "JwtTokenService.cs",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\Services\\Authentication\\JwtTokenService.cs",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Web\\Services\\Authentication\\JwtTokenService.cs",
               "RelativeDocumentMoniker": "src\\HorusVis.Web\\Services\\Authentication\\JwtTokenService.cs",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\Services\\Authentication\\JwtTokenService.cs",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Web\\Services\\Authentication\\JwtTokenService.cs",
               "RelativeToolTip": "src\\HorusVis.Web\\Services\\Authentication\\JwtTokenService.cs",
               "ViewState": "AgIAADkAAAAAAAAAAAAEwE4AAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -117,11 +302,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 12,
               "Title": "AuthServiceRefreshTests.cs",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\tests\\HorusVis.Business.Tests\\AuthServiceRefreshTests.cs",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\tests\\HorusVis.Business.Tests\\AuthServiceRefreshTests.cs",
               "RelativeDocumentMoniker": "tests\\HorusVis.Business.Tests\\AuthServiceRefreshTests.cs",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\tests\\HorusVis.Business.Tests\\AuthServiceRefreshTests.cs",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\tests\\HorusVis.Business.Tests\\AuthServiceRefreshTests.cs",
               "RelativeToolTip": "tests\\HorusVis.Business.Tests\\AuthServiceRefreshTests.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAASwBYAAAA+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -130,37 +315,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "20260408035933_SeedAdminUser.cs",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Data.Migrations\\Migrations\\20260408035933_SeedAdminUser.cs",
-              "RelativeDocumentMoniker": "src\\HorusVis.Data.Migrations\\Migrations\\20260408035933_SeedAdminUser.cs",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Data.Migrations\\Migrations\\20260408035933_SeedAdminUser.cs",
-              "RelativeToolTip": "src\\HorusVis.Data.Migrations\\Migrations\\20260408035933_SeedAdminUser.cs",
-              "ViewState": "AgIAAB0AAAAAAAAAAAAQwBgAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-08T04:04:41.216Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AuthenticationService.cs",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Business\\Services\\AuthenticationService.cs",
-              "RelativeDocumentMoniker": "src\\HorusVis.Business\\Services\\AuthenticationService.cs",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Business\\Services\\AuthenticationService.cs",
-              "RelativeToolTip": "src\\HorusVis.Business\\Services\\AuthenticationService.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAAwEUAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-08T04:04:25.248Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 14,
               "Title": "UnitOfWorkService.cs",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Data\\Services\\UnitOfWorkService.cs",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Data\\Services\\UnitOfWorkService.cs",
               "RelativeDocumentMoniker": "src\\HorusVis.Data\\Services\\UnitOfWorkService.cs",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Data\\Services\\UnitOfWorkService.cs",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Data\\Services\\UnitOfWorkService.cs",
               "RelativeToolTip": "src\\HorusVis.Data\\Services\\UnitOfWorkService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABLAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -169,11 +328,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 13,
               "Title": "AssemblyMarker.cs",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Data\\AssemblyMarker.cs",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Data\\AssemblyMarker.cs",
               "RelativeDocumentMoniker": "src\\HorusVis.Data\\AssemblyMarker.cs",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Data\\AssemblyMarker.cs",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Data\\AssemblyMarker.cs",
               "RelativeToolTip": "src\\HorusVis.Data\\AssemblyMarker.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -182,24 +341,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "20260407174335_InitialCreate.cs",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Data.Migrations\\Migrations\\20260407174335_InitialCreate.cs",
-              "RelativeDocumentMoniker": "src\\HorusVis.Data.Migrations\\Migrations\\20260407174335_InitialCreate.cs",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Data.Migrations\\Migrations\\20260407174335_InitialCreate.cs",
-              "RelativeToolTip": "src\\HorusVis.Data.Migrations\\Migrations\\20260407174335_InitialCreate.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAAACEAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-07T17:44:00.067Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 15,
               "Title": "DateTimeOffsetConverter.cs",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Data\\Persistence\\DateTimeOffsetConverter.cs",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Data\\Persistence\\DateTimeOffsetConverter.cs",
               "RelativeDocumentMoniker": "src\\HorusVis.Data\\Persistence\\DateTimeOffsetConverter.cs",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Data\\Persistence\\DateTimeOffsetConverter.cs",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Data\\Persistence\\DateTimeOffsetConverter.cs",
               "RelativeToolTip": "src\\HorusVis.Data\\Persistence\\DateTimeOffsetConverter.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -208,48 +354,47 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 19,
               "Title": "HorusVis.Web",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\HorusVis.Web.csproj",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Web\\HorusVis.Web.csproj",
               "RelativeDocumentMoniker": "src\\HorusVis.Web\\HorusVis.Web.csproj",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\HorusVis.Web.csproj",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Web\\HorusVis.Web.csproj",
               "RelativeToolTip": "src\\HorusVis.Web\\HorusVis.Web.csproj",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-04-07T12:48:03.137Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-07T12:48:03.137Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 17,
               "Title": "HorusVis.Web.csproj",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\HorusVis.Web.csproj",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Web\\HorusVis.Web.csproj",
               "RelativeDocumentMoniker": "src\\HorusVis.Web\\HorusVis.Web.csproj",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\HorusVis.Web.csproj",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Web\\HorusVis.Web.csproj",
               "RelativeToolTip": "src\\HorusVis.Web\\HorusVis.Web.csproj",
               "ViewState": "AgIAAAAAAADJmZmZmRkWwAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-04-07T07:09:12.412Z",
+              "WhenOpened": "2026-04-07T07:09:12.412Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Directory.Build.props",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\Directory.Build.props",
+              "RelativeDocumentMoniker": "Directory.Build.props",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\Directory.Build.props",
+              "RelativeToolTip": "Directory.Build.props",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2026-04-07T07:26:52.875Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Directory.Build.props",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\Directory.Build.props",
-              "RelativeDocumentMoniker": "Directory.Build.props",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\Directory.Build.props",
-              "RelativeToolTip": "Directory.Build.props",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
-              "WhenOpened": "2026-04-07T07:26:52.875Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 18,
               "Title": "Directory.Packages.props",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\Directory.Packages.props",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\Directory.Packages.props",
               "RelativeDocumentMoniker": "Directory.Packages.props",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\Directory.Packages.props",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\Directory.Packages.props",
               "RelativeToolTip": "Directory.Packages.props",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
@@ -258,28 +403,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 16,
               "Title": "launchSettings.json",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\Properties\\launchSettings.json",
+              "DocumentMoniker": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Web\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "src\\HorusVis.Web\\Properties\\launchSettings.json",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\Properties\\launchSettings.json",
+              "ToolTip": "D:\\ThuyVT\\PTIT\\ptit-web-fe\\HorusVis\\backend\\src\\HorusVis.Web\\Properties\\launchSettings.json",
               "RelativeToolTip": "src\\HorusVis.Web\\Properties\\launchSettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2026-04-07T07:14:26.352Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "src\\HorusVis.Web\\Controllers\\AuthController.cs",
-              "ToolTip": "D:\\VuND\\Board\\HorusVis\\backend\\src\\HorusVis.Web\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "src\\HorusVis.Web\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAE0AAAAAAAAAAAAgwBMAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-07T07:09:21.335Z",
               "EditorCaption": ""
             }
           ]
