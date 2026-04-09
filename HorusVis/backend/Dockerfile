@@ -6,7 +6,6 @@ WORKDIR /src
 COPY Directory.Build.props .
 COPY Directory.Packages.props .
 COPY NuGet.Config .
-COPY HorusVis.sln .
 
 # Copy project files and restore (cached unless .csproj files change)
 COPY src/HorusVis.Core/HorusVis.Core.csproj src/HorusVis.Core/
@@ -15,7 +14,7 @@ COPY src/HorusVis.Data/HorusVis.Data.csproj src/HorusVis.Data/
 COPY src/HorusVis.Data.Migrations/HorusVis.Data.Migrations.csproj src/HorusVis.Data.Migrations/
 COPY src/HorusVis.Web/HorusVis.Web.csproj src/HorusVis.Web/
 
-RUN dotnet restore HorusVis.sln --locked-mode
+RUN dotnet restore src/HorusVis.Web/HorusVis.Web.csproj --locked-mode
 
 # Copy source and publish
 COPY src/ src/

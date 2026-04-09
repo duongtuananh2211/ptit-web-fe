@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { fileURLToPath, URL } from 'url';
 
-const BACKEND_URL = process.env.VITE_BACKEND_URL ?? 'https://localhost:7235';
+const BACKEND_URL = process.env.VITE_BACKEND_URL ?? 'http://localhost:5049';
 
 export default defineConfig({
   plugins: [react()],
@@ -20,7 +20,7 @@ export default defineConfig({
       '/api': {
         target: BACKEND_URL,
         changeOrigin: true,
-        secure: false, // accept self-signed cert on localhost
+        secure: false, // accept self-signed cert if HTTPS target is ever used
       },
     },
   },

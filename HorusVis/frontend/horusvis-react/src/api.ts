@@ -52,7 +52,7 @@ function userFromJwt(token: string): CurrentUser {
 // Call the backend directly to avoid Vite proxy 307 redirects.
 // Override with VITE_BACKEND_URL env var (e.g. in .env.local).
 const BACKEND_BASE: string =
-  (import.meta.env.VITE_BACKEND_URL as string | undefined) ?? 'https://localhost:7235';
+  (import.meta.env.VITE_BACKEND_URL as string | undefined) ?? 'http://localhost:5049';
 
 // ─── Token management ────────────────────────────────────────────────────────
 let isRedirecting = false;
@@ -369,7 +369,7 @@ export const register = async (userData: {
   return data;
 };
 
-export const getCurrentUser = (): { user: CurrentUser } => {
+export const getCurrentUser = async (): Promise<{ user: CurrentUser }> => {
   // HorusVis backend has no /auth/me endpoint — decode claims from the stored JWT.
   const token = localStorage.getItem('authToken');
   if (!token) throw new Error('No auth token available');

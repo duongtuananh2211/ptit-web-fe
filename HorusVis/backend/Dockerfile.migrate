@@ -1,0 +1,37 @@
+# Runs "dotnet ef database update" to:
+#   1. Create the database if it does not exist
+#   2. Apply all pending EF Core migrations
+#
+# This container exits (code 0) when migrations are done so the API service
+# can start (depends_on: service_completed_successfully).
+
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS migrate
+WORKDIR /src
+
+# Install the EF Core global tool
+RUN dotnet tool install --global dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
+
+# Copy solution-level files for layer caching
+COPY Directory.Build.props .
+COPY Directory.Packages.props .
+COPY NuGet.Config .
+
+# Copy project files and restore (no solution — test projects not present)
+COPY src/HorusVis.Core/HorusVis.Core.csproj           src/HorusVis.Core/
+COPY src/HorusVis.Business/HorusVis.Business.csproj   src/HorusVis.Business/
+COPY src/HorusVis.Data/HorusVis.Data.csproj            src/HorusVis.Data/
+COPY src/HorusVis.Data.Migrations/HorusVis.Data.Migrations.csproj src/HorusVis.Data.Migrations/
+
+RUN dotnet restore src/HorusVis.Data.Migrations/HorusVis.Data.Migrations.csproj --locked-mode
+
+COPY src/ src/
+
+# Run migrations at container start using --connection to bypass appsettings host override.
+# Shell form expands $HORUSVIS_CONNECTION at runtime from the env var injected by docker-compose.
+CMD dotnet ef database update \
+      --project src/HorusVis.Data.Migrations/HorusVis.Data.Migrations.csproj \
+      --startup-project src/HorusVis.Data.Migrations/HorusVis.Data.Migrations.csproj \
+      --context HorusVisDbContext \
+      --connection "$HORUSVIS_CONNECTION" \
+      --verbose

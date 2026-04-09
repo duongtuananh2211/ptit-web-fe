@@ -1,16 +1,67 @@
 services:
+
+  # ── PostgreSQL database ────────────────────────────────────────────────────
+  horusvis-db:
+    image: postgres:16-alpine
+    container_name: horusvis-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: horusvis
+    ports:
+      - "5432:5432"
+    volumes:
+      - horusvis-pgdata:/var/lib/postgresql/data
+    networks:
+      - horusvis-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d horusvis"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ── EF Core migrations (runs once then exits) ──────────────────────────────
+  horusvis-migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile.migrate
+    container_name: horusvis-migrate
+    restart: "no"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStringParts__HorusVis__Host: horusvis-db
+      ConnectionStringParts__HorusVis__Password: postgres
+      # Full connection string passed directly to dotnet-ef via --connection flag
+      HORUSVIS_CONNECTION: "Host=horusvis-db;Port=5432;User ID=postgres;Password=postgres;Database=horusvis;Include Error Detail=true"
+    networks:
+      - horusvis-net
+    depends_on:
+      horusvis-db:
+        condition: service_healthy
+
+  # ── ASP.NET Core API ───────────────────────────────────────────────────────
   horusvis-api:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: horusvis-api
+    restart: unless-stopped
     ports:
       - "5049:8080"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      # Connection string is read from appsettings.Development.json.
-      # Host is set to the horusvis-postgres container IP on the bridge network.
-      ConnectionStringParts__HorusVis__Host: "172.17.0.3"
-    # Join the default bridge network so we can reach horusvis-postgres by IP
-    network_mode: bridge
-    restart: unless-stopped
+      ConnectionStringParts__HorusVis__Host: horusvis-db
+      ConnectionStringParts__HorusVis__Password: postgres
+    networks:
+      - horusvis-net
+    depends_on:
+      horusvis-migrate:
+        condition: service_completed_successfully
+
+networks:
+  horusvis-net:
+    driver: bridge
+
+volumes:
+  horusvis-pgdata:
