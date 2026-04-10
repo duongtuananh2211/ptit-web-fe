@@ -101,6 +101,7 @@ public sealed class TasksService(HorusVisDbContext dbContext) : ITasksService
         string? description,
         string status,
         string priority,
+        Guid? assigneeUserId = null,
         string? blockedNote = null,
         DateOnly? startDate = null,
         DateOnly? dueDate = null,
@@ -115,6 +116,15 @@ public sealed class TasksService(HorusVisDbContext dbContext) : ITasksService
 
         if (!Enum.TryParse<WorkTaskPriority>(priority, true, out var priorityEnum))
             throw new InvalidOperationException($"Invalid priority: {priority}");
+
+        if (assigneeUserId.HasValue)
+        {
+            var isProjectMember = await dbContext.Set<ProjectMember>()
+                .AnyAsync(pm => pm.ProjectId == task.ProjectId && pm.UserId == assigneeUserId.Value, ct);
+
+            if (!isProjectMember)
+                throw new InvalidOperationException("Selected assignee is not a member of this project.");
+        }
 
         // Check if task can move to Done
         if (statusEnum == WorkTaskStatus.Done)
@@ -140,6 +150,34 @@ public sealed class TasksService(HorusVisDbContext dbContext) : ITasksService
         task.StartDate = startDate;
         task.DueDate = dueDate;
         task.UpdatedAt = DateTimeOffset.UtcNow;
+
+        var primaryAssignee = await dbContext.Set<TaskAssignee>()
+            .FirstOrDefaultAsync(ta => ta.TaskId == taskId && ta.AssignmentType == AssignmentType.Primary, ct);
+
+        if (assigneeUserId.HasValue)
+        {
+            if (primaryAssignee is null)
+            {
+                dbContext.Set<TaskAssignee>().Add(new TaskAssignee
+                {
+                    Id = Guid.NewGuid(),
+                    TaskId = task.Id,
+                    UserId = assigneeUserId.Value,
+                    AssignmentType = AssignmentType.Primary,
+                    AssignedAt = DateTimeOffset.UtcNow,
+                });
+            }
+            else
+            {
+                primaryAssignee.UserId = assigneeUserId.Value;
+                primaryAssignee.AssignedAt = DateTimeOffset.UtcNow;
+                dbContext.Set<TaskAssignee>().Update(primaryAssignee);
+            }
+        }
+        else if (primaryAssignee is not null)
+        {
+            dbContext.Set<TaskAssignee>().Remove(primaryAssignee);
+        }
 
         dbContext.Set<WorkTask>().Update(task);
         await dbContext.SaveChangesAsync(ct);

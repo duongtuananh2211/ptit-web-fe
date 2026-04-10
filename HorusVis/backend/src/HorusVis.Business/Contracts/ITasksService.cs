@@ -22,7 +22,7 @@ public interface ITasksService
     /// <summary>
     /// Update task
     /// </summary>
-    Task<WorkTask> UpdateTaskAsync(Guid taskId, string title, string? description, string status, string priority, string? blockedNote = null, DateOnly? startDate = null, DateOnly? dueDate = null, CancellationToken ct = default);
+    Task<WorkTask> UpdateTaskAsync(Guid taskId, string title, string? description, string status, string priority, Guid? assigneeUserId = null, string? blockedNote = null, DateOnly? startDate = null, DateOnly? dueDate = null, CancellationToken ct = default);
 
     /// <summary>
     /// Get subtasks by task ID

@@ -17,6 +17,9 @@ public static class ServiceCollectionExtensions
         // API Services
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IProjectsService, ProjectsService>();
+        services.AddScoped<IProjectMembersService, ProjectMembersService>();
+        services.AddScoped<IFeatureAreasService, FeatureAreasService>();
+        services.AddScoped<ISprintsService, SprintsService>();
         services.AddScoped<ITasksService, TasksService>();
         services.AddScoped<IIssuesService, IssuesService>();
         services.AddScoped<ISubtasksService, SubtasksService>();

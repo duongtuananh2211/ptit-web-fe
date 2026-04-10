@@ -173,7 +173,7 @@ public sealed class ProjectsService(HorusVisDbContext dbContext) : IProjectsServ
                 AvatarUrl:    u.AvatarUrl,
                 ProjectRole:  m.ProjectRole,
                 MemberStatus: m.MemberStatus.ToString(),
-                JoinedAt:     m.JoinedAt.UtcDateTime
+                JoinedAt:     m.JoinedAt
             ))
             .ToListAsync(ct);
 
@@ -198,7 +198,7 @@ public sealed class ProjectsService(HorusVisDbContext dbContext) : IProjectsServ
             OwnerDisplayName: project.OwnerUser.FullName,
             StartDate:        project.StartDate,
             EndDate:          project.EndDate,
-            CreatedAt:        project.CreatedAt.UtcDateTime,
+            CreatedAt:        project.CreatedAt,
             Members:          members,
             FeatureAreas:     featureAreas
         );
@@ -282,7 +282,30 @@ public sealed class ProjectsService(HorusVisDbContext dbContext) : IProjectsServ
                             : t.Priority == WorkTaskPriority.Medium   ? 2 : 3)
                 .ThenBy(t => t.CreatedAt)
                 .Take(5)
-                .Select(t => new { t.Id, t.Title, t.Priority })
+                .GroupJoin(
+                    dbContext.Set<FeatureArea>(),
+                    t => t.FeatureAreaId,
+                    fa => fa.Id,
+                    (t, areas) => new { t, Area = areas.FirstOrDefault() })
+                .Select(x => new
+                {
+                    x.t.Id,
+                    x.t.Title,
+                    x.t.Description,
+                    x.t.Priority,
+                    x.t.Status,
+                    x.t.ProgressPercent,
+                    x.t.PlanEstimate,
+                    x.t.BlockedNote,
+                    x.t.StartDate,
+                    x.t.DueDate,
+                    x.t.CreatedAt,
+                    x.t.UpdatedAt,
+                    x.t.FeatureAreaId,
+                    FeatureAreaCode = x.Area != null ? x.Area.AreaCode : null,
+                    FeatureAreaName = x.Area != null ? x.Area.AreaName : null,
+                    FeatureAreaColorHex = x.Area != null ? x.Area.ColorHex : null,
+                })
                 .ToListAsync(ct);
 
             var taskIds = taskRows.Select(t => t.Id).ToList();
@@ -291,16 +314,44 @@ public sealed class ProjectsService(HorusVisDbContext dbContext) : IProjectsServ
             var assigneeMap = await dbContext.Set<TaskAssignee>()
                 .Where(ta => taskIds.Contains(ta.TaskId))
                 .GroupBy(ta => ta.TaskId)
-                .Select(g => new { TaskId = g.Key, UserId = g.OrderBy(ta => ta.AssignedAt).First().UserId })
+                .Select(g => new
+                {
+                    TaskId = g.Key,
+                    Assignee = g
+                        .OrderBy(ta => ta.AssignmentType == AssignmentType.Primary ? 0 : 1)
+                        .ThenBy(ta => ta.AssignedAt)
+                        .Select(ta => new
+                        {
+                            ta.UserId,
+                            ta.User.FullName,
+                            ta.User.AvatarUrl,
+                        })
+                        .FirstOrDefault()
+                })
                 .ToListAsync(ct);
 
-            var assigneeDict = assigneeMap.ToDictionary(x => x.TaskId, x => (Guid?)x.UserId);
+            var assigneeDict = assigneeMap.ToDictionary(x => x.TaskId, x => x.Assignee);
 
             var topTasks = taskRows.Select(t => new BoardTaskPreviewItem(
-                Id:             t.Id,
-                Title:          t.Title,
-                Priority:       t.Priority.ToString(),
-                AssigneeUserId: assigneeDict.TryGetValue(t.Id, out var uid) ? uid : null
+                Id:                 t.Id,
+                Title:              t.Title,
+                Description:        t.Description,
+                Priority:           t.Priority.ToString(),
+                Status:             t.Status.ToString(),
+                ProgressPercent:    t.ProgressPercent,
+                PlanEstimate:       t.PlanEstimate,
+                BlockedNote:        t.BlockedNote,
+                StartDate:          t.StartDate,
+                DueDate:            t.DueDate,
+                CreatedAt:          t.CreatedAt,
+                UpdatedAt:          t.UpdatedAt,
+                FeatureAreaId:      t.FeatureAreaId,
+                FeatureAreaCode:    t.FeatureAreaCode,
+                FeatureAreaName:    t.FeatureAreaName,
+                FeatureAreaColorHex:t.FeatureAreaColorHex,
+                AssigneeUserId:     assigneeDict.TryGetValue(t.Id, out var assignee) ? assignee?.UserId : null,
+                AssigneeDisplayName:assigneeDict.TryGetValue(t.Id, out var assigneeInfo) ? assigneeInfo?.FullName : null,
+                AssigneeAvatarUrl:  assigneeDict.TryGetValue(t.Id, out var assigneeAvatar) ? assigneeAvatar?.AvatarUrl : null
             )).ToList();
 
             columns.Add(new BoardColumnDto(status.ToString(), totalCount, topTasks));

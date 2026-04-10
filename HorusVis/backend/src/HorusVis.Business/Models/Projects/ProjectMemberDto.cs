@@ -8,5 +8,5 @@ public sealed record ProjectMemberDto(
     string? AvatarUrl,
     string  ProjectRole,
     string  MemberStatus,
-    DateTime JoinedAt
+    DateTimeOffset JoinedAt
 );

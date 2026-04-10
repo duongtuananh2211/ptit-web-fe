@@ -1,260 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Prevent flash of light content in dark mode */
 @layer base {
-  html.dark {
-    color-scheme: dark;
+  html,
+  body,
+  #root {
+    min-height: 100%;
   }
-  
-  /* Ensure task cards render with correct background immediately to prevent flash */
-  /* Only apply to default task cards (not selected, not system, not special states) */
-  .task-card:not(.bg-gray-100):not(.bg-yellow-50):not(.bg-blue-50):not(.bg-blue-100):not(.bg-green-50):not(.bg-purple-50):not(.bg-yellow-50):not(.bg-gray-700):not(.bg-yellow-900):not(.bg-blue-900):not(.bg-green-900):not(.bg-purple-900) {
-    background-color: var(--task-card-bg) !important;
+
+  body {
+    @apply bg-surface text-on-surface font-body antialiased;
   }
-  
-  /* Prevent column background flash - use CSS variable for default state */
-  .column-container {
-    background-color: var(--column-bg) !important;
+}
+
+@layer components {
+  .primary-gradient {
+    background: linear-gradient(135deg, #003d9b 0%, #0052cc 100%);
   }
-  
-  /* Allow hover states to work */
-  .column-container:hover {
-    background-color: var(--column-hover-bg) !important;
+
+  .glass-sidebar {
+    @apply backdrop-blur-[12px];
+    background: rgba(241, 243, 255, 0.9);
   }
-  
-}
 
-/* Prevent scrollable container flash - apply outside @layer for higher priority */
-/* This ensures the background is applied immediately, even during React re-renders */
-/* Use direct colors for light mode, CSS variable for dark mode to prevent flash */
-div[data-tour-id="kanban-columns"],
-.kanban-scrollable-container,
-.overflow-x-auto.w-full,
-.board-drop-area,
-.main-layout-container,
-.kanban-columns-container {
-  /* Light mode default */
-  background-color: rgb(249, 250, 251) !important; /* gray-50 */
-  /* Hint browser to optimize for background changes */
-  will-change: background-color;
-  /* Ensure background is painted immediately */
-  contain: paint;
-}
+  .editorial-tight {
+    letter-spacing: -0.02em;
+  }
 
-/* Dark mode override */
-.dark div[data-tour-id="kanban-columns"],
-.dark .kanban-scrollable-container,
-.dark .overflow-x-auto.w-full,
-.dark .board-drop-area,
-.dark .main-layout-container,
-.dark .kanban-columns-container {
-  background-color: rgb(17, 24, 39) !important; /* gray-900 */
-}
+  .label-wide {
+    letter-spacing: 0.05em;
+    @apply uppercase;
+  }
 
-/* Also ensure body/html have correct background to prevent any flash */
-html {
-  background-color: var(--main-bg) !important;
-}
-
-body {
-  background-color: var(--main-bg) !important;
-}
-
-/* CSS Variables for Recharts Tooltips */
-:root {
-  --tooltip-bg: #ffffff;
-  --tooltip-border: #e5e7eb;
-  --tooltip-text: #111827;
-  --scrollbar-thumb: rgb(203, 213, 225); /* gray-300 */
-  --scrollbar-track: rgb(241, 245, 249); /* gray-100 */
-  --task-card-bg: rgb(255, 255, 255); /* white */
-  --column-bg: rgb(249, 250, 251); /* gray-50 */
-  --column-hover-bg: rgb(243, 244, 246); /* gray-100 */
-  --page-bg: rgb(249, 250, 251); /* gray-50 */
-  --main-bg: rgb(243, 244, 246); /* gray-100 */
-}
-
-.dark {
-  --tooltip-bg: #1f2937;
-  --tooltip-border: #374151;
-  --tooltip-text: #f9fafb;
-  --scrollbar-thumb: rgb(55, 65, 81); /* gray-700 - darker to blend better */
-  --scrollbar-track: rgb(17, 24, 39); /* gray-900 - matches main background */
-  --task-card-bg: rgb(31, 41, 55); /* gray-800 - matches dark mode */
-  --column-bg: rgb(31, 41, 55); /* gray-800 */
-  --column-hover-bg: rgb(55, 65, 81); /* gray-700 */
-  --page-bg: rgb(17, 24, 39); /* gray-900 */
-  --main-bg: rgb(17, 24, 39); /* gray-900 */
-}
-
-/* Disable drag-and-drop when comment tooltip is active (JS version) */
-.comment-tooltip-active [data-dnd-kit-draggable-handle],
-.comment-tooltip-active [data-sortable-handle],
-.comment-tooltip-active .sortable-item {
-  pointer-events: none !important;
-  cursor: default !important;
-}
-
-/* Keep tooltip interactive */
-.comment-tooltip-active .comment-tooltip {
-  pointer-events: auto !important;
-}
-
-/* Hide scrollbars for navigation containers */
-.hide-scrollbar {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer and Edge */
-}
-
-.hide-scrollbar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, and Opera */
-}
-
-/* TipTap Editor List Styles - Fix for bullet and numbering issues */
-.ProseMirror ul {
-  list-style-type: disc !important;
-  margin-left: 1.5rem !important;
-  padding-left: 0 !important;
-}
-
-.ProseMirror ol {
-  list-style-type: decimal !important;
-  margin-left: 1.5rem !important;
-  padding-left: 0 !important;
-}
-
-.ProseMirror li {
-  display: list-item !important;
-  margin-left: 0 !important;
-  padding-left: 0.25rem !important;
-}
-
-.ProseMirror ul ul {
-  list-style-type: circle !important;
-  margin-left: 1.5rem !important;
-}
-
-.ProseMirror ul ul ul {
-  list-style-type: square !important;
-  margin-left: 1.5rem !important;
-}
-
-/* Ensure list items have proper spacing */
-.ProseMirror li p {
-  margin: 0 !important;
-}
-
-.ProseMirror li + li {
-  margin-top: 0.25rem !important;
-}
-
-/* Also apply list styles to rendered comments (prose class) */
-.prose ul {
-  list-style-type: disc !important;
-  margin-left: 1.5rem !important;
-  padding-left: 0 !important;
-}
-
-.prose ol {
-  list-style-type: decimal !important;
-  margin-left: 1.5rem !important;
-  padding-left: 0 !important;
-}
-
-.prose li {
-  display: list-item !important;
-  margin-left: 0 !important;
-  padding-left: 0.25rem !important;
-}
-
-.prose ul ul {
-  list-style-type: circle !important;
-  margin-left: 1.5rem !important;
-}
-
-.prose ul ul ul {
-  list-style-type: square !important;
-  margin-left: 1.5rem !important;
-}
-
-.prose li p {
-  margin: 0 !important;
-}
-
-.prose li + li {
-  margin-top: 0.25rem !important;
-}
-
-/* TipTap specific list classes */
-.tiptap-bullet-list {
-  list-style-type: disc !important;
-  margin-left: 1.5rem !important;
-  padding-left: 0 !important;
-}
-
-.tiptap-ordered-list {
-  list-style-type: decimal !important;
-  margin-left: 1.5rem !important;
-  padding-left: 0 !important;
-}
-
-.tiptap-list-item {
-  display: list-item !important;
-  margin-left: 0 !important;
-  padding-left: 0.25rem !important;
-}
-
-/* TaskCard Title - Handle text wrapping */
-.task-card h3 {
-  word-break: break-word !important;
-  overflow-wrap: break-word !important;
-}
-
-/* TaskCard Description Styles - Handle text wrapping and images */
-.task-card-description {
-  word-break: break-word !important;
-  overflow-wrap: break-word !important;
-}
-
-.task-card-description * {
-  word-break: break-word !important;
-  overflow-wrap: break-word !important;
-}
-
-.task-card-description img {
-  max-width: 100% !important;
-  height: auto !important;
-  max-height: 120px !important;
-  border-radius: 4px !important;
-  object-fit: cover !important;
-  margin: 0.5rem 0 !important;
-  display: block !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
-}
-
-/* Ensure images in shrunken task cards don't break layout */
-.task-card-description.line-clamp-2 img {
-  max-height: 60px !important;
-  margin: 0.25rem 0 !important;
-}
-
-/* Compact image mode for inline editing in TaskCards */
-.ProseMirror .tiptap-image[data-compact="true"],
-.prose .tiptap-image[data-compact="true"] {
-  max-width: 150px !important;
-  max-height: 80px !important;
-  object-fit: cover !important;
-  border-radius: 4px !important;
-  margin: 0.25rem 0 !important;
-}
-
-/* TaskDetails word-wrap handling for long unbroken text */
-[data-task-details] .ProseMirror,
-[data-task-details] .prose,
-[data-task-details] p,
-[data-task-details] div {
-  word-break: break-word !important;
-  overflow-wrap: break-word !important;
+  .material-symbols-outlined {
+    font-variation-settings:
+      "FILL" 0,
+      "wght" 400,
+      "GRAD" 0,
+      "opsz" 24;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+  }
 }

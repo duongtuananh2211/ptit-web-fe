@@ -23,7 +23,7 @@ public sealed class ProjectMembersService(HorusVisDbContext dbContext) : IProjec
                 AvatarUrl:    u.AvatarUrl,
                 ProjectRole:  m.ProjectRole,
                 MemberStatus: m.MemberStatus.ToString(),
-                JoinedAt:     m.JoinedAt.UtcDateTime
+                JoinedAt:     m.JoinedAt
             ))
             .ToListAsync(ct);
     }
@@ -62,7 +62,7 @@ public sealed class ProjectMembersService(HorusVisDbContext dbContext) : IProjec
             AvatarUrl:    user.AvatarUrl,
             ProjectRole:  member.ProjectRole,
             MemberStatus: member.MemberStatus.ToString(),
-            JoinedAt:     member.JoinedAt.UtcDateTime
+            JoinedAt:     member.JoinedAt
         );
     }
 
@@ -93,7 +93,7 @@ public sealed class ProjectMembersService(HorusVisDbContext dbContext) : IProjec
             AvatarUrl:    user.AvatarUrl,
             ProjectRole:  member.ProjectRole,
             MemberStatus: member.MemberStatus.ToString(),
-            JoinedAt:     member.JoinedAt.UtcDateTime
+            JoinedAt:     member.JoinedAt
         );
     }
 
