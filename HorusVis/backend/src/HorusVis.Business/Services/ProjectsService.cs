@@ -173,7 +173,7 @@ public sealed class ProjectsService(HorusVisDbContext dbContext) : IProjectsServ
                 AvatarUrl:    u.AvatarUrl,
                 ProjectRole:  m.ProjectRole,
                 MemberStatus: m.MemberStatus.ToString(),
-                JoinedAt:     m.JoinedAt.UtcDateTime
+                JoinedAt:     m.JoinedAt
             ))
             .ToListAsync(ct);
 
@@ -198,7 +198,7 @@ public sealed class ProjectsService(HorusVisDbContext dbContext) : IProjectsServ
             OwnerDisplayName: project.OwnerUser.FullName,
             StartDate:        project.StartDate,
             EndDate:          project.EndDate,
-            CreatedAt:        project.CreatedAt.UtcDateTime,
+            CreatedAt:        project.CreatedAt,
             Members:          members,
             FeatureAreas:     featureAreas
         );

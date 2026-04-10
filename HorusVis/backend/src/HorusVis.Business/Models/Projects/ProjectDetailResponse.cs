@@ -10,7 +10,7 @@ public sealed record ProjectDetailResponse(
     string                      OwnerDisplayName,
     DateOnly?                   StartDate,
     DateOnly?                   EndDate,
-    DateTime                    CreatedAt,
+    DateTimeOffset              CreatedAt,
     IReadOnlyList<ProjectMemberDto>  Members,
     IReadOnlyList<FeatureAreaDto>    FeatureAreas
 );

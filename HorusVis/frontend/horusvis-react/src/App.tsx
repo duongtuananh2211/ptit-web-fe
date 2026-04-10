@@ -9,6 +9,9 @@ import AuthLayout from "./components/AuthLayout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Projects from "./pages/Projects";
+import ProjectDetail from "./pages/ProjectDetail";
+import ProjectCreate from "./pages/ProjectCreate";
+import ProjectEdit from "./pages/ProjectEdit";
 import MyTasks from "./pages/MyTasks";
 import Reports from "./pages/Reports";
 import Admin from "./pages/Admin";
@@ -52,6 +55,9 @@ function App() {
           }
         >
           <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/new" element={<ProjectCreate />} />
+          <Route path="/projects/:projectId" element={<ProjectDetail />} />
+          <Route path="/projects/:projectId/edit" element={<ProjectEdit />} />
           <Route path="/tasks" element={<MyTasks />} />
           <Route path="/reports" element={<Reports />} />
           <Route
