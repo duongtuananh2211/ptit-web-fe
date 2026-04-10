@@ -76,8 +76,29 @@ export interface BoardTaskItem {
   id: string;
   title: string;
   priority: string;
-  assignee: string;
-  date: string;
+  description?: string;
+  status?: string;
+  progressPercent?: number;
+  planEstimate?: number;
+  blockedNote?: string;
+  startDate?: string;
+  dueDate?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  featureAreaId?: string;
+  featureAreaCode?: string;
+  featureAreaName?: string;
+  featureAreaColorHex?: string;
+  assigneeUserId?: string;
+  assigneeDisplayName?: string;
+  assigneeAvatarUrl?: string;
+  assignee?: string;
+  assignees?: string[];
+  date?: string;
+  due?: string;
+  progress?: number;
+  completed?: string;
+  warning?: string;
 }
 
 export interface ProjectBoardTasks {
@@ -87,11 +108,84 @@ export interface ProjectBoardTasks {
   done: BoardTaskItem[];
 }
 
+export interface FeatureAreaOption {
+  id: string;
+  code: string;
+  name: string;
+}
+
+export interface CreateTaskRequest {
+  projectId: string;
+  title: string;
+  description: string;
+  priority: string;
+  featureAreaId?: string;
+  planEstimate: string;
+  startDate: string;
+  dueDate: string;
+}
+
+export interface UpdateTaskRequest {
+  title: string;
+  description: string;
+  status: string;
+  priority: string;
+  assigneeUserId: string;
+  blockedNote: string;
+  featureAreaId?: string;
+  planEstimate: string;
+  startDate: string;
+  dueDate: string;
+}
+
 interface RawBoardTask {
   id?: string | number;
+  Id?: string | number;
   title?: string;
+  Title?: string;
+  description?: string;
+  Description?: string;
   priority?: string;
+  Priority?: string;
+  status?: string;
+  Status?: string;
+  progressPercent?: number;
+  ProgressPercent?: number;
+  planEstimate?: number;
+  PlanEstimate?: number;
+  blockedNote?: string;
+  BlockedNote?: string;
+  startDate?: string;
+  StartDate?: string;
+  dueDate?: string;
+  DueDate?: string;
+  createdAt?: string;
+  CreatedAt?: string;
+  updatedAt?: string;
+  UpdatedAt?: string;
+  featureAreaId?: string;
+  FeatureAreaId?: string;
+  featureAreaCode?: string;
+  FeatureAreaCode?: string;
+  featureAreaName?: string;
+  FeatureAreaName?: string;
+  featureAreaColorHex?: string;
+  FeatureAreaColorHex?: string;
   assigneeUserId?: string;
+  AssigneeUserId?: string;
+  assigneeDisplayName?: string;
+  AssigneeDisplayName?: string;
+  assigneeAvatarUrl?: string;
+  AssigneeAvatarUrl?: string;
+}
+
+interface RawFeatureArea {
+  id?: string;
+  areaCode?: string;
+  areaName?: string;
+  Id?: string;
+  AreaCode?: string;
+  AreaName?: string;
 }
 
 interface RawBoardColumn {
@@ -125,6 +219,22 @@ interface RawProjectMember {
 
 const DEFAULT_AVATAR_URL =
   "https://ui-avatars.com/api/?background=E8EEFF&color=1F2A44&size=64&name=HV";
+
+const formatBoardDate = (value?: string): string => {
+  if (!value) {
+    return "";
+  }
+
+  const parsedDate = new Date(value);
+  if (Number.isNaN(parsedDate.getTime())) {
+    return value;
+  }
+
+  return new Intl.DateTimeFormat(undefined, {
+    month: "short",
+    day: "numeric",
+  }).format(parsedDate);
+};
 
 const getAuthHeaders = (): HeadersInit => {
   const token = authService.getToken();
@@ -227,21 +337,79 @@ const normalizeBoardTask = (
   task: RawBoardTask,
   index: number,
 ): BoardTaskItem => {
-  const idValue = task.id ?? `task-${index + 1}`;
+  const idValue = task.id ?? task.Id ?? `task-${index + 1}`;
   const priority =
     typeof task.priority === "string" && task.priority.trim().length > 0
       ? task.priority
-      : "Medium";
+      : typeof task.Priority === "string" && task.Priority.trim().length > 0
+        ? task.Priority
+        : "Medium";
+  const description = task.description ?? task.Description;
+  const status = task.status ?? task.Status;
+  const progressPercent = task.progressPercent ?? task.ProgressPercent;
+  const planEstimate = task.planEstimate ?? task.PlanEstimate;
+  const blockedNote = task.blockedNote ?? task.BlockedNote;
+  const startDate = task.startDate ?? task.StartDate;
+  const dueDate = task.dueDate ?? task.DueDate;
+  const createdAt = task.createdAt ?? task.CreatedAt;
+  const updatedAt = task.updatedAt ?? task.UpdatedAt;
+  const featureAreaId = task.featureAreaId ?? task.FeatureAreaId;
+  const featureAreaCode = task.featureAreaCode ?? task.FeatureAreaCode;
+  const featureAreaName = task.featureAreaName ?? task.FeatureAreaName;
+  const featureAreaColorHex =
+    task.featureAreaColorHex ?? task.FeatureAreaColorHex;
+  const assigneeUserId = task.assigneeUserId ?? task.AssigneeUserId;
+  const assigneeDisplayName =
+    task.assigneeDisplayName ?? task.AssigneeDisplayName;
+  const assigneeAvatarUrl = task.assigneeAvatarUrl ?? task.AssigneeAvatarUrl;
 
   return {
     id: String(idValue),
     title:
       typeof task.title === "string" && task.title.trim().length > 0
         ? task.title
-        : `Task ${index + 1}`,
+        : typeof task.Title === "string" && task.Title.trim().length > 0
+          ? task.Title
+          : `Task ${index + 1}`,
     priority,
-    assignee: DEFAULT_AVATAR_URL,
-    date: "From Board Preview",
+    description: typeof description === "string" ? description : "",
+    status: typeof status === "string" ? status : "",
+    progressPercent:
+      typeof progressPercent === "number" ? progressPercent : undefined,
+    planEstimate: typeof planEstimate === "number" ? planEstimate : undefined,
+    blockedNote: typeof blockedNote === "string" ? blockedNote : "",
+    startDate: typeof startDate === "string" ? startDate : "",
+    dueDate: typeof dueDate === "string" ? dueDate : "",
+    createdAt: typeof createdAt === "string" ? createdAt : "",
+    updatedAt: typeof updatedAt === "string" ? updatedAt : "",
+    featureAreaId: typeof featureAreaId === "string" ? featureAreaId : "",
+    featureAreaCode: typeof featureAreaCode === "string" ? featureAreaCode : "",
+    featureAreaName: typeof featureAreaName === "string" ? featureAreaName : "",
+    featureAreaColorHex:
+      typeof featureAreaColorHex === "string" ? featureAreaColorHex : "",
+    assigneeUserId: typeof assigneeUserId === "string" ? assigneeUserId : "",
+    assigneeDisplayName:
+      typeof assigneeDisplayName === "string" ? assigneeDisplayName : "",
+    assigneeAvatarUrl:
+      typeof assigneeAvatarUrl === "string" &&
+      assigneeAvatarUrl.trim().length > 0
+        ? assigneeAvatarUrl
+        : DEFAULT_AVATAR_URL,
+    assignee:
+      typeof assigneeAvatarUrl === "string" &&
+      assigneeAvatarUrl.trim().length > 0
+        ? assigneeAvatarUrl
+        : DEFAULT_AVATAR_URL,
+    assignees: assigneeAvatarUrl ? [assigneeAvatarUrl] : [DEFAULT_AVATAR_URL],
+    date:
+      formatBoardDate(startDate) ||
+      formatBoardDate(createdAt) ||
+      "From Board Preview",
+    due: formatBoardDate(dueDate),
+    warning:
+      typeof blockedNote === "string" && blockedNote.trim().length > 0
+        ? blockedNote
+        : undefined,
   };
 };
 
@@ -297,6 +465,19 @@ const normalizeProjectMember = (
 const normalizeDateOnly = (value: string): string | null => {
   const trimmed = value.trim();
   return trimmed.length > 0 ? trimmed : null;
+};
+
+const normalizeFeatureArea = (
+  area: RawFeatureArea,
+  index: number,
+): FeatureAreaOption => {
+  const id = area.id ?? area.Id ?? `${index + 1}`;
+
+  return {
+    id,
+    code: area.areaCode ?? area.AreaCode ?? "",
+    name: area.areaName ?? area.AreaName ?? `Area ${index + 1}`,
+  };
 };
 
 export const projectsService = {
@@ -361,6 +542,105 @@ export const projectsService = {
 
     const payload = (await response.json().catch(() => ({}))) as unknown;
     return parseBoardPreview(payload);
+  },
+
+  async listFeatureAreas(projectId: string): Promise<FeatureAreaOption[]> {
+    const response = await fetch(
+      `${API_BASE_URL}/api/tasks/feature-areas/${encodeURIComponent(projectId)}`,
+      {
+        method: "GET",
+        headers: getAuthHeaders(),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        await getErrorMessage(
+          response,
+          `List feature areas failed with status ${response.status}`,
+        ),
+      );
+    }
+
+    const payload = (await response.json().catch(() => [])) as unknown;
+    if (!Array.isArray(payload)) {
+      return [];
+    }
+
+    return (payload as RawFeatureArea[]).map(normalizeFeatureArea);
+  },
+
+  async createTask(data: CreateTaskRequest): Promise<void> {
+    const parsedPlanEstimate = data.planEstimate.trim();
+
+    const payload = {
+      projectId: data.projectId,
+      title: data.title.trim(),
+      description: data.description.trim() || null,
+      priority: data.priority,
+      featureAreaId: data.featureAreaId || null,
+      planEstimate:
+        parsedPlanEstimate.length > 0 ? Number(parsedPlanEstimate) : null,
+      startDate: normalizeDateOnly(data.startDate),
+      dueDate: normalizeDateOnly(data.dueDate),
+    };
+
+    const response = await fetch(`${API_BASE_URL}/api/tasks`, {
+      method: "POST",
+      headers: {
+        ...getAuthHeaders(),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        await getErrorMessage(
+          response,
+          `Create task failed with status ${response.status}`,
+        ),
+      );
+    }
+  },
+
+  async updateTask(taskId: string, data: UpdateTaskRequest): Promise<void> {
+    const parsedPlanEstimate = data.planEstimate.trim();
+
+    const payload = {
+      title: data.title.trim(),
+      description: data.description.trim() || null,
+      status: data.status,
+      priority: data.priority,
+      assigneeUserId: data.assigneeUserId || null,
+      blockedNote: data.blockedNote.trim() || null,
+      featureAreaId: data.featureAreaId || null,
+      planEstimate:
+        parsedPlanEstimate.length > 0 ? Number(parsedPlanEstimate) : null,
+      startDate: normalizeDateOnly(data.startDate),
+      dueDate: normalizeDateOnly(data.dueDate),
+    };
+
+    const response = await fetch(
+      `${API_BASE_URL}/api/tasks/${encodeURIComponent(taskId)}`,
+      {
+        method: "PUT",
+        headers: {
+          ...getAuthHeaders(),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        await getErrorMessage(
+          response,
+          `Update task failed with status ${response.status}`,
+        ),
+      );
+    }
   },
 
   async createProject(data: CreateProjectRequest): Promise<ProjectSummary> {
