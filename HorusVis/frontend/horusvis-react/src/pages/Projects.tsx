@@ -5,19 +5,6 @@ import {
   type ProjectSummary,
 } from "../services/projectsService";
 
-const formatDate = (value: string) => {
-  if (!value) {
-    return "-";
-  }
-
-  const parsed = new Date(value);
-  if (Number.isNaN(parsed.getTime())) {
-    return "-";
-  }
-
-  return parsed.toLocaleDateString();
-};
-
 const getStatusBadge = (status: string) => {
   const normalized = status.toLowerCase();
 
@@ -136,7 +123,7 @@ const Projects = () => {
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <h3 className="text-lg font-black text-on-surface editorial-tight">
+                  <h3 className="text-lg font-black min-h-[56px] text-on-surface editorial-tight">
                     {project.title}
                   </h3>
                   {project.code && (
@@ -156,29 +143,7 @@ const Projects = () => {
                 {project.description || "No project description available."}
               </p>
 
-              <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
-                <div className="rounded-lg bg-surface-container-low px-3 py-2">
-                  <div className="text-outline uppercase tracking-wider">
-                    Members
-                  </div>
-                  <div className="text-on-surface text-base font-black">
-                    {project.memberCount}
-                  </div>
-                </div>
-                <div className="rounded-lg bg-surface-container-low px-3 py-2">
-                  <div className="text-outline uppercase tracking-wider">
-                    Tasks
-                  </div>
-                  <div className="text-on-surface text-base font-black">
-                    {project.taskCount}
-                  </div>
-                </div>
-              </div>
-
               <div className="mt-5 flex items-center justify-between">
-                <p className="text-xs text-on-surface-variant">
-                  Updated {formatDate(project.updatedAt)}
-                </p>
                 <div className="flex items-center gap-2">
                   <button
                     type="button"

@@ -81,3 +81,112 @@ export const addProjectMemberSchema = yup.object({
     .required("Project role is required"),
 });
 
+export const createTaskSchema = yup.object({
+  title: yup
+    .string()
+    .trim()
+    .min(3, "Task title must be at least 3 characters")
+    .max(200, "Task title must not exceed 200 characters")
+    .required("Task title is required"),
+  description: yup
+    .string()
+    .trim()
+    .max(2000, "Description must not exceed 2000 characters"),
+  priority: yup
+    .string()
+    .oneOf(["Low", "Medium", "High", "Critical"], "Invalid priority")
+    .required("Priority is required"),
+  featureAreaId: yup.string().trim(),
+  planEstimate: yup
+    .string()
+    .trim()
+    .test(
+      "valid-plan-estimate",
+      "Plan estimate must be a positive number",
+      (value) => {
+        if (!value) {
+          return true;
+        }
+
+        const parsed = Number(value);
+        return Number.isFinite(parsed) && parsed > 0;
+      },
+    ),
+  startDate: yup.string().trim(),
+  dueDate: yup
+    .string()
+    .trim()
+    .test(
+      "due-after-start",
+      "Due date must be on or after start date",
+      function (value) {
+        const startDate = this.parent.startDate as string;
+
+        if (!value || !startDate) {
+          return true;
+        }
+
+        return new Date(value) >= new Date(startDate);
+      },
+    ),
+});
+
+export const updateTaskSchema = yup.object({
+  title: yup
+    .string()
+    .trim()
+    .min(3, "Task title must be at least 3 characters")
+    .max(200, "Task title must not exceed 200 characters")
+    .required("Task title is required"),
+  description: yup
+    .string()
+    .trim()
+    .max(2000, "Description must not exceed 2000 characters"),
+  status: yup
+    .string()
+    .oneOf(["ToDo", "Working", "Stuck", "Done"], "Invalid status")
+    .required("Status is required"),
+  priority: yup
+    .string()
+    .oneOf(["Low", "Medium", "High", "Critical"], "Invalid priority")
+    .required("Priority is required"),
+  assigneeUserId: yup.string().trim().required("Assignee is required"),
+  blockedNote: yup
+    .string()
+    .trim()
+    .max(2000, "Blocked note must not exceed 2000 characters"),
+  featureAreaId: yup.string().trim(),
+  planEstimate: yup
+    .string()
+    .trim()
+    .test(
+      "valid-plan-estimate",
+      "Plan estimate must be a positive number",
+      (value) => {
+        if (!value) {
+          return true;
+        }
+
+        const parsed = Number(value);
+        return Number.isFinite(parsed) && parsed > 0;
+      },
+    ),
+  startDate: yup.string().trim(),
+  dueDate: yup
+    .string()
+    .trim()
+    .test(
+      "due-after-start",
+      "Due date must be on or after start date",
+      function (value) {
+        const startDate = this.parent.startDate as string;
+
+        if (!value || !startDate) {
+          return true;
+        }
+
+        return new Date(value) >= new Date(startDate);
+      },
+    ),
+});
+

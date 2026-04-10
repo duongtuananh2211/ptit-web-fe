@@ -160,6 +160,7 @@ public sealed class TasksController(
             request.Description,
             request.Status,
             request.Priority,
+            request.AssigneeUserId,
             request.BlockedNote,
             request.StartDate,
             request.DueDate,

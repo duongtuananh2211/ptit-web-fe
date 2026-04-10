@@ -20,9 +20,9 @@ public sealed class MyTasksService(ITasksService tasksService) : IMyTasksService
         return await tasksService.GetTaskDetailAsync(taskId, ct);
     }
 
-    public async Task<WorkTask> UpdateTaskAsync(Guid taskId, string title, string? description, string status, string priority, string? blockedNote = null, DateOnly? startDate = null, DateOnly? dueDate = null, CancellationToken ct = default)
+    public async Task<WorkTask> UpdateTaskAsync(Guid taskId, string title, string? description, string status, string priority, Guid? assigneeUserId = null, string? blockedNote = null, DateOnly? startDate = null, DateOnly? dueDate = null, CancellationToken ct = default)
     {
-        return await tasksService.UpdateTaskAsync(taskId, title, description, status, priority, blockedNote, startDate, dueDate, ct);
+        return await tasksService.UpdateTaskAsync(taskId, title, description, status, priority, assigneeUserId, blockedNote, startDate, dueDate, ct);
     }
 
     public async Task<List<Subtask>> GetTaskSubtasksAsync(Guid taskId, CancellationToken ct = default)
