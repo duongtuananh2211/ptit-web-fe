@@ -387,7 +387,7 @@ Trong đó:
 | ----- | ----- | ----- | ----- |
 | Id | UUID | PK, NOT NULL, DEFAULT gen_random_uuid() | Mã lỗi / issue |
 | ProjectId | UUID | FK → Projects(Id), NOT NULL | Dự án chứa issue |
-| TaskId | UUID | FK → Tasks(Id), NOT NULL | Task cha liên quan |
+| TaskId | UUID | FK → Tasks(Id), NULL | Task cha liên quan; **nullable** — Issue có thể tồn tại độc lập, không bắt buộc phải gắn với Task cụ thể nào (nhất quán với ER Diagram và API `POST /api/issues`) |
 | IssueCode | VARCHAR(20) | NOT NULL, UNIQUE | Mã hiển thị dạng ISS-241 |
 | Title | VARCHAR(200) | NOT NULL | Tiêu đề lỗi |
 | Summary | TEXT | NOT NULL | Mô tả ngắn lỗi |
@@ -715,38 +715,124 @@ Bảng dưới đây mô tả các route chính trong kiến trúc client-server
 | ----- | ----- | ----- | ----- | ----- |
 | /login | /api/auth/login | POST | Tất cả | Đăng nhập và cấp access token |
 | /login/refresh | /api/auth/refresh | POST | Tất cả | Làm mới phiên đăng nhập |
+| /logout | /api/auth/logout | POST | Tất cả đã xác thực | Đăng xuất và thu hồi refresh token của phiên hiện tại |
+| /register | /api/auth/register | POST | Tất cả | Đăng ký tài khoản mới (xem gap 3.1.D về chính sách) |
 | /projects | /api/projects | GET | Tất cả người dùng đã xác thực | Lấy danh sách dự án |
 | /projects/new | /api/projects | POST | Admin / PM | Tạo dự án mới |
 | /projects/:projectId | /api/projects/{projectId} | GET | Thành viên dự án | Xem chi tiết dự án |
-| /projects/:projectId/members | /api/projects/{projectId}/members | GET / POST | Admin / PM | Quản lý thành viên dự án |
+| /projects/:projectId/edit | /api/projects/{projectId} | PUT | Admin / PM | Cập nhật thông tin dự án |
+| /projects/:projectId/archive | /api/projects/{projectId}/archive | POST | Admin / PM | Lưu trữ dự án (chuyển Status → Archived) |
+| /projects/:projectId/overview | /api/projects/{projectId}/overview | GET | Thành viên dự án | Tổng quan tiến độ và thống kê nhanh của dự án |
 | /projects/:projectId/board | /api/projects/{projectId}/board?sprintId={guid?} | GET | Thành viên dự án | Board sprint theo project; mặc định sprint hiện tại; 204 khi không có sprint đang chạy |
 | /projects/:projectId/backlog | /api/projects/{projectId}/backlog | GET | Thành viên dự án | Danh sách Task và Issue chưa được gán sprint (Backlog) |
+| /projects/:projectId/members | /api/projects/{projectId}/members | GET / POST | Admin / PM | Xem danh sách hoặc thêm thành viên vào dự án |
+| /projects/:projectId/members/:memberId | /api/projects/{projectId}/members/{memberId} | PUT | Admin / PM | Cập nhật vai trò hoặc team của thành viên trong dự án |
+| /projects/:projectId/members/:memberId | /api/projects/{projectId}/members/{memberId} | DELETE | Admin / PM | Xóa thành viên khỏi dự án |
+| /projects/:projectId/feature-areas | /api/projects/{projectId}/feature-areas | GET / POST | Admin / PM | Xem danh sách hoặc tạo module/chức năng của dự án |
+| /projects/:projectId/feature-areas/:areaId | /api/projects/{projectId}/feature-areas/{areaId} | DELETE | Admin / PM | Xóa module/chức năng khỏi dự án |
 | /sprints | /api/sprints | GET | Tất cả đã xác thực | Danh sách toàn bộ sprint |
 | /sprints/current | /api/sprints/current | GET | Tất cả đã xác thực | Sprint đang hoạt động hiện tại |
+| /sprints/:sprintId | /api/sprints/{id} | GET | Tất cả đã xác thực | Xem chi tiết một sprint theo ID |
+| /sprints/by-code/:code | /api/sprints/by-code/{code} | GET | Tất cả đã xác thực | Tìm sprint theo mã code (ví dụ: 2026Q1-1) |
 | /sprints/:sprintId/board | /api/sprints/{id}/board | GET | Tất cả đã xác thực | Board tổng hợp toàn hệ thống theo sprint |
-| /my-tasks | /api/tasks/my-board | GET | Dev / Tester / PM | Lấy board công việc cá nhân |
+| /sprints/:sprintId/tasks/:taskId | /api/sprints/{id}/tasks/{taskId} | POST | Admin / PM / Dev | Gán task vào sprint (di chuyển từ Backlog sang sprint) |
+| /sprints/tasks/:taskId | /api/sprints/tasks/{taskId} | DELETE | Admin / PM / Dev | Hủy gán task khỏi sprint; SprintId = NULL → đưa về Backlog |
+| /sprints/:sprintId/issues/:issueId | /api/sprints/{id}/issues/{issueId} | POST | Admin / PM / Dev / Tester | Gán issue vào sprint |
+| /sprints/issues/:issueId | /api/sprints/issues/{issueId} | DELETE | Admin / PM / Dev / Tester | Hủy gán issue khỏi sprint; SprintId = NULL → đưa về Backlog |
+| /my-tasks | /api/my-tasks/board | GET | Dev / Tester / PM | Lấy board công việc cá nhân |
 | /my-tasks/new | /api/tasks | POST | Admin / PM / Dev | Tạo task mới |
 | /my-tasks/:taskId | /api/tasks/{taskId} | GET | Thành viên liên quan | Xem chi tiết task |
 | /my-tasks/:taskId | /api/tasks/{taskId} | PUT | Admin / PM / Dev | Cập nhật trạng thái task; tiến độ được tính tự động từ subtasks |
 | /my-tasks/:taskId/subtasks | /api/tasks/{taskId}/subtasks | GET / POST | Dev / Tester / PM | Lấy hoặc tạo subtask của task |
-| /my-tasks/:taskId/issues | /api/tasks/{taskId}/issues | GET / POST | Dev / Tester / PM | Lấy hoặc tạo issue của task |
+| /my-tasks/:taskId/issues | /api/tasks/{taskId}/issues | GET / POST | Dev / Tester / PM | Lấy hoặc tạo issue gắn với task |
+| /my-tasks/:taskId/health | /api/tasks/{taskId}/health | GET | Dev / PM | Kiểm tra tình trạng task: còn issue mở? còn subtask chưa hoàn thành? — phục vụ ràng buộc chuyển trạng thái Done |
+| /my-tasks/:taskId/effort | /api/tasks/{taskId}/effort | GET | Dev / Tester / PM | Tổng hợp effort (EstimateHours, ToDoHours, ActualHours) của toàn bộ subtask thuộc task |
+| /my-tasks/:taskId/burndown | /api/tasks/{taskId}/burndown | GET | PM / Admin | Biểu đồ burndown (actual effort theo thời gian) của task |
+| /my-tasks/:taskId/dependencies | /api/tasks/{taskId}/dependencies | GET | Dev / PM | Danh sách các task phụ thuộc chặn hoặc được chặn bởi task này |
+| /my-tasks/:taskId/resources | /api/tasks/{taskId}/resources | GET | PM / Admin | Phân bổ nguồn lực (assignees, giờ đã dùng) của task |
+| /my-tasks/feature-areas/:projectId | /api/tasks/feature-areas/{projectId} | GET | Dev / Tester / PM | Lấy danh sách feature area của project để gán khi tạo task |
+| /issues/new | /api/issues | POST | Dev / Tester / PM | Tạo issue mới độc lập (TaskId nullable — không nhất thiết phải gắn với task) |
 | /issues/:issueId | /api/issues/{issueId} | GET / PUT | Dev / Tester / PM | Xem và cập nhật issue detail |
 | /issues/:issueId/subtasks | /api/issues/{issueId}/subtasks | GET / POST | Dev / Tester / PM | Lấy hoặc tạo subtask của issue |
-| /subtasks/:subtaskId | /api/subtasks/{subtaskId} | GET / PUT | Thành viên liên quan | Cập nhật state, estimate, todo và actual của subtask; backend tự tính lại progress của task |
-| /reports | /api/reports/dashboard | GET | Admin / PM | Lấy dashboard phân tích tổng quan |
+| /subtasks/:subtaskId | /api/subtasks/{subtaskId} | PUT | Thành viên liên quan | Cập nhật state, estimate, todo và actual của subtask; backend tự tính lại progress của task |
+| /reports | /api/reports/dashboard | GET | Admin / PM | Lấy dashboard phân tích tổng quan (KPI overview) |
+| /reports/bug-density | /api/reports/bug-density | GET | Admin / PM | Thống kê mật độ lỗi phân bổ theo module/feature area |
+| /reports/team-performance | /api/reports/team-performance | GET | Admin / PM | So sánh hiệu suất và tốc độ hoàn thành của từng team |
+| /reports/critical-issues | /api/reports/critical-issues | GET | Admin / PM | Danh sách issue critical cần ưu tiên xử lý |
+| /reports/recommendations | /api/reports/recommendations | GET | Admin / PM | Gợi ý tối ưu hóa tự động từ Analytics Engine |
 | /reports/export | /api/reports/export | POST | Admin / PM | Xuất báo cáo |
-| /admin/users | /api/admin/users | GET / POST | Super Admin / Admin | Quản lý người dùng |
-| /admin/roles | /api/admin/roles | GET / PUT | Super Admin / Admin | Quản lý role và permission |
+| /admin/users | /api/admin/users | GET / POST | Super Admin / Admin | Xem danh sách hoặc tạo người dùng mới |
+| /admin/users/:userId | /api/admin/users/{userId} | PUT | Super Admin / Admin | Cập nhật thông tin người dùng (kích hoạt, vô hiệu hóa, đổi role) |
+| /admin/roles | /api/admin/roles | GET | Super Admin / Admin | Xem danh sách role trong hệ thống |
+| /admin/roles/:roleId | /api/admin/roles/{roleId} | PUT | Super Admin / Admin | Cập nhật role và gán permission |
 | /admin/sessions | /api/admin/sessions | GET | Super Admin / Admin | Theo dõi active sessions |
-| /admin/system-health | /api/admin/system-health | GET | Super Admin / Admin | Theo dõi tải hệ thống và node status |
-| /admin/deployments | /api/admin/deployments | GET | Super Admin / Admin | Lịch sử triển khai hệ thống |
+| /admin/sessions/:sessionId | /api/admin/sessions/{sessionId} | DELETE | Super Admin / Admin | Thu hồi (revoke) một phiên đăng nhập cụ thể |
+| /admin/metrics | /api/admin/metrics | GET | Super Admin / Admin | Theo dõi tải hệ thống (CPU, RAM, request rate) |
+| /admin/nodes | /api/admin/nodes | GET | Super Admin / Admin | Trạng thái từng node/service đang chạy |
+| /admin/deployments | /api/deployments | GET | Super Admin / Admin | Lịch sử triển khai hệ thống |
 
 **Ghi chú xử lý phân quyền:**  
-Mọi API (trừ `/api/auth/login`) đều yêu cầu token hợp lệ. 
+Mọi API (trừ `/api/auth/login` và `/api/auth/register`) đều yêu cầu token hợp lệ. 
 
 * Frontend ReactJS sử dụng React Router để điều hướng giữa các màn hình.  
 * Backend chỉ trả dữ liệu JSON và mã trạng thái HTTP; việc hiển thị lỗi 401/403 được xử lý ở phía client.  
 * Phân quyền được kiểm tra tại controller và service trước khi EF Core thực hiện truy vấn hoặc cập nhật dữ liệu.
+
+### **D. Phân tích Gap Nghiệp vụ (Business Gap Analysis)** {#d.-phân-tích-gap-nghiệp-vụ}
+
+Qua đối chiếu giữa tài liệu thiết kế và API thực tế (`api.md`), nhóm phát hiện và xử lý các gap nhất quán sau:
+
+**Gap 1 — Sai lệch CSDL: `Issues.TaskId` (Đã sửa)**
+
+| Hạng mục | Nội dung |
+| ----- | ----- |
+| Vấn đề | Bảng 13 định nghĩa `TaskId` là `NOT NULL` nhưng ER Diagram ghi chú rõ ràng `Issues.TaskId` là **nullable** |
+| Tác động | API `POST /api/issues` hỗ trợ tạo issue độc lập (không gắn Task), nhưng ràng buộc NOT NULL sẽ chặn hoàn toàn tính năng này ở tầng database |
+| Trạng thái | ✅ Đã sửa: đổi `TaskId` sang `NULL` trong Bảng 13 |
+
+**Gap 2 — Thiếu luồng quản lý Sprint (Sprint Planning Workflow)**
+
+| Hạng mục | Nội dung |
+| ----- | ----- |
+| Vấn đề | 4 API gán/hủy task và issue vào sprint (`POST/DELETE /api/sprints/{id}/tasks/{taskId}`, `POST/DELETE /api/sprints/{id}/issues/{issueId}`) chưa có route frontend và nghiệp vụ tương ứng |
+| Tác động | Không có màn hình hay flow nào hướng dẫn PM/Dev chuyển Task/Issue từ Backlog vào Sprint — tính năng lập kế hoạch sprint bị thiếu trên frontend |
+| Trạng thái | ✅ Đã bổ sung route vào bảng 3.1.C; cần thiết kế UI sprint planning tương ứng |
+
+**Gap 3 — 5 Task Analytics Endpoint chưa có nghiệp vụ**
+
+| API | Mô tả gợi ý | Trang đề xuất |
+| ----- | ----- | ----- |
+| `GET /api/tasks/{taskId}/health` | Kiểm tra task có thể Done không (chặn issue, subtask mở) | My Tasks — Task Detail |
+| `GET /api/tasks/{taskId}/effort` | Tổng hợp Estimate / ToDo / Actual của tất cả subtask | My Tasks — Task Detail |
+| `GET /api/tasks/{taskId}/burndown` | Biểu đồ actual effort theo thời gian | Reports hoặc My Tasks detail |
+| `GET /api/tasks/{taskId}/dependencies` | Danh sách task chặn / bị chặn | My Tasks — Task Detail |
+| `GET /api/tasks/{taskId}/resources` | Phân bổ assignees và giờ làm việc | Reports |
+
+**Gap 4 — Sai lệch tên endpoint (Đã sửa)**
+
+| Tài liệu cũ | API thực tế | Ghi chú |
+| ----- | ----- | ----- |
+| `/api/tasks/my-board` | `/api/my-tasks/board` | Route My Tasks board đặt sai namespace |
+| `/api/admin/system-health` | `/api/admin/metrics` + `/api/admin/nodes` | System health tách thành 2 endpoint riêng |
+| `/api/admin/deployments` | `/api/deployments` | Deployments không thuộc namespace `/admin` |
+
+**Gap 5 — Các endpoint không có route frontend**
+
+Các API sau tồn tại trong backend nhưng chưa được đặt route tương ứng ở frontend. Đã bổ sung vào bảng 3.1.C, cần thiết kế màn hình:
+
+* `POST /api/auth/logout` — Đăng xuất (có thể tích hợp vào header/sidebar)
+* `GET /api/reports/bug-density`, `/team-performance`, `/critical-issues`, `/recommendations` — Trang Reports gọi 5 endpoint riêng lẻ; trước đây tài liệu chỉ map 1 route duy nhất
+* `DELETE /api/admin/sessions/{sessionId}` — Thu hồi phiên cụ thể (chưa có nút Revoke trên UI)
+* `PUT /api/projects/{projectId}` — Chỉnh sửa dự án chưa có form riêng
+* `POST /api/projects/{projectId}/archive` — Lưu trữ dự án chưa có nút Archive
+
+**Gap 6 — Chính sách User Registration chưa xác định**
+
+| Hạng mục | Nội dung |
+| ----- | ----- |
+| Vấn đề | API `POST /api/auth/register` tồn tại nhưng không có use case mô tả ai được phép đăng ký, thông tin nào cần nhập, và sau đăng ký chuyển đến màn hình nào |
+| Khuyến nghị A | Nếu chỉ Admin tạo user (`POST /api/admin/users`): bỏ hoặc lock endpoint `/register` ở production |
+| Khuyến nghị B | Nếu hỗ trợ self-service: bổ sung use case và màn hình đăng ký, định nghĩa role mặc định (DEVELOPER?), quy trình xác minh email |
 
 ## **3.2. Các page chính theo menubar** {#3.2.-các-chức-năng-đã-làm}
 
