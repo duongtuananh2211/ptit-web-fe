@@ -12,6 +12,7 @@ import {
   type ProjectSummary,
   type UpdateTaskRequest,
 } from "../services/projectsService";
+import { authService } from "../services/authService";
 import TaskBoard from "../components/TaskBoard";
 import {
   createTaskSchema,
@@ -65,6 +66,7 @@ const INITIAL_EDIT_TASK_FORM: EditTaskForm = {
 const ProjectDetail = () => {
   const navigate = useNavigate();
   const { projectId = "" } = useParams();
+  const isAdmin = authService.isAdmin();
   const [project, setProject] = useState<ProjectSummary | null>(null);
   const [boardTasks, setBoardTasks] = useState<ProjectBoardTasks | null>(null);
   const [projectMembers, setProjectMembers] = useState<ProjectMember[]>([]);
@@ -359,16 +361,18 @@ const ProjectDetail = () => {
           <div className="flex items-center gap-3">
             {projectId && (
               <>
-                <button
-                  type="button"
-                  onClick={() => navigate(`/projects/${projectId}/members`)}
-                  className="flex items-center gap-2 px-4 py-2 bg-surface-container-high text-on-surface font-semibold rounded-xl hover:bg-surface-container-highest transition-all"
-                >
-                  <span className="material-symbols-outlined text-lg">
-                    group
-                  </span>
-                  <span className="text-sm">Manage Members</span>
-                </button>
+                {isAdmin && (
+                  <button
+                    type="button"
+                    onClick={() => navigate(`/projects/${projectId}/members`)}
+                    className="flex items-center gap-2 px-4 py-2 bg-surface-container-high text-on-surface font-semibold rounded-xl hover:bg-surface-container-highest transition-all"
+                  >
+                    <span className="material-symbols-outlined text-lg">
+                      group
+                    </span>
+                    <span className="text-sm">Manage Members</span>
+                  </button>
+                )}
 
                 <button
                   type="button"

@@ -61,7 +61,11 @@ function App() {
           <Route path="/projects/:projectId/edit" element={<ProjectEdit />} />
           <Route
             path="/projects/:projectId/members"
-            element={<ProjectMembers />}
+            element={
+              <RequireAdmin>
+                <ProjectMembers />
+              </RequireAdmin>
+            }
           />
           <Route path="/tasks" element={<MyTasks />} />
           <Route path="/reports" element={<Reports />} />
