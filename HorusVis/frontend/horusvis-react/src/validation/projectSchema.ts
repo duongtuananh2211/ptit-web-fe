@@ -71,3 +71,13 @@ export const updateProjectSchema = yup.object({
     ),
 });
 
+export const addProjectMemberSchema = yup.object({
+  userId: yup.string().trim().required("Please select a user from suggestions"),
+  projectRole: yup
+    .string()
+    .trim()
+    .min(2, "Project role must be at least 2 characters")
+    .max(30, "Project role must not exceed 30 characters")
+    .required("Project role is required"),
+});
+

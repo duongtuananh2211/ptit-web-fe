@@ -56,6 +56,22 @@ export interface UpdateProjectRequest {
   endDate: string;
 }
 
+export interface AddProjectMemberRequest {
+  userId: string;
+  projectRole: string;
+}
+
+export interface ProjectMember {
+  memberId: string;
+  userId: string;
+  displayName: string;
+  email: string;
+  avatarUrl: string;
+  projectRole: string;
+  memberStatus: string;
+  joinedAt: string;
+}
+
 export interface BoardTaskItem {
   id: string;
   title: string;
@@ -86,6 +102,25 @@ interface RawBoardColumn {
 
 interface RawBoardPreview {
   columns?: RawBoardColumn[];
+}
+
+interface RawProjectMember {
+  memberId?: string;
+  userId?: string;
+  displayName?: string;
+  email?: string;
+  avatarUrl?: string;
+  projectRole?: string;
+  memberStatus?: string;
+  joinedAt?: string;
+  MemberId?: string;
+  UserId?: string;
+  DisplayName?: string;
+  Email?: string;
+  AvatarUrl?: string;
+  ProjectRole?: string;
+  MemberStatus?: string;
+  JoinedAt?: string;
 }
 
 const DEFAULT_AVATAR_URL =
@@ -240,6 +275,25 @@ const parseBoardPreview = (payload: unknown): ProjectBoardTasks => {
   return board;
 };
 
+const normalizeProjectMember = (
+  raw: RawProjectMember,
+  index: number,
+): ProjectMember => {
+  const memberId = raw.memberId ?? raw.MemberId ?? `${index + 1}`;
+  const userId = raw.userId ?? raw.UserId ?? "";
+
+  return {
+    memberId,
+    userId,
+    displayName: raw.displayName ?? raw.DisplayName ?? "Unknown User",
+    email: raw.email ?? raw.Email ?? "",
+    avatarUrl: raw.avatarUrl ?? raw.AvatarUrl ?? DEFAULT_AVATAR_URL,
+    projectRole: raw.projectRole ?? raw.ProjectRole ?? "Member",
+    memberStatus: raw.memberStatus ?? raw.MemberStatus ?? "Active",
+    joinedAt: raw.joinedAt ?? raw.JoinedAt ?? "",
+  };
+};
+
 const normalizeDateOnly = (value: string): string | null => {
   const trimmed = value.trim();
   return trimmed.length > 0 ? trimmed : null;
@@ -375,6 +429,90 @@ export const projectsService = {
 
     const updated = (await response.json().catch(() => ({}))) as RawProject;
     return normalizeProject(updated, 0);
+  },
+
+  async listProjectMembers(projectId: string): Promise<ProjectMember[]> {
+    const response = await fetch(
+      `${API_BASE_URL}/api/projects/${encodeURIComponent(projectId)}/members`,
+      {
+        method: "GET",
+        headers: getAuthHeaders(),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        await getErrorMessage(
+          response,
+          `List project members failed with status ${response.status}`,
+        ),
+      );
+    }
+
+    const payload = (await response.json().catch(() => [])) as unknown;
+    if (!Array.isArray(payload)) {
+      return [];
+    }
+
+    return (payload as RawProjectMember[]).map(normalizeProjectMember);
+  },
+
+  async addProjectMember(
+    projectId: string,
+    data: AddProjectMemberRequest,
+  ): Promise<ProjectMember> {
+    const payload = {
+      userId: data.userId,
+      projectRole: data.projectRole.trim(),
+    };
+
+    const response = await fetch(
+      `${API_BASE_URL}/api/projects/${encodeURIComponent(projectId)}/members`,
+      {
+        method: "POST",
+        headers: {
+          ...getAuthHeaders(),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        await getErrorMessage(
+          response,
+          `Add project member failed with status ${response.status}`,
+        ),
+      );
+    }
+
+    const payloadResult = (await response
+      .json()
+      .catch(() => ({}))) as RawProjectMember;
+    return normalizeProjectMember(payloadResult, 0);
+  },
+
+  async removeProjectMember(
+    projectId: string,
+    memberId: string,
+  ): Promise<void> {
+    const response = await fetch(
+      `${API_BASE_URL}/api/projects/${encodeURIComponent(projectId)}/members/${encodeURIComponent(memberId)}`,
+      {
+        method: "DELETE",
+        headers: getAuthHeaders(),
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        await getErrorMessage(
+          response,
+          `Remove project member failed with status ${response.status}`,
+        ),
+      );
+    }
   },
 };
 

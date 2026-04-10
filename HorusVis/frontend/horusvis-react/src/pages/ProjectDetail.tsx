@@ -96,14 +96,29 @@ const ProjectDetail = () => {
 
           <div className="flex items-center gap-3">
             {projectId && (
-              <button
-                type="button"
-                onClick={() => navigate(`/projects/${projectId}/edit`)}
-                className="flex items-center gap-2 px-4 py-2 primary-gradient text-on-primary font-semibold rounded-xl shadow-sm hover:scale-102 active:scale-98 transition-all"
-              >
-                <span className="material-symbols-outlined text-lg">edit</span>
-                <span className="text-sm">Edit Project</span>
-              </button>
+              <>
+                <button
+                  type="button"
+                  onClick={() => navigate(`/projects/${projectId}/members`)}
+                  className="flex items-center gap-2 px-4 py-2 bg-surface-container-high text-on-surface font-semibold rounded-xl hover:bg-surface-container-highest transition-all"
+                >
+                  <span className="material-symbols-outlined text-lg">
+                    group
+                  </span>
+                  <span className="text-sm">Manage Members</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => navigate(`/projects/${projectId}/edit`)}
+                  className="flex items-center gap-2 px-4 py-2 primary-gradient text-on-primary font-semibold rounded-xl shadow-sm hover:scale-102 active:scale-98 transition-all"
+                >
+                  <span className="material-symbols-outlined text-lg">
+                    edit
+                  </span>
+                  <span className="text-sm">Edit Project</span>
+                </button>
+              </>
             )}
             <button
               type="button"
@@ -137,63 +152,6 @@ const ProjectDetail = () => {
 
       {!loading && !error && project && (
         <section className="space-y-6">
-          <article className="rounded-2xl border border-slate-100/70 bg-white p-6 shadow-sm">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <h3 className="text-2xl font-black text-on-surface editorial-tight">
-                  {project.title}
-                </h3>
-                {project.code && (
-                  <p className="text-xs text-outline uppercase tracking-widest mt-1">
-                    {project.code}
-                  </p>
-                )}
-              </div>
-              <span className="px-2 py-1 rounded-md text-[10px] font-black uppercase tracking-wider bg-blue-100 text-blue-700">
-                {project.status}
-              </span>
-            </div>
-
-            <p className="mt-4 text-sm text-on-surface-variant leading-relaxed">
-              {project.description || "No project description available."}
-            </p>
-
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="rounded-xl bg-surface-container-low p-4">
-                <p className="text-xs text-outline uppercase tracking-wider">
-                  Members
-                </p>
-                <p className="text-2xl font-black text-on-surface mt-1">
-                  {project.memberCount}
-                </p>
-              </div>
-              <div className="rounded-xl bg-surface-container-low p-4">
-                <p className="text-xs text-outline uppercase tracking-wider">
-                  Tasks
-                </p>
-                <p className="text-2xl font-black text-on-surface mt-1">
-                  {project.taskCount}
-                </p>
-              </div>
-              <div className="rounded-xl bg-surface-container-low p-4">
-                <p className="text-xs text-outline uppercase tracking-wider">
-                  Created
-                </p>
-                <p className="text-sm font-semibold text-on-surface mt-2">
-                  {formatDateTime(project.createdAt)}
-                </p>
-              </div>
-              <div className="rounded-xl bg-surface-container-low p-4">
-                <p className="text-xs text-outline uppercase tracking-wider">
-                  Updated
-                </p>
-                <p className="text-sm font-semibold text-on-surface mt-2">
-                  {formatDateTime(project.updatedAt)}
-                </p>
-              </div>
-            </div>
-          </article>
-
           <article className="rounded-2xl border border-slate-100/70 bg-surface-container-low p-6 space-y-4">
             <div className="flex items-center justify-between gap-3">
               <h4 className="text-lg font-black text-on-surface editorial-tight">

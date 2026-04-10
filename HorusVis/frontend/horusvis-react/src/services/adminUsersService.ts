@@ -146,5 +146,23 @@ export const adminUsersService = {
 
     return null;
   },
+
+  async listAllUsers(pageSize = 100): Promise<AdminUserDto[]> {
+    const allUsers: AdminUserDto[] = [];
+    let cursor: string | undefined;
+
+    for (let pageIndex = 0; pageIndex < 200; pageIndex += 1) {
+      const response = await this.listUsers({ cursor, pageSize });
+      allUsers.push(...response.data);
+
+      if (!response.hasMore || !response.nextCursor) {
+        break;
+      }
+
+      cursor = response.nextCursor;
+    }
+
+    return allUsers;
+  },
 };
 
