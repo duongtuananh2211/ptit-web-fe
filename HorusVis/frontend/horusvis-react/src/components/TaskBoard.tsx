@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DndContext,
   DragOverlay,
@@ -35,40 +35,60 @@ interface TaskBoardProps {
     done: BoardTaskItem[];
   };
   onEditTask?: (task: BoardTaskItem) => void;
+  onTaskColumnChange?: (payload: {
+    task: BoardTaskItem;
+    fromColumnId: string;
+    toColumnId: string;
+  }) => void | Promise<void>;
 }
 
-const TaskBoard: React.FC<TaskBoardProps> = ({ initialTasks, onEditTask }) => {
-  const [columns, setColumns] = useState<Record<string, Column>>({
+const buildColumns = (tasks: TaskBoardProps["initialTasks"]): Record<string, Column> => ({
     todo: {
       id: "todo",
       title: "To Do",
-      tasks: initialTasks.todo,
+      tasks: tasks.todo,
       dotColor: "bg-outline",
     },
     working: {
       id: "working",
       title: "Working",
-      tasks: initialTasks.working,
+      tasks: tasks.working,
       dotColor: "bg-primary-container",
       countColor: "bg-primary-fixed text-on-primary-fixed",
     },
     stuck: {
       id: "stuck",
       title: "Stuck",
-      tasks: initialTasks.stuck,
+      tasks: tasks.stuck,
       dotColor: "bg-error",
       countColor: "bg-error-container text-on-error-container",
     },
     done: {
       id: "done",
       title: "Done",
-      tasks: initialTasks.done,
+      tasks: tasks.done,
       dotColor: "bg-[#28A745]",
       isDone: true,
     },
   });
 
+const TaskBoard: React.FC<TaskBoardProps> = ({
+  initialTasks,
+  onEditTask,
+  onTaskColumnChange,
+}) => {
+  const [columns, setColumns] = useState<Record<string, Column>>(
+    buildColumns(initialTasks),
+  );
+
   const [activeId, setActiveId] = useState<string | number | null>(null);
+  const [dragStartColumnId, setDragStartColumnId] = useState<string | null>(
+    null,
+  );
+
+  useEffect(() => {
+    setColumns(buildColumns(initialTasks));
+  }, [initialTasks]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -81,8 +101,11 @@ const TaskBoard: React.FC<TaskBoardProps> = ({ initialTasks, onEditTask }) => {
     }),
   );
 
-  const findColumn = (id: string | number) => {
-    if (id in columns) return id;
+  const findColumn = (id: string | number): string | undefined => {
+    if (typeof id === "string" && id in columns) {
+      return id;
+    }
+
     return Object.keys(columns).find((key) =>
       columns[key].tasks.find((task) => task.id === id),
     );
@@ -90,6 +113,7 @@ const TaskBoard: React.FC<TaskBoardProps> = ({ initialTasks, onEditTask }) => {
 
   const handleDragStart = (event: DragStartEvent) => {
     setActiveId(event.active.id);
+    setDragStartColumnId(findColumn(event.active.id) ?? null);
   };
 
   const handleDragOver = (event: DragOverEvent) => {
@@ -145,10 +169,27 @@ const TaskBoard: React.FC<TaskBoardProps> = ({ initialTasks, onEditTask }) => {
     });
   };
 
-  const handleDragEnd = (event: DragEndEvent) => {
+  const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
     const activeContainer = findColumn(active.id);
     const overContainer = findColumn(over?.id || "");
+
+    const movedTask = activeContainer
+      ? columns[activeContainer].tasks.find((item) => item.id === active.id)
+      : undefined;
+
+    if (
+      dragStartColumnId &&
+      activeContainer &&
+      dragStartColumnId !== activeContainer &&
+      movedTask
+    ) {
+      await onTaskColumnChange?.({
+        task: movedTask,
+        fromColumnId: dragStartColumnId,
+        toColumnId: activeContainer,
+      });
+    }
 
     if (
       !activeContainer ||
@@ -156,6 +197,7 @@ const TaskBoard: React.FC<TaskBoardProps> = ({ initialTasks, onEditTask }) => {
       activeContainer !== overContainer
     ) {
       setActiveId(null);
+      setDragStartColumnId(null);
       return;
     }
 
@@ -177,6 +219,7 @@ const TaskBoard: React.FC<TaskBoardProps> = ({ initialTasks, onEditTask }) => {
     }
 
     setActiveId(null);
+    setDragStartColumnId(null);
   };
 
   const activeTask = activeId

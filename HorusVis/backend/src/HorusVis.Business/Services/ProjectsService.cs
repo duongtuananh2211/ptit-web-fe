@@ -9,10 +9,17 @@ namespace HorusVis.Business.Services;
 
 public sealed class ProjectsService(HorusVisDbContext dbContext) : IProjectsService
 {
-    public async Task<ProjectListResponse> GetProjectsAsync(ProjectListFilter filter, Guid callerId, CancellationToken ct = default)
+    public async Task<ProjectListResponse> GetProjectsAsync(ProjectListFilter filter, Guid callerId, bool isAdmin, CancellationToken ct = default)
     {
         var query = dbContext.Set<Project>()
             .Join(dbContext.Set<User>(), p => p.OwnerUserId, u => u.Id, (p, u) => new { p, OwnerName = u.FullName });
+
+        if (!isAdmin)
+        {
+            query = query.Where(x =>
+                x.p.OwnerUserId == callerId ||
+                dbContext.Set<ProjectMember>().Any(m => m.ProjectId == x.p.Id && m.UserId == callerId));
+        }
 
         if (!string.IsNullOrWhiteSpace(filter.Status) &&
             Enum.TryParse<ProjectStatus>(filter.Status, ignoreCase: true, out var statusEnum))

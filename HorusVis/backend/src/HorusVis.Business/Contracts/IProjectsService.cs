@@ -4,7 +4,7 @@ namespace HorusVis.Business.Contracts;
 
 public interface IProjectsService
 {
-    Task<ProjectListResponse>   GetProjectsAsync(ProjectListFilter filter, Guid callerId, CancellationToken ct = default);
+    Task<ProjectListResponse>   GetProjectsAsync(ProjectListFilter filter, Guid callerId, bool isAdmin, CancellationToken ct = default);
     Task<ProjectDetailResponse> GetProjectByIdAsync(Guid projectId, Guid callerId, CancellationToken ct = default);
     Task<ProjectDetailResponse> CreateProjectAsync(CreateProjectRequest request, Guid callerId, CancellationToken ct = default);
     Task<ProjectDetailResponse> UpdateProjectAsync(Guid projectId, UpdateProjectRequest request, Guid callerId, CancellationToken ct = default);

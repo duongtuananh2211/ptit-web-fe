@@ -63,6 +63,26 @@ const INITIAL_EDIT_TASK_FORM: EditTaskForm = {
   dueDate: "",
 };
 
+const mapColumnIdToTaskStatus = (columnId: string): string | null => {
+  if (columnId === "todo") {
+    return "ToDo";
+  }
+
+  if (columnId === "working") {
+    return "Working";
+  }
+
+  if (columnId === "stuck") {
+    return "Stuck";
+  }
+
+  if (columnId === "done") {
+    return "Done";
+  }
+
+  return null;
+};
+
 const ProjectDetail = () => {
   const navigate = useNavigate();
   const { projectId = "" } = useParams();
@@ -327,6 +347,50 @@ const ProjectDetail = () => {
     }
   };
 
+  const handleTaskColumnChange = async ({
+    task,
+    toColumnId,
+  }: {
+    task: BoardTaskItem;
+    fromColumnId: string;
+    toColumnId: string;
+  }) => {
+    if (!projectId) {
+      return;
+    }
+
+    const nextStatus = mapColumnIdToTaskStatus(toColumnId);
+    if (!nextStatus) {
+      return;
+    }
+
+    try {
+      await projectsService.updateTask(task.id, {
+        title: task.title,
+        description: task.description ?? "",
+        status: nextStatus,
+        priority: task.priority || "Medium",
+        assigneeUserId: task.assigneeUserId ?? "",
+        blockedNote: task.blockedNote ?? "",
+        featureAreaId: task.featureAreaId ?? "",
+        planEstimate:
+          task.planEstimate !== undefined && task.planEstimate !== null
+            ? String(task.planEstimate)
+            : "",
+        startDate: task.startDate ?? "",
+        dueDate: task.dueDate ?? "",
+      });
+
+      await loadBoardPreview(projectId);
+      showToast("Task status updated.");
+    } catch (err) {
+      setBoardError(
+        err instanceof Error ? err.message : "Failed to update task status.",
+      );
+      await loadBoardPreview(projectId);
+    }
+  };
+
   return (
     <div className="space-y-8">
       <ActionToast
@@ -456,6 +520,7 @@ const ProjectDetail = () => {
               <TaskBoard
                 initialTasks={boardTasks}
                 onEditTask={openEditTaskModal}
+                onTaskColumnChange={handleTaskColumnChange}
               />
             )}
 
@@ -579,7 +644,7 @@ const ProjectDetail = () => {
       )}
 
       {editModalOpen && (
-        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-black/40 px-4">
+        <div className="fixed inset-0 z-[90] flex items-center !mt-0 justify-center bg-black/40 px-4">
           <div className="w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl">
             <div className="flex items-center justify-between mb-4">
               <div>

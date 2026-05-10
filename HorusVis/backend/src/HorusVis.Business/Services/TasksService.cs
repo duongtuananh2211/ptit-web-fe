@@ -11,7 +11,12 @@ public sealed class TasksService(HorusVisDbContext dbContext) : ITasksService
     public async Task<(List<WorkTask> TodoTasks, List<WorkTask> WorkingTasks, List<WorkTask> StuckTasks, List<WorkTask> DoneTasks)> GetMyBoardAsync(Guid currentUserId, CancellationToken ct = default)
     {
         var tasks = await dbContext.Set<WorkTask>()
-            .Where(t => t.CreatedByUserId == currentUserId)            .Include(t => t.FeatureArea)            .OrderByDescending(t => t.CreatedAt)
+            .Where(t => dbContext.Set<TaskAssignee>()
+                .Any(ta => ta.TaskId == t.Id
+                    && ta.UserId == currentUserId
+                    && ta.AssignmentType == AssignmentType.Primary))
+            .Include(t => t.FeatureArea)
+            .OrderByDescending(t => t.CreatedAt)
             .ToListAsync(ct);
 
         var todoTasks = tasks.Where(t => t.Status == WorkTaskStatus.ToDo).ToList();

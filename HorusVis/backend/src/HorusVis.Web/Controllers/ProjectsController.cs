@@ -24,7 +24,8 @@ public sealed class ProjectsController(
         CancellationToken ct)
     {
         var callerId = GetCallerId();
-        var result   = await projects.GetProjectsAsync(filter, callerId, ct);
+        var isAdmin = User.IsInRole("admin") || User.IsInRole("Admin");
+        var result   = await projects.GetProjectsAsync(filter, callerId, isAdmin, ct);
         return Ok(result);
     }
 
