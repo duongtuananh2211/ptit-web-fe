@@ -1,18 +1,77 @@
 import React, { useEffect, useState } from 'react';
-import { getStats } from '../services/mockData';
+import { reportsService, type ReportsData } from '../services/reportsService';
 import StatCard from '../components/StatCard';
 import BugDensityChart from '../components/BugDensityChart';
 import TeamPerformanceChart from '../components/TeamPerformanceChart';
 import CriticalIssueItem from '../components/CriticalIssueItem';
 
 const Reports: React.FC = () => {
-  const [stats, setStats] = useState<any>(null);
+  const [reports, setReports] = useState<ReportsData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [exporting, setExporting] = useState(false);
 
   useEffect(() => {
-    getStats().then(setStats);
-  }, []);
+    let active = true;
+    setLoading(true);
+    setError(null);
 
-  if (!stats) return null;
+    reportsService.getReports()
+      .then((data) => {
+        if (active) setReports(data);
+      })
+      .catch((loadError: unknown) => {
+        if (active) {
+          setError(loadError instanceof Error ? loadError.message : 'Failed to load reports.');
+        }
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [refreshKey]);
+
+  const handleExport = async () => {
+    setExporting(true);
+    setError(null);
+    try {
+      const { blob, fileName } = await reportsService.exportCsv();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName;
+      link.click();
+      URL.revokeObjectURL(url);
+    } catch (exportError: unknown) {
+      setError(exportError instanceof Error ? exportError.message : 'Failed to export report.');
+    } finally {
+      setExporting(false);
+    }
+  };
+
+  if (loading && !reports) {
+    return <p className="py-12 text-center text-on-surface-variant">Loading reports...</p>;
+  }
+
+  if (!reports) {
+    return (
+      <div className="space-y-4" role="alert">
+        <p className="text-error">{error || 'Reports are unavailable.'}</p>
+        <button
+          className="px-4 py-2 primary-gradient text-on-primary rounded-md text-sm font-semibold"
+          onClick={() => setRefreshKey((key) => key + 1)}
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
+
+  const maxPoints = Math.max(...reports.teamPerformance.map((item) => item.totalPoints), 0);
 
   return (
     <div className="space-y-8">
@@ -23,47 +82,51 @@ const Reports: React.FC = () => {
           <p className="text-on-surface-variant mt-1">Real-time performance monitoring and bug distribution.</p>
         </div>
         <div className="flex gap-3">
-          <button className="px-4 py-2 border border-outline-variant rounded-md text-sm font-medium hover:bg-surface-container-low transition-colors">
-            Export Report
+          <button
+            className="px-4 py-2 border border-outline-variant rounded-md text-sm font-medium hover:bg-surface-container-low transition-colors disabled:opacity-50"
+            onClick={handleExport}
+            disabled={exporting}
+          >
+            {exporting ? 'Exporting...' : 'Export Report'}
           </button>
-          <button className="px-4 py-2 primary-gradient text-on-primary rounded-md text-sm font-semibold shadow-sm hover:scale-105 active:scale-95 transition-all">
-            Refresh Data
+          <button
+            className="px-4 py-2 primary-gradient text-on-primary rounded-md text-sm font-semibold shadow-sm hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
+            onClick={() => setRefreshKey((key) => key + 1)}
+            disabled={loading}
+          >
+            {loading ? 'Refreshing...' : 'Refresh Data'}
           </button>
         </div>
       </div>
+
+      {error && <p className="text-error" role="alert">{error}</p>}
 
       {/* Stats Bento Grid */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <StatCard 
           label="Total Active Bugs" 
-          value={stats.activeBugs} 
-          trend="12%" trendIcon="trending_up" trendColor="text-error" 
-          progressColor="bg-error" progressWidth="65%" 
+          value={reports.dashboard.totalActiveBugs} 
         />
         <StatCard 
           label="Avg Time to Close" 
-          value={stats.avgTimeToClose} 
-          trend="0.8d" trendIcon="trending_down" trendColor="text-[#28A745]" 
-          progressWidth="42%" 
+          value={reports.dashboard.avgTimeToCloseHours == null
+            ? 'N/A'
+            : `${(reports.dashboard.avgTimeToCloseHours / 24).toFixed(1)}d`} 
         />
         <StatCard 
           label="Task Velocity" 
-          value={stats.taskVelocity} 
-          trend="Stable" trendIcon="check_circle" trendColor="text-[#28A745]" 
-          progressColor="bg-[#28A745]" progressWidth="88%" 
+          value={`${reports.dashboard.taskVelocityPoints} pts`} 
         />
         <StatCard 
           label="Critical Priority" 
-          value={stats.criticalPriority} 
-          progressColor="bg-tertiary" progressWidth="15%" 
-          pulse 
+          value={reports.dashboard.criticalPriorityCount} 
         />
       </div>
 
       {/* Detailed Visualizations */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-        <BugDensityChart bugs={stats.bugDensity} total={stats.activeBugs} />
-        <TeamPerformanceChart performance={stats.teamPerformance} />
+        <BugDensityChart bugs={reports.bugDensity} />
+        <TeamPerformanceChart performance={reports.teamPerformance} maxPoints={maxPoints} />
       </div>
 
       {/* Critical Issues */}
@@ -71,18 +134,29 @@ const Reports: React.FC = () => {
         <div className="md:col-span-2 space-y-4">
           <h3 className="text-lg font-bold text-on-surface">Top Critical Issues</h3>
           <div className="space-y-3">
-            {stats.criticalIssues.map((issue: any, i: number) => (
-              <CriticalIssueItem key={i} issue={issue} />
+            {reports.criticalIssues.map((issue) => (
+              <CriticalIssueItem key={issue.id} issue={issue} />
             ))}
+            {reports.criticalIssues.length === 0 && (
+              <p className="text-sm text-on-surface-variant">No open issues found.</p>
+            )}
           </div>
         </div>
         <div className="bg-primary-container p-6 rounded-xl text-on-primary-container relative overflow-hidden shadow-lg">
           <div className="relative z-10">
-            <h3 className="text-lg font-bold editorial-tight mb-2">Automated Optimization</h3>
-            <p className="text-sm opacity-90 mb-6">Our engine suggests shifting 2 resources from Mobile to Infra to meet the sprint deadline.</p>
-            <button className="w-full py-2 bg-white text-primary font-bold rounded-md text-sm hover:bg-opacity-90 transition-all shadow-md">
-              Accept Recommendation
-            </button>
+            <h3 className="text-lg font-bold editorial-tight mb-4">Recommendations</h3>
+            {reports.recommendations.length > 0 ? (
+              <div className="space-y-4">
+                {reports.recommendations.map((recommendation) => (
+                  <div key={recommendation.ruleKey}>
+                    <h4 className="text-sm font-bold">{recommendation.title}</h4>
+                    <p className="text-sm opacity-90 mt-1">{recommendation.detail}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm opacity-90">No recommendations at this time.</p>
+            )}
           </div>
           <div className="absolute top-0 right-0 w-32 h-32 opacity-20 transform translate-x-8 -translate-y-8">
             <span className="material-symbols-outlined text-[120px]" style={{ fontVariationSettings: "'wght' 700" }}>bolt</span>

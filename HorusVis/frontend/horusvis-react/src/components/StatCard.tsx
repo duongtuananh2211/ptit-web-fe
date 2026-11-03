@@ -7,7 +7,7 @@ interface StatCardProps {
   trendIcon?: string;
   trendColor?: string;
   progressColor?: string;
-  progressWidth: string;
+  progressWidth?: string;
   pulse?: boolean;
 }
 
@@ -24,9 +24,11 @@ const StatCard: React.FC<StatCardProps> = ({ label, value, trend, trendIcon, tre
         )}
         {pulse && <div className="w-2 h-2 rounded-full bg-tertiary animate-pulse mb-3"></div>}
       </div>
-      <div className="mt-4 w-full h-1 bg-surface-variant rounded-full">
-        <div className={`h-full ${progressColor || 'primary-gradient'} rounded-full`} style={{ width: progressWidth }}></div>
-      </div>
+      {progressWidth && (
+        <div className="mt-4 w-full h-1 bg-surface-variant rounded-full">
+          <div className={`h-full ${progressColor || 'primary-gradient'} rounded-full`} style={{ width: progressWidth }}></div>
+        </div>
+      )}
     </div>
   );
 };

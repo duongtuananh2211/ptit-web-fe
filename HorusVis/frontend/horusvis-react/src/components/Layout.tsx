@@ -8,6 +8,7 @@ const Layout = () => {
   const navItems = [
     { name: "Projects", icon: "folder_open", path: "/projects" },
     { name: "My Tasks", icon: "assignment_turned_in", path: "/tasks" },
+    { name: "Reports", icon: "bar_chart", path: "/reports" },
     ...(isAdmin ? [{ name: "Admin", icon: "settings", path: "/admin" }] : []),
   ];
 
@@ -75,4 +76,3 @@ const Layout = () => {
 };
 
 export default Layout;
-
