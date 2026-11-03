@@ -119,10 +119,10 @@ export interface CreateTaskRequest {
   title: string;
   description: string;
   priority: string;
+  assigneeUserId: string;
+  sprintId: string;
   featureAreaId?: string;
   planEstimate: string;
-  startDate: string;
-  dueDate: string;
 }
 
 export interface UpdateTaskRequest {
@@ -522,9 +522,17 @@ export const projectsService = {
     return normalizeProject(payload, 0);
   },
 
-  async getProjectBoardPreview(projectId: string): Promise<ProjectBoardTasks> {
+  async getProjectBoardPreview(
+    projectId: string,
+    sprintId: string,
+  ): Promise<ProjectBoardTasks> {
+    if (!sprintId) {
+      throw new Error("A sprint must be selected to load the project board.");
+    }
+
+    const query = `?sprintId=${encodeURIComponent(sprintId)}`;
     const response = await fetch(
-      `${API_BASE_URL}/api/projects/${encodeURIComponent(projectId)}/board-preview`,
+      `${API_BASE_URL}/api/projects/${encodeURIComponent(projectId)}/board-preview${query}`,
       {
         method: "GET",
         headers: getAuthHeaders(),
@@ -578,11 +586,11 @@ export const projectsService = {
       title: data.title.trim(),
       description: data.description.trim() || null,
       priority: data.priority,
+      assigneeUserId: data.assigneeUserId || null,
+      sprintId: data.sprintId || null,
       featureAreaId: data.featureAreaId || null,
       planEstimate:
         parsedPlanEstimate.length > 0 ? Number(parsedPlanEstimate) : null,
-      startDate: normalizeDateOnly(data.startDate),
-      dueDate: normalizeDateOnly(data.dueDate),
     };
 
     const response = await fetch(`${API_BASE_URL}/api/tasks`, {
@@ -795,4 +803,3 @@ export const projectsService = {
     }
   },
 };
-

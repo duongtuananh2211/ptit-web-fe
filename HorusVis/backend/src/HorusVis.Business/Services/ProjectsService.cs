@@ -253,11 +253,18 @@ public sealed class ProjectsService(HorusVisDbContext dbContext) : IProjectsServ
         return new ProjectOverviewDto(velocityScore, nextMilestone, workload, summary);
     }
 
-    public async Task<ProjectBoardPreviewDto> GetBoardPreviewAsync(Guid projectId, CancellationToken ct = default)
+    public async Task<ProjectBoardPreviewDto> GetBoardPreviewAsync(
+        Guid projectId,
+        Guid sprintId,
+        CancellationToken ct = default)
     {
         var exists = await dbContext.Set<Project>().AnyAsync(p => p.Id == projectId, ct);
         if (!exists)
             throw new KeyNotFoundException($"Project {projectId} not found.");
+
+        var sprintExists = await dbContext.Set<Sprint>().AnyAsync(s => s.Id == sprintId, ct);
+        if (!sprintExists)
+            throw new KeyNotFoundException($"Sprint {sprintId} not found.");
 
         var statuses = new[]
         {
@@ -272,16 +279,19 @@ public sealed class ProjectsService(HorusVisDbContext dbContext) : IProjectsServ
         foreach (var status in statuses)
         {
             var totalCount = await dbContext.Set<WorkTask>()
-                .CountAsync(t => t.ProjectId == projectId && t.Status == status, ct);
+                .CountAsync(
+                    t => t.ProjectId == projectId
+                        && t.Status == status
+                        && t.SprintId == sprintId,
+                    ct);
 
-            // Load top-5 tasks (ordered by priority desc then by creation date)
-            var taskRows = await dbContext.Set<WorkTask>()
-                .Where(t => t.ProjectId == projectId && t.Status == status)
-                .OrderBy(t => t.Priority == WorkTaskPriority.Critical ? 0
-                            : t.Priority == WorkTaskPriority.High     ? 1
-                            : t.Priority == WorkTaskPriority.Medium   ? 2 : 3)
-                .ThenBy(t => t.CreatedAt)
-                .Take(5)
+            var taskQuery = dbContext.Set<WorkTask>()
+                .Where(t => t.ProjectId == projectId
+                         && t.Status == status
+                         && t.SprintId == sprintId)
+                .OrderBy(t => t.CreatedAt);
+
+            var taskRows = await taskQuery
                 .GroupJoin(
                     dbContext.Set<FeatureArea>(),
                     t => t.FeatureAreaId,

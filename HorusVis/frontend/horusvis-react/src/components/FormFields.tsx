@@ -92,6 +92,7 @@ export const FormTextArea = ({
 interface SelectOption {
   label: string;
   value: string;
+  className?: string;
 }
 
 type SelectProps = Omit<
@@ -124,7 +125,11 @@ export const FormSelect = ({
         className={`${baseControlClass} ${error ? "ring-error" : "ring-transparent"}`}
       >
         {options.map((option) => (
-          <option key={option.value} value={option.value}>
+          <option
+            key={option.value}
+            value={option.value}
+            className={option.className}
+          >
             {option.label}
           </option>
         ))}
@@ -132,4 +137,3 @@ export const FormSelect = ({
     </FormFieldWrapper>
   );
 };
-

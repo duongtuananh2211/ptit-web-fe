@@ -8,5 +8,7 @@ public sealed record CreateTaskRequest(
     Guid? FeatureAreaId = null,
     decimal? PlanEstimate = null,
     DateOnly? StartDate = null,
-    DateOnly? DueDate = null
+    DateOnly? DueDate = null,
+    Guid? SprintId = null,
+    Guid? AssigneeUserId = null
 );

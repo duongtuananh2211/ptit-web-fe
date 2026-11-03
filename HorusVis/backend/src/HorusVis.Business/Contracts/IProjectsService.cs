@@ -10,5 +10,5 @@ public interface IProjectsService
     Task<ProjectDetailResponse> UpdateProjectAsync(Guid projectId, UpdateProjectRequest request, Guid callerId, CancellationToken ct = default);
     Task                        ArchiveProjectAsync(Guid projectId, Guid callerId, CancellationToken ct = default);
     Task<ProjectOverviewDto>     GetProjectOverviewAsync(Guid projectId, CancellationToken ct = default);
-    Task<ProjectBoardPreviewDto> GetBoardPreviewAsync(Guid projectId, CancellationToken ct = default);
+    Task<ProjectBoardPreviewDto> GetBoardPreviewAsync(Guid projectId, Guid sprintId, CancellationToken ct = default);
 }

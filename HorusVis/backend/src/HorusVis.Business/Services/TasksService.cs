@@ -32,7 +32,9 @@ public sealed class TasksService(HorusVisDbContext dbContext) : ITasksService
         decimal? planEstimate = null,
         DateOnly? startDate = null,
         DateOnly? dueDate = null,
-        CancellationToken ct = default)
+        CancellationToken ct = default,
+        Guid? sprintId = null,
+        Guid? assigneeUserId = null)
     {
         if (!Enum.TryParse<WorkTaskPriority>(priority, true, out var priorityEnum))
             throw new InvalidOperationException($"Invalid priority: {priority}");
@@ -47,6 +49,23 @@ public sealed class TasksService(HorusVisDbContext dbContext) : ITasksService
                 throw new InvalidOperationException($"FeatureArea with ID {featureAreaId} not found or does not belong to project {projectId}");
         }
 
+        Sprint? sprint = null;
+        if (sprintId.HasValue)
+        {
+            sprint = await dbContext.Set<Sprint>()
+                .FirstOrDefaultAsync(s => s.Id == sprintId.Value, ct)
+                ?? throw new InvalidOperationException($"Sprint with ID {sprintId} was not found.");
+        }
+
+        if (assigneeUserId.HasValue)
+        {
+            var isProjectMember = await dbContext.Set<ProjectMember>()
+                .AnyAsync(pm => pm.ProjectId == projectId && pm.UserId == assigneeUserId.Value, ct);
+
+            if (!isProjectMember)
+                throw new InvalidOperationException("Selected assignee is not a member of this project.");
+        }
+
         var task = new WorkTask
         {
             Id = Guid.NewGuid(),
@@ -59,12 +78,25 @@ public sealed class TasksService(HorusVisDbContext dbContext) : ITasksService
             PlanEstimate = planEstimate,
             ProgressPercent = 0,
             CreatedByUserId = createdByUserId,
-            StartDate = startDate,
-            DueDate = dueDate,
+            SprintId = sprint?.Id,
+            StartDate = sprint?.StartDate ?? startDate,
+            DueDate = sprint?.EndDate ?? dueDate,
             CreatedAt = DateTimeOffset.UtcNow
         };
 
         dbContext.Set<WorkTask>().Add(task);
+        if (assigneeUserId.HasValue)
+        {
+            dbContext.Set<TaskAssignee>().Add(new TaskAssignee
+            {
+                Id = Guid.NewGuid(),
+                TaskId = task.Id,
+                UserId = assigneeUserId.Value,
+                AssignmentType = AssignmentType.Primary,
+                AssignedAt = DateTimeOffset.UtcNow,
+            });
+        }
+
         await dbContext.SaveChangesAsync(ct);
 
         return task;

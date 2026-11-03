@@ -12,7 +12,7 @@ public interface ITasksService
     /// <summary>
     /// Create a new task
     /// </summary>
-    Task<WorkTask> CreateTaskAsync(Guid projectId, string title, string? description, string priority, Guid createdByUserId, Guid? featureAreaId = null, decimal? planEstimate = null, DateOnly? startDate = null, DateOnly? dueDate = null, CancellationToken ct = default);
+    Task<WorkTask> CreateTaskAsync(Guid projectId, string title, string? description, string priority, Guid createdByUserId, Guid? featureAreaId = null, decimal? planEstimate = null, DateOnly? startDate = null, DateOnly? dueDate = null, CancellationToken ct = default, Guid? sprintId = null, Guid? assigneeUserId = null);
 
     /// <summary>
     /// Get task details with related issues and subtasks

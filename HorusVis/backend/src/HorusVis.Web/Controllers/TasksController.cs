@@ -92,7 +92,9 @@ public sealed class TasksController(
             request.PlanEstimate,
             request.StartDate,
             request.DueDate,
-            ct);
+            ct,
+            request.SprintId,
+            request.AssigneeUserId);
 
         return CreatedAtAction(nameof(GetTaskDetail), new { taskId = task.Id }, MapToResponse(task));
     }

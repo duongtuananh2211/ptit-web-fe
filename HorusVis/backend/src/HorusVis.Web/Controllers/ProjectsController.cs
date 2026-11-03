@@ -204,11 +204,14 @@ public sealed class ProjectsController(
     }
 
     [HttpGet("{projectId:guid}/board-preview")]
-    public async Task<ActionResult<ProjectBoardPreviewDto>> GetBoardPreview(Guid projectId, CancellationToken ct)
+    public async Task<ActionResult<ProjectBoardPreviewDto>> GetBoardPreview(
+        Guid projectId,
+        [FromQuery] Guid sprintId,
+        CancellationToken ct)
     {
         try
         {
-            var result = await projects.GetBoardPreviewAsync(projectId, ct);
+            var result = await projects.GetBoardPreviewAsync(projectId, sprintId, ct);
             return Ok(result);
         }
         catch (KeyNotFoundException e) { return NotFound(new { e.Message }); }

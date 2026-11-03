@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ValidationError } from "yup";
 import ActionToast from "../components/ActionToast";
@@ -13,6 +13,7 @@ import {
   type UpdateTaskRequest,
 } from "../services/projectsService";
 import { authService } from "../services/authService";
+import { sprintsService, type Sprint } from "../services/sprintsService";
 import TaskBoard from "../components/TaskBoard";
 import {
   createTaskSchema,
@@ -38,9 +39,9 @@ const INITIAL_TASK_FORM: CreateTaskRequest = {
   title: "",
   description: "",
   priority: "Medium",
+  assigneeUserId: "",
+  sprintId: "",
   planEstimate: "",
-  startDate: "",
-  dueDate: "",
 };
 
 type EditTaskForm = Omit<
@@ -69,7 +70,10 @@ const ProjectDetail = () => {
   const isAdmin = authService.isAdmin();
   const [project, setProject] = useState<ProjectSummary | null>(null);
   const [boardTasks, setBoardTasks] = useState<ProjectBoardTasks | null>(null);
+  const [boardRevision, setBoardRevision] = useState(0);
   const [projectMembers, setProjectMembers] = useState<ProjectMember[]>([]);
+  const [sprints, setSprints] = useState<Sprint[]>([]);
+  const [selectedSprintId, setSelectedSprintId] = useState("");
   const [loading, setLoading] = useState(true);
   const [boardLoading, setBoardLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
@@ -93,6 +97,17 @@ const ProjectDetail = () => {
   const [taskError, setTaskError] = useState("");
   const [toastVisible, setToastVisible] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
+  const boardRequestId = useRef(0);
+
+  const currentYear = new Date().getFullYear();
+  const availableSprints = sprints.filter((sprint) => {
+    const sprintStartYear = Number(sprint.startDate.slice(0, 4));
+    const sprintEndYear = Number(sprint.endDate.slice(0, 4));
+    return sprintStartYear <= currentYear + 1 && sprintEndYear >= currentYear;
+  });
+  const selectedSprint = availableSprints.find(
+    (sprint) => sprint.id === selectedSprintId,
+  );
 
   const showToast = (message: string) => {
     setToastMessage(message);
@@ -176,23 +191,51 @@ const ProjectDetail = () => {
     setEditModalOpen(true);
   };
 
-  const loadBoardPreview = async (targetProjectId: string) => {
+  const loadBoardPreview = useCallback(async (
+    targetProjectId: string,
+    targetSprintId: string,
+  ) => {
+    const requestId = ++boardRequestId.current;
     setBoardLoading(true);
     setBoardError("");
 
+    if (!targetSprintId) {
+      setBoardTasks(null);
+      setBoardLoading(false);
+      return;
+    }
+
     try {
       const boardResponse =
-        await projectsService.getProjectBoardPreview(targetProjectId);
-      setBoardTasks(boardResponse);
+        await projectsService.getProjectBoardPreview(
+          targetProjectId,
+          targetSprintId,
+        );
+      if (requestId === boardRequestId.current) {
+        setBoardTasks(boardResponse);
+        setBoardRevision((revision) => revision + 1);
+      }
     } catch (err) {
-      setBoardTasks(null);
-      setBoardError(
-        err instanceof Error
-          ? err.message
-          : "Failed to load project board preview.",
-      );
+      if (requestId === boardRequestId.current) {
+        setBoardTasks(null);
+        setBoardError(
+          err instanceof Error
+            ? err.message
+            : "Failed to load project board preview.",
+        );
+      }
     } finally {
-      setBoardLoading(false);
+      if (requestId === boardRequestId.current) {
+        setBoardLoading(false);
+      }
+    }
+  }, []);
+
+  const handleSprintChange = (sprintId: string) => {
+    setSelectedSprintId(sprintId);
+    setTaskForm((prev) => ({ ...prev, sprintId }));
+    if (projectId) {
+      void loadBoardPreview(projectId, sprintId);
     }
   };
 
@@ -208,24 +251,25 @@ const ProjectDetail = () => {
       setError("");
 
       try {
-        const [projectResponse, boardResponse, projectMemberResponse] =
+        const [projectResponse, sprintResponse, projectMemberResponse] =
           await Promise.all([
             projectsService.getProjectById(projectId),
-            projectsService.getProjectBoardPreview(projectId).catch((err) => {
-              setBoardError(
-                err instanceof Error
-                  ? err.message
-                  : "Failed to load project board preview.",
-              );
-              return null;
-            }),
-            projectsService.listProjectMembers(projectId).catch(() => []),
+            sprintsService.listSprints(),
+            projectsService.listProjectMembers(projectId),
           ]);
 
         setProject(projectResponse);
-        setBoardTasks(boardResponse);
         setProjectMembers(projectMemberResponse);
-        setTaskForm((prev) => ({ ...prev, projectId }));
+        setSprints(sprintResponse);
+        const activeSprint = sprintResponse.find((sprint) => sprint.isCurrent);
+        const initialSprintId = activeSprint?.id ?? "";
+        setSelectedSprintId(initialSprintId);
+        setTaskForm((prev) => ({
+          ...prev,
+          projectId,
+          sprintId: initialSprintId,
+        }));
+        await loadBoardPreview(projectId, initialSprintId);
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "Failed to load project.",
@@ -237,7 +281,7 @@ const ProjectDetail = () => {
     };
 
     void loadProject();
-  }, [projectId]);
+  }, [projectId, loadBoardPreview]);
 
   const handleCreateTask = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -263,11 +307,17 @@ const ProjectDetail = () => {
 
     setTaskSubmitting(true);
     try {
+      const taskSprintId = taskForm.sprintId;
       await projectsService.createTask({ ...taskForm, projectId });
-      await loadBoardPreview(projectId);
+      setSelectedSprintId(taskSprintId);
+      await loadBoardPreview(projectId, taskSprintId);
       showToast("Task created successfully.");
       setModalOpen(false);
-      setTaskForm({ ...INITIAL_TASK_FORM, projectId });
+      setTaskForm({
+        ...INITIAL_TASK_FORM,
+        projectId,
+        sprintId: taskSprintId,
+      });
     } catch (err) {
       setTaskError(
         err instanceof Error ? err.message : "Failed to create task.",
@@ -313,7 +363,7 @@ const ProjectDetail = () => {
         startDate: editTaskForm.startDate,
         dueDate: editTaskForm.dueDate,
       });
-      await loadBoardPreview(projectId);
+      await loadBoardPreview(projectId, selectedSprintId);
       showToast("Task updated successfully.");
       setEditModalOpen(false);
       setEditingTask(null);
@@ -390,7 +440,11 @@ const ProjectDetail = () => {
                   onClick={() => {
                     setTaskError("");
                     setTaskFormErrors({});
-                    setTaskForm((prev) => ({ ...prev, projectId }));
+                    setTaskForm((prev) => ({
+                      ...prev,
+                      projectId,
+                      sprintId: selectedSprintId,
+                    }));
                     setModalOpen(true);
                   }}
                   className="flex items-center gap-2 px-4 py-2 bg-surface-container-high text-on-surface font-semibold rounded-xl hover:bg-surface-container-highest transition-all"
@@ -434,12 +488,30 @@ const ProjectDetail = () => {
         <section className="space-y-6">
           <article className="rounded-2xl border border-slate-100/70 bg-surface-container-low p-6 space-y-4">
             <div className="flex items-center justify-between gap-3">
-              <h4 className="text-lg font-black text-on-surface editorial-tight">
-                Project Board
-              </h4>
-              <span className="text-xs text-on-surface-variant uppercase tracking-wider">
-                BoardColumn UI
-              </span>
+              <div>
+                <h4 className="text-lg font-black text-on-surface editorial-tight">
+                  Project Board
+                </h4>
+                {selectedSprint?.isCurrent && (
+                  <p className="mt-1 text-sm font-bold text-primary">
+                    Active sprint: {selectedSprint.sprintCode}
+                  </p>
+                )}
+              </div>
+              <FormSelect
+                containerClassName="w-full max-w-sm"
+                label="Sprint"
+                options={[
+                  { label: "Select a sprint", value: "" },
+                  ...availableSprints.map((sprint) => ({
+                    label: `${sprint.sprintCode} (${sprint.startDate} – ${sprint.endDate})${sprint.isCurrent ? " — ACTIVE" : ""}`,
+                    value: sprint.id,
+                    className: sprint.isCurrent ? "font-bold" : undefined,
+                  })),
+                ]}
+                value={selectedSprintId}
+                onChange={(event) => handleSprintChange(event.target.value)}
+              />
             </div>
 
             {boardLoading && (
@@ -454,6 +526,7 @@ const ProjectDetail = () => {
 
             {!boardLoading && !boardError && boardTasks && (
               <TaskBoard
+                key={`${selectedSprintId}-${boardRevision}`}
                 initialTasks={boardTasks}
                 onEditTask={openEditTaskModal}
               />
@@ -461,7 +534,9 @@ const ProjectDetail = () => {
 
             {!boardLoading && !boardError && !boardTasks && (
               <p className="text-sm text-on-surface-variant">
-                Board data is not available for this project yet.
+                {selectedSprintId
+                  ? "Board data is not available for this project yet."
+                  : "There is no active sprint. Select a sprint to view its tasks."}
               </p>
             )}
           </article>
@@ -527,6 +602,27 @@ const ProjectDetail = () => {
                 error={taskFormErrors.priority}
               />
 
+              <FormSelect
+                label="Assignee"
+                options={[
+                  { label: "Select assignee", value: "" },
+                  ...projectMembers
+                    .filter(
+                      (member) =>
+                        member.memberStatus.toLowerCase() === "active",
+                    )
+                    .map((member) => ({
+                      label: `${member.displayName} (${member.email})`,
+                      value: member.userId,
+                    })),
+                ]}
+                value={taskForm.assigneeUserId}
+                onChange={(event) =>
+                  updateTaskField("assigneeUserId", event.target.value)
+                }
+                error={taskFormErrors.assigneeUserId}
+              />
+
               <TextInput
                 label="Plan estimate"
                 value={taskForm.planEstimate}
@@ -537,24 +633,22 @@ const ProjectDetail = () => {
                 error={taskFormErrors.planEstimate}
               />
 
-              <TextInput
-                type="date"
-                label="Start date"
-                value={taskForm.startDate}
+              <FormSelect
+                containerClassName="md:col-span-2"
+                label="Sprint"
+                options={[
+                  { label: "Select a sprint", value: "" },
+                  ...availableSprints.map((sprint) => ({
+                    label: `${sprint.sprintCode} (${sprint.startDate} – ${sprint.endDate})${sprint.isCurrent ? " — ACTIVE" : ""}`,
+                    value: sprint.id,
+                    className: sprint.isCurrent ? "font-bold" : undefined,
+                  })),
+                ]}
+                value={taskForm.sprintId}
                 onChange={(event) =>
-                  updateTaskField("startDate", event.target.value)
+                  updateTaskField("sprintId", event.target.value)
                 }
-                error={taskFormErrors.startDate}
-              />
-
-              <TextInput
-                type="date"
-                label="Due date"
-                value={taskForm.dueDate}
-                onChange={(event) =>
-                  updateTaskField("dueDate", event.target.value)
-                }
-                error={taskFormErrors.dueDate}
+                error={taskFormErrors.sprintId}
               />
 
               <div className="md:col-span-2 flex gap-3 mt-2">
@@ -743,4 +837,3 @@ const ProjectDetail = () => {
 };
 
 export default ProjectDetail;
-
